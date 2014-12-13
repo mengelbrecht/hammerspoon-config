@@ -9,31 +9,26 @@ class Profile
     @screens = screens
     @config = config
 
+  _actionsFor: (appName) =>
+    actions = @config[appName]
+    if actions then actions else @config["_"]
+    
+  _activateForApp: (app) =>
+    actions = @_actionsFor(app\title!)
+    if actions then for action in *actions do for win in *app\allWindows! do action\perform(win)
+
   isActive: =>
     for screen in *hs.screen.allScreens()
       if hs.fnutils.contains(@screens, screen\id!) then return true
     return false
 
-  activateFor: (appname) =>
-    app = hs.appfinder.appFromName(appname)
-    if not app then return {}
-    actions = @config[appname]
-    windows = app\allWindows!
-    for action in *actions
-      for win in *windows do action\perform(win)
-    return windows
+  activateFor: (appName) =>
+    app = hs.appfinder.appFromName(appName)
+    if app then @_activateForApp(app)
 
   activate: =>
     hs.alert.show("Arranging #{@title}", 1)
-    processed = [w for appname, _ in pairs(@config) for w in *@activateFor(appname)]
-
-    -- Apply actions to all remaining windows
-    actions = @config["_"]
-    if not actions then return
-    
-    windows = [w for w in *hs.window.allWindows! when not hs.fnutils.contains(processed, w)]
-    for action in *actions
-      for win in *windows do action\perform(win)
+    for app in *hs.application.runningApplications! do @_activateForApp(app)
 
 
 {
