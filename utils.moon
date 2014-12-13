@@ -12,12 +12,7 @@ pushToScreen = (win, screen) ->
     os.execute('sleep 3')
     win = hs.window.windowForID(id)
 
-  screenframeOld = win\screen!\frame!
-  screenframeNew = screen\frame!
-  win\setTopLeft({
-    x: win\topLeft!.x - screenframeOld.x + screenframeNew.x,
-    y: win\topLeft!.y - screenframeOld.y + screenframeNew.y
-  })
+  win\moveToScreen(screen)
 
   if fullscreenChange then win\toggleFullscreen!
 
