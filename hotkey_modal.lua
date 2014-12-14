@@ -1,7 +1,7 @@
-local modals = {}
-
 HotkeyModal = {}
 HotkeyModal.__index = HotkeyModal
+
+local modals = {}
 
 function HotkeyModal.new(title, modifiers, key)
   local m = setmetatable({}, HotkeyModal)
@@ -13,20 +13,20 @@ function HotkeyModal.new(title, modifiers, key)
   return m
 end
 
-function HotkeyModal:disableOtherModals_()
+function HotkeyModal:_disableOtherModals()
   for _, modal in pairs(modals) do
-    if modal ~= self and modal:isActive() then modal:exitSilent_() end
+    if modal ~= self and modal:isActive() then modal:_exitSilent() end
   end
 end
 
-function HotkeyModal:exitSilent_()
+function HotkeyModal:_exitSilent()
   self.active = false
   for _, key in pairs(self.keys) do hs.hotkey.disable(key) end
   self.key:enable()
 end
 
 function HotkeyModal:enter()
-  self:disableOtherModals_()
+  self:_disableOtherModals()
   self.active = true
   self.key:disable()
   for _, key in pairs(self.keys) do hs.hotkey.enable(key) end
@@ -34,7 +34,7 @@ function HotkeyModal:enter()
 end
 
 function HotkeyModal:exit()
-  self:exitSilent_()
+  self:_exitSilent()
   hs.alert.show("done " .. self.title, 0.5)
 end
 

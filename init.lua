@@ -9,36 +9,36 @@ require 'action'
 local grid1 = Grid.new(6, 6)
 
 local home = Profile.new('Home', {69671680}, {
-  ["iTunes"] =     {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Mail"] =       {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Safari"] =     {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["iTunes"]     = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["Mail"]       = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["Safari"]     = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
   ["SourceTree"] = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Spotify"] =    {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.8, 1.0)},
-  ["Terminal"] =   {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
-  ["TextMate"] =   {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"] =      {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["_"] =          {Action.Snap.new(grid1)}
+  ["Spotify"]    = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.8, 1.0)},
+  ["Terminal"]   = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
+  ["TextMate"]   = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
+  ["Xcode"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["_"]          = {Action.Snap.new(grid1)}
 })
 
 ----------------------------------------------------------------------------------------------------
 
 local work = Profile.new('Work', {188898833, 188898834}, {
-  ["Dash"] =              {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
-  ["iTunes"] =            {Action.Close.new()},
+  ["Dash"]              = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
+  ["iTunes"]            = {Action.Close.new()},
   ["Parallels Desktop"] = {Action.MoveToScreen.new(2), Action.FullScreen.new()},
-  ["Safari"] =            {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["SourceTree"] =        {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["Terminal"] =          {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
-  ["TextMate"] =          {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"] =             {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["_"] =                 {Action.Snap.new(grid1)}
+  ["Safari"]            = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
+  ["SourceTree"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
+  ["Terminal"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
+  ["TextMate"]          = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
+  ["Xcode"]             = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
+  ["_"]                 = {Action.Snap.new(grid1)}
 })
 
 ----------------------------------------------------------------------------------------------------
 
-function launchOrFocusApp(appName) hs.application.launchOrFocus(appName) end
- 
-function launchOrActivateApp(appName)
+local function launchOrFocusApp(appName) hs.application.launchOrFocus(appName) end
+
+local function launchOrActivateApp(appName)
   local wasAlreadyRunning = hs.appfinder.appFromName(appName) ~= nil
   hs.application.launchOrFocus(appName)
   if wasAlreadyRunning then
@@ -47,7 +47,7 @@ function launchOrActivateApp(appName)
     if profile and app then profile:activateFor(app) end
   end
 end
-   
+
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------

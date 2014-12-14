@@ -12,13 +12,13 @@ function Profile.new(title, screens, config)
   return m
 end
 
-function Profile:actionsFor_(appName)
+function Profile:_actionsFor(appName)
   local actions = self.config[appName]
   if actions then return actions else return self.config["_"] end
 end
 
 function Profile:activateFor(app)
-  local actions = self:actionsFor_(app:title())
+  local actions = self:_actionsFor(app:title())
   if actions then
     for _, action in pairs(actions) do
       for _, win in pairs(app:allWindows()) do action:perform(win) end
@@ -35,9 +35,7 @@ end
 
 function Profile:activate()
   hs.alert.show("Arranging " .. self.title, 1)
-  for _, app in pairs(hs.application.runningApplications()) do 
-    self:activateFor(app)
-  end
+  for _, app in pairs(hs.application.runningApplications()) do self:activateFor(app) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -52,9 +50,7 @@ end
 function Profile.checkKnownProfile()
   if Profile.activeProfile() == nil then
     hs.alert.show("unknown profile, see console for screen information", 3)
-    for _, screen in pairs(hs.screen.allScreens()) do
-      print("unknown screen: " .. screen:id())
-    end
+    for _, screen in pairs(hs.screen.allScreens()) do print("unknown screen: " .. screen:id()) end
   end
 end
 
