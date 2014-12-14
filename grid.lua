@@ -36,7 +36,7 @@ function Grid:_set(win, grid)
     h = grid.h * ratioHeight,
   }
   win:setFrame(newFrame)
-  utils.ensureWindowIsInScreenBounds(win)
+  win:ensureIsInScreenBounds()
 end
 
 function Grid:_adjustWindow(win, fn)

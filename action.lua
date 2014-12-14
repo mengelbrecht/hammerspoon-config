@@ -119,7 +119,7 @@ end
 function Action.MoveToUnit:perform(win)
   local win = win or hs.window.focusedWindow()
   win:moveToUnit(self.unit)
-  utils.ensureWindowIsInScreenBounds(win)
+  win:ensureIsInScreenBounds()
 end
 
 ----------------------------------------------------------------------------------------------------
