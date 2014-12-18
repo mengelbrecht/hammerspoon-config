@@ -109,6 +109,15 @@ hs.hotkey.bind(arrangementModifiers, '3', function() work:activate() end)
 ----------------------------------------------------------------------------------------------------
 hs.window.animationDuration = 0.1
 
+function appEvent(appName, event)
+  if event == hs.application.watcher.launched then
+    local profile = Profile.activeProfile()
+    local app = hs.appfinder.appFromName(appName)
+    if profile and app then profile:activateFor(app) end
+  end
+end
+
+hs.application.watcher.new(appEvent):start()
 hs.screen.watcher.new(function() Profile.activateActiveProfile() end):start()
 hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
 hs.alert.show("Hammerspoon loaded", 1)
