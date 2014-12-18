@@ -8,14 +8,14 @@ function utils.pushToScreen(win, screen)
   local fullscreenChange = win:isFullScreen()
   if fullscreenChange then
     id = win:id()
-    win:toggleFullscreen()
+    win:toggleFullScreen()
     os.execute('sleep 3')
     win = hs.window.windowForID(id)
   end
 
   win:moveToScreen(screen)
 
-  if fullscreenChange then win:toggleFullscreen() end
+  if fullscreenChange then win:toggleFullScreen() end
 end
 
 ----------------------------------------------------------------------------------------------------
