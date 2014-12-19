@@ -22,7 +22,7 @@ local home = Profile.new('Home', {69671680}, {
 
 ----------------------------------------------------------------------------------------------------
 
-local work = Profile.new('Work', {188898833, 188898834}, {
+local work = Profile.new('Work', {69732352, 188898833, 188898834}, {
   ["Dash"]              = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
   ["iTunes"]            = {Action.Close.new()},
   ["Parallels Desktop"] = {Action.MoveToScreen.new(2), Action.FullScreen.new()},
