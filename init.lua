@@ -52,7 +52,7 @@ end
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
-local splitModifiers = {'ctrl', 'alt', 'cmd'}
+local splitModifiers = {'ctrl', 'alt'}
 local modalModifiers = {'cmd', 'alt'}
 local arrangementModifiers = {'cmd', 'shift'}
 
