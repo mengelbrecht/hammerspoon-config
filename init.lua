@@ -118,7 +118,11 @@ function appEvent(appName, event)
 end
 
 hs.application.watcher.new(appEvent):start()
-hs.screen.watcher.new(function() Profile.activateActiveProfile() end):start()
+hs.screen.watcher.new(
+  function()
+    Profile.checkKnownProfile()
+    Profile.activateActiveProfile()
+  end):start()
 hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
 hs.alert.show("Hammerspoon loaded", 1)
 
