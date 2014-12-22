@@ -109,6 +109,7 @@ hs.hotkey.bind(arrangementModifiers, '3', function() work:activate() end)
 -- Settings and Watcher
 ----------------------------------------------------------------------------------------------------
 hs.window.animationDuration = 0.1
+hs.hints.hintChars = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}
 
 function appEvent(appName, event)
   if event == hs.application.watcher.launched then
