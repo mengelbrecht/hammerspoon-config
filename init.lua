@@ -61,6 +61,7 @@ hs.hotkey.bind(splitModifiers, 'DOWN', function() Action.MoveToNextScreen.new():
 hs.hotkey.bind(splitModifiers, 'LEFT', function() Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0):perform() end)
 hs.hotkey.bind(splitModifiers, 'RIGHT', function() Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0):perform() end)
 hs.hotkey.bind(splitModifiers, 'SPACE', function() grid1:snapAll() end)
+hs.hotkey.bind(splitModifiers, 'H', function() hs.hints.windowHints() end)
 
 local position = HotkeyModal.new('Position', modalModifiers, '1')
 position:bind({}, 'UP', function() grid1:positionTopRight() end)
