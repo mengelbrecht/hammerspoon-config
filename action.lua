@@ -14,7 +14,7 @@ end
 
 function Action.Close:perform(win)
   local win = win or hs.window.focusedWindow()
-  win:close()
+  if win then win:close() end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ end
 
 function Action.Maximize:perform(win)
   local win = win or hs.window.focusedWindow()
-  win:maximize()
+  if win then win:maximize() end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ end
 
 function Action.FullScreen:perform(win)
   local win = win or hs.window.focusedWindow()
-  win:setFullScreen(true)
+  if win then win:setFullScreen(true) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ end
 
 function Action.Snap:perform(win)
   local win = win or hs.window.focusedWindow()
-  self.grid:snap(win)
+  if win then self.grid:snap(win) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ end
 
 function Action.MoveToScreen:perform(win)
   local win = win or hs.window.focusedWindow()
-  utils.pushToScreen(win, hs.screen.allScreens()[self.screenIndex])
+  if win then utils.pushToScreen(win, hs.screen.allScreens()[self.screenIndex]) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ end
 
 function Action.MoveToNextScreen:perform(win)
   local win = win or hs.window.focusedWindow()
-  utils.pushToScreen(win, win:screen():next())
+  if win then utils.pushToScreen(win, win:screen():next()) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ end
 
 function Action.MoveToPreviousScreen:perform(win)
   local win = win or hs.window.focusedWindow()
-  utils.pushToScreen(win, win:screen():previous())
+  if win then utils.pushToScreen(win, win:screen():previous()) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -118,8 +118,10 @@ end
 
 function Action.MoveToUnit:perform(win)
   local win = win or hs.window.focusedWindow()
-  win:moveToUnit(self.unit)
-  win:ensureIsInScreenBounds()
+  if win then
+    win:moveToUnit(self.unit)
+    win:ensureIsInScreenBounds()
+  end
 end
 
 ----------------------------------------------------------------------------------------------------
