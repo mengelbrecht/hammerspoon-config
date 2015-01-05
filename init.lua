@@ -9,21 +9,23 @@ require 'action'
 local grid1 = Grid.new(6, 6)
 
 local home = Profile.new('Home', {69671680}, {
-  ["iTunes"]     = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Mail"]       = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Safari"]     = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["SourceTree"] = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Spotify"]    = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.8, 1.0)},
-  ["Terminal"]   = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
-  ["TextMate"]   = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["_"]          = {Action.Snap.new(grid1)}
+  ["Google Chrome"] = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["iTunes"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["Mail"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["Safari"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["SourceTree"]    = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["Spotify"]       = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.8, 1.0)},
+  ["Terminal"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
+  ["TextMate"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
+  ["Xcode"]         = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
+  ["_"]             = {Action.Snap.new(grid1)}
 })
 
 ----------------------------------------------------------------------------------------------------
 
 local work = Profile.new('Work', {69732352, 188898833, 188898834}, {
   ["Dash"]              = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
+  ["Google Chrome"]     = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
   ["iTunes"]            = {Action.Close.new()},
   ["Parallels Desktop"] = {Action.MoveToScreen.new(2), Action.FullScreen.new()},
   ["Safari"]            = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
