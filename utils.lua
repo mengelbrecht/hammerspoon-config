@@ -11,6 +11,7 @@ function utils.pushToScreen(win, screen)
     win:toggleFullScreen()
     os.execute('sleep 3')
     win = hs.window.windowForID(id)
+    if not win then return end
   end
 
   win:moveToScreen(screen)
