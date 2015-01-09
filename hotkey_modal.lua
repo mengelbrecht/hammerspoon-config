@@ -30,12 +30,12 @@ function HotkeyModal:enter()
   self.active = true
   self.key:disable()
   for _, key in pairs(self.keys) do hs.hotkey.enable(key) end
-  hs.alert.show(self.title .. " Mode", 1)
+  hs.alert(self.title .. " Mode", 1)
 end
 
 function HotkeyModal:exit()
   self:_exitSilent()
-  hs.alert.show("done " .. self.title, 0.5)
+  hs.alert("done " .. self.title, 0.5)
 end
 
 function HotkeyModal:isActive()

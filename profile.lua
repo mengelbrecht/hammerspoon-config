@@ -34,7 +34,7 @@ function Profile:isActive()
 end
 
 function Profile:activate()
-  hs.alert.show("Arranging " .. self.title, 1)
+  hs.alert("Arranging " .. self.title, 1)
   for _, app in pairs(hs.application.runningApplications()) do self:activateFor(app) end
 end
 
@@ -49,7 +49,7 @@ end
 
 function Profile.checkKnownProfile()
   if Profile.activeProfile() == nil then
-    hs.alert.show("unknown profile, see console for screen information", 3)
+    hs.alert("unknown profile, see console for screen information", 3)
     for _, screen in pairs(hs.screen.allScreens()) do print("unknown screen: " .. screen:id()) end
   end
 end
