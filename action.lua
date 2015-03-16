@@ -58,7 +58,7 @@ end
 
 function Action.Snap:perform(win)
   local win = win or hs.window.focusedWindow()
-  if win then self.grid:snap(win) end
+  if win and not utils.isFullScreen(win) then self.grid:snap(win) end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ end
 
 function Action.MoveToUnit:perform(win)
   local win = win or hs.window.focusedWindow()
-  if win then
+  if win and not utils.isFullScreen(win) then
     win:moveToUnit(self.unit)
     win:ensureIsInScreenBounds()
   end
