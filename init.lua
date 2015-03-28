@@ -1,7 +1,7 @@
-require 'hotkey_modal'
-require 'grid'
-require 'profile'
 require 'action'
+require 'grid'
+require 'hotkey_modal'
+require 'profile'
 
 ----------------------------------------------------------------------------------------------------
 -- Profiles
