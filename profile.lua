@@ -21,7 +21,13 @@ function Profile:activateFor(app)
   local actions = self:_actionsFor(app:title())
   if actions then
     for _, action in pairs(actions) do
-      for _, win in pairs(app:allWindows()) do action:perform(win) end
+      local mainWindow = app:mainWindow()
+      for _, win in pairs(app:allWindows()) do
+        action:perform(win)
+        if mainWindow and win:id() == mainWindow:id() then mainWindow = nil end
+      end
+
+      if mainWindow then app:perform(mainWindow) end
     end
   end
 end
