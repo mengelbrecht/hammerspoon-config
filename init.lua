@@ -89,6 +89,8 @@ move:bind({}, 'RIGHT', function() grid1:moveRight() end)
 move:bind({}, 'RETURN', function() move:exit() end)
 
 local appShortcuts = {
+  ['a'] = 'Atom',
+  ['c'] = 'Google Chrome',
   ['d'] = 'Dash',
   ['e'] = 'TextMate',
   ['f'] = 'Finder',
@@ -96,7 +98,6 @@ local appShortcuts = {
   ['i'] = 'iTunes',
   ['m'] = 'Mail',
   ['p'] = 'Parallels Desktop',
-  ['s'] = 'Safari',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 }
