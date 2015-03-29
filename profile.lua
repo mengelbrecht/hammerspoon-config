@@ -27,7 +27,7 @@ function Profile:activateFor(app)
         if mainWindow and win:id() == mainWindow:id() then mainWindow = nil end
       end
 
-      if mainWindow then app:perform(mainWindow) end
+      if mainWindow then action:perform(mainWindow) end
     end
   end
 end
