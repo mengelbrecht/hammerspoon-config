@@ -36,7 +36,7 @@ end
 Action.FullScreen = {}
 Action.FullScreen.__index = Action.FullScreen
 
-function Action.FullScreen.new() 
+function Action.FullScreen.new()
   return setmetatable({}, Action.FullScreen)
 end
 
@@ -119,8 +119,7 @@ end
 function Action.MoveToUnit:perform(win)
   local win = win or hs.window.focusedWindow()
   if win and not utils.isFullScreen(win) then
-    win:moveToUnit(self.unit)
-    win:ensureIsInScreenBounds()
+    win:moveToUnit(self.unit):ensureIsInScreenBounds()
   end
 end
 
