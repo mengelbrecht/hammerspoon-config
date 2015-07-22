@@ -9,6 +9,7 @@ require 'profile'
 local grid1 = Grid.new(6, 6)
 
 local home = Profile.new('Home', {69671680}, {
+  ["Atom"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
   ["Google Chrome"] = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
   ["iTunes"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
   ["Mail"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
@@ -25,6 +26,7 @@ local home = Profile.new('Home', {69671680}, {
 ----------------------------------------------------------------------------------------------------
 
 local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
+  ["Atom"]              = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
   ["Dash"]              = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
   ["Google Chrome"]     = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
   ["iTunes"]            = {Action.Close.new()},
