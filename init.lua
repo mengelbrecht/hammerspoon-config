@@ -12,11 +12,11 @@ hs.grid.setMargins({0, 0})
 hs.grid.setGrid({6, 4})
 --hs.grid.ui.fontName = "PragmataPro"
 hs.grid.HINTS = {
-  {'f1','f2','f3','f4','f5','f6','f7','f8'},
-  {'1','2','3','4','5','6','7','8'},
-  {'Q','W','E','R','T','Z','U','I'},
-  {'A','S','D','F','G','H','J','K'},
-  {'Y','X','C','V','B','N','M',','}
+  {'f1', 'f2','f3', 'f4', 'f5', 'f6', 'f7', 'f8'},
+  {'1', '2', '3', '4', '5', '6', '7', '8'},
+  {'Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I'},
+  {'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K'},
+  {'Y', 'X', 'C', 'V', 'B', 'N', 'M', ','}
 }
 
 local home = Profile.new('Home', {69671680}, {
@@ -27,7 +27,6 @@ local home = Profile.new('Home', {69671680}, {
   ["Reeder"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Safari"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["SourceTree"]    = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Spotify"]       = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.8, 1.0)},
   ["Terminal"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.5, 0.5, 0.5)},
   ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
   ["Xcode"]         = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
