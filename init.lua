@@ -7,6 +7,8 @@ require 'profile'
 -- Profiles
 ----------------------------------------------------------------------------------------------------
 local grid1 = Grid.new(6, 6)
+hs.hints.fontName = "PragmataPro"
+hs.hints.fontSize = 22
 
 local home = Profile.new('Home', {69671680}, {
   ["Atom"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
