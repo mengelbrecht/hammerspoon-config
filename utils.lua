@@ -1,7 +1,6 @@
 utils = {}
 utils.__index = utils
 
-
 function utils.positionTopLeft(win)
   local screenFrame = win:screen():frame()
   win:setTopLeft({x = screenFrame.x, y = screenFrame.y})
