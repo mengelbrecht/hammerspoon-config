@@ -1,14 +1,23 @@
 require 'action'
-require 'grid'
 require 'hotkey_modal'
 require 'profile'
 
 ----------------------------------------------------------------------------------------------------
 -- Profiles
 ----------------------------------------------------------------------------------------------------
-local grid1 = Grid.new(6, 6)
 hs.hints.fontName = "PragmataPro"
 hs.hints.fontSize = 22
+
+hs.grid.setMargins({0, 0})
+hs.grid.setGrid({6, 4})
+--hs.grid.ui.fontName = "PragmataPro"
+hs.grid.HINTS = {
+  {'f1','f2','f3','f4','f5','f6','f7','f8'},
+  {'1','2','3','4','5','6','7','8'},
+  {'Q','W','E','R','T','Z','U','I'},
+  {'A','S','D','F','G','H','J','K'},
+  {'Y','X','C','V','B','N','M',','}
+}
 
 local home = Profile.new('Home', {69671680}, {
   ["Atom"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
@@ -22,7 +31,7 @@ local home = Profile.new('Home', {69671680}, {
   ["Terminal"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
   ["TextMate"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
   ["Xcode"]         = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["_"]             = {Action.Snap.new(grid1)}
+  ["_"]             = {Action.Snap.new()}
 })
 
 ----------------------------------------------------------------------------------------------------
@@ -39,43 +48,43 @@ local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
   ["TextMate"]          = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
   ["Tower"]             = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
   ["Xcode"]             = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["_"]                 = {Action.Snap.new(grid1)}
+  ["_"]                 = {Action.Snap.new()}
 })
 
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
-local splitModifiers = {'ctrl', 'alt'}
-local modalModifiers = {'cmd', 'alt'}
 local arrangementModifiers = {'cmd', 'shift'}
+local mash = {'ctrl', 'alt'}
 
-hs.hotkey.bind(splitModifiers, 'UP', function() Action.Maximize.new():perform() end)
-hs.hotkey.bind(splitModifiers, 'DOWN', function() Action.MoveToNextScreen.new():perform() end)
-hs.hotkey.bind(splitModifiers, 'LEFT', function() Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0):perform() end)
-hs.hotkey.bind(splitModifiers, 'RIGHT', function() Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0):perform() end)
-hs.hotkey.bind(splitModifiers, 'SPACE', function() grid1:snapAll() end)
-hs.hotkey.bind(splitModifiers, 'H', function() hs.hints.windowHints() end)
+hs.hotkey.bind(mash, 'UP', function() Action.Maximize.new():perform() end)
+hs.hotkey.bind(mash, 'DOWN', function() Action.MoveToNextScreen.new():perform() end)
+hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0):perform() end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0):perform() end)
+hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
+hs.hotkey.bind(mash, 'H', function() hs.hints.windowHints() end)
+hs.hotkey.bind(mash, 'G', function() hs.grid.show() end)
 
-local position = HotkeyModal.new('Position', modalModifiers, '1')
-position:bind({}, 'UP', function() grid1:positionTopRight() end)
-position:bind({}, 'DOWN', function() grid1:positionBottomLeft() end)
-position:bind({}, 'LEFT', function() grid1:positionTopLeft() end)
-position:bind({}, 'RIGHT', function() grid1:positionBottomRight() end)
+local position = HotkeyModal.new('Position', mash, '1')
+position:bind({}, 'UP', function() utils.positionBottomLeft() end)
+position:bind({}, 'DOWN', function() utils.positionBottomRight() end)
+position:bind({}, 'LEFT', function() utils.positionTopLeft() end)
+position:bind({}, 'RIGHT', function() utils.positionTopRight() end)
 position:bind({}, 'RETURN', function() position:exit() end)
 
-local resize = HotkeyModal.new('Resize', modalModifiers, '2')
-resize:bind({}, 'UP', function() grid1:resizeShorter() end)
-resize:bind({}, 'DOWN', function() grid1:resizeTaller() end)
-resize:bind({}, 'LEFT', function() grid1:resizeThinner() end)
-resize:bind({}, 'RIGHT', function() grid1:resizeWider() end)
+local resize = HotkeyModal.new('Resize', mash, '2')
+resize:bind({}, 'UP', function() hs.grid.resizeWindowShorter() end)
+resize:bind({}, 'DOWN', function() hs.grid.resizeWindowTaller() end)
+resize:bind({}, 'LEFT', function() hs.grid.resizeWindowThinner() end)
+resize:bind({}, 'RIGHT', function() hs.grid.resizeWindowWider() end)
 resize:bind({}, 'RETURN', function() resize:exit() end)
 
-local move = HotkeyModal.new('Move', modalModifiers, '3')
-move:bind({}, 'UP', function() grid1:moveUp() end)
-move:bind({}, 'DOWN', function() grid1:moveDown() end)
-move:bind({}, 'LEFT', function() grid1:moveLeft() end)
-move:bind({}, 'RIGHT', function() grid1:moveRight() end)
+local move = HotkeyModal.new('Move', mash, '3')
+move:bind({}, 'UP', function() hs.grid.pushWindowUp() end)
+move:bind({}, 'DOWN', function() hs.grid.pushWindowDown() end)
+move:bind({}, 'LEFT', function() hs.grid.pushWindowLeft() end)
+move:bind({}, 'RIGHT', function() hs.grid.pushWindowRight() end)
 move:bind({}, 'RETURN', function() move:exit() end)
 
 local appShortcuts = {

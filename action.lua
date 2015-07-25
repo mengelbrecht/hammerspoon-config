@@ -50,15 +50,13 @@ end
 Action.Snap = {}
 Action.Snap.__index = Action.Snap
 
-function Action.Snap.new(grid)
-  local m = setmetatable({}, Action.Snap)
-  m.grid = grid
-  return m
+function Action.Snap.new()
+  return setmetatable({}, Action.Snap)
 end
 
 function Action.Snap:perform(win)
   local win = win or hs.window.focusedWindow()
-  if win and not utils.isFullScreen(win) then self.grid:snap(win) end
+  if win and not utils.isFullScreen(win) then hs.grid.snap(win) end
 end
 
 ----------------------------------------------------------------------------------------------------
