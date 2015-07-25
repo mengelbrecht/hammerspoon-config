@@ -20,35 +20,35 @@ hs.grid.HINTS = {
 }
 
 local home = Profile.new('Home', {69671680}, {
-  ["Atom"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["Google Chrome"] = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["iTunes"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Mail"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Reeder"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Safari"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["SourceTree"]    = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["Spotify"]       = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.8, 1.0)},
-  ["Terminal"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
-  ["TextMate"]      = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"]         = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 0.7, 1.0)},
-  ["_"]             = {Action.Snap.new()}
+  ["Atom"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["Mail"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["Reeder"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["Safari"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["SourceTree"]    = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["Spotify"]       = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.8, 1.0)},
+  ["Terminal"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.5, 0.5, 0.5)},
+  ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
+  ["Xcode"]         = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["_"]             = {Action.Snap()}
 })
 
 ----------------------------------------------------------------------------------------------------
 
 local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
-  ["Atom"]              = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["Dash"]              = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0)},
-  ["Google Chrome"]     = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["iTunes"]            = {Action.Close.new()},
-  ["Parallels Desktop"] = {Action.MoveToScreen.new(2), Action.FullScreen.new()},
-  ["Safari"]            = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["SourceTree"]        = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["Terminal"]          = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.5, 0.5, 0.5, 0.5)},
-  ["TextMate"]          = {Action.MoveToScreen.new(2), Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0)},
-  ["Tower"]             = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["Xcode"]             = {Action.MoveToScreen.new(1), Action.MoveToUnit.new(0.0, 0.0, 1.0, 1.0)},
-  ["_"]                 = {Action.Snap.new()}
+  ["Atom"]              = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
+  ["Google Chrome"]     = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["iTunes"]            = {Action.Close()},
+  ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
+  ["Safari"]            = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["SourceTree"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.5, 0.5, 0.5)},
+  ["TextMate"]          = {Action.MoveToScreen(2), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
+  ["Tower"]             = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Xcode"]             = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["_"]                 = {Action.Snap()}
 })
 
 ----------------------------------------------------------------------------------------------------
@@ -57,10 +57,10 @@ local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
 
 local mash = {'ctrl', 'alt'}
 
-hs.hotkey.bind(mash, 'UP', function() Action.Maximize.new():perform() end)
-hs.hotkey.bind(mash, 'DOWN', function() Action.MoveToNextScreen.new():perform() end)
-hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit.new(0.0, 0.0, 0.5, 1.0):perform() end)
-hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.0):perform() end)
+hs.hotkey.bind(mash, 'UP', function() Action.Maximize()(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'DOWN', function() Action.MoveToNextScreen()(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
 hs.hotkey.bind(mash, 'H', function() hs.hints.windowHints() end)
 hs.hotkey.bind(mash, 'G', function() hs.grid.show() end)

@@ -23,7 +23,7 @@ function Profile:activateFor(app)
     for _, action in pairs(actions) do
       local mainWindow = app:mainWindow()
       for _, win in pairs(app:allWindows()) do
-        action:perform(win)
+        action(win)
         if mainWindow and win:id() == mainWindow:id() then mainWindow = nil end
       end
 
