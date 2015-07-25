@@ -41,20 +41,6 @@ local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
 })
 
 ----------------------------------------------------------------------------------------------------
-
-local function launchOrFocusApp(appName) hs.application.launchOrFocus(appName) end
-
-local function launchOrActivateApp(appName)
-  local wasAlreadyRunning = hs.appfinder.appFromName(appName) ~= nil
-  hs.application.launchOrFocus(appName)
-  if wasAlreadyRunning then
-    local profile = Profile.activeProfile()
-    local app = hs.appfinder.appFromName(appName)
-    if profile and app then profile:activateFor(app) end
-  end
-end
-
-----------------------------------------------------------------------------------------------------
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
@@ -96,16 +82,15 @@ local appShortcuts = {
   ['d'] = 'Dash',
   ['e'] = 'TextMate',
   ['f'] = 'Finder',
-  ['g'] = 'SourceTree',
-  ['i'] = 'iTunes',
-  ['m'] = 'Mail',
+  ['g'] = 'Tower',
+  ['m'] = 'iTunes',
   ['p'] = 'Parallels Desktop',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 }
+
 for shortcut, appName in pairs(appShortcuts) do
-  hs.hotkey.bind(modalModifiers, shortcut, function() launchOrFocusApp(appName) end)
-  hs.hotkey.bind(splitModifiers, shortcut, function() launchOrActivateApp(appName) end)
+  hs.hotkey.bind({'alt', 'cmd'}, shortcut, function() hs.application.launchOrFocus(appName) end)
 end
 
 hs.hotkey.bind(arrangementModifiers, '1', function() Profile.activateActiveProfile() end)
