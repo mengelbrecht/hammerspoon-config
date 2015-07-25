@@ -53,16 +53,14 @@ function Profile.activeProfile()
   return nil
 end
 
-function Profile.checkKnownProfile()
-  if Profile.activeProfile() == nil then
+function Profile.activateActiveProfile()
+  local profile = Profile.activeProfile()
+  if profile then
+    profile:activate()
+  else
     hs.alert("unknown profile, see console for screen information", 3)
     for _, screen in pairs(hs.screen.allScreens()) do print("unknown screen: " .. screen:id()) end
   end
-end
-
-function Profile.activateActiveProfile()
-  local profile = Profile.activeProfile()
-  if profile then profile:activate() end
 end
 
 ----------------------------------------------------------------------------------------------------

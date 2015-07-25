@@ -55,7 +55,6 @@ local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
-local arrangementModifiers = {'cmd', 'shift'}
 local mash = {'ctrl', 'alt'}
 
 hs.hotkey.bind(mash, 'UP', function() Action.Maximize.new():perform() end)
@@ -65,6 +64,7 @@ hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit.new(0.5, 0.0, 0.5, 1.
 hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
 hs.hotkey.bind(mash, 'H', function() hs.hints.windowHints() end)
 hs.hotkey.bind(mash, 'G', function() hs.grid.show() end)
+hs.hotkey.bind(mash, '^', function() Profile.activateActiveProfile() end)
 
 local position = HotkeyModal.new('Position', mash, '1')
 position:bind({}, 'UP', function() utils.positionBottomLeft() end)
@@ -104,10 +104,6 @@ for shortcut, appName in pairs(appShortcuts) do
   hs.hotkey.bind({'alt', 'cmd'}, shortcut, function() hs.application.launchOrFocus(appName) end)
 end
 
-hs.hotkey.bind(arrangementModifiers, '1', function() Profile.activateActiveProfile() end)
-hs.hotkey.bind(arrangementModifiers, '2', function() home:activate() end)
-hs.hotkey.bind(arrangementModifiers, '3', function() work:activate() end)
-
 ----------------------------------------------------------------------------------------------------
 -- Settings and Watcher
 ----------------------------------------------------------------------------------------------------
@@ -123,19 +119,9 @@ hs.application.watcher.new(
   end
 ):start()
 
-hs.screen.watcher.new(
-  function()
-    Profile.checkKnownProfile()
-    Profile.activateActiveProfile()
-  end
-):start()
-
-hs.pathwatcher.new(hs.configdir,
-  function(files)
-    hs.reload()
-  end
-):start()
+hs.screen.watcher.new(function() Profile.activateActiveProfile() end):start()
+hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
 
 hs.alert("Hammerspoon loaded", 1)
 
-Profile.checkKnownProfile()
+Profile.activateActiveProfile()
