@@ -3,25 +3,21 @@ utils.__index = utils
 
 
 function utils.positionTopLeft(win)
-  local win = win or hs.window.focusedWindow()
   local screenFrame = win:screen():frame()
   win:setTopLeft({x = screenFrame.x, y = screenFrame.y})
 end
 
 function utils.positionBottomLeft(win)
-  local win = win or hs.window.focusedWindow()
   local screenFrame = win:screen():frame()
   win:setTopLeft({x = screenFrame.x, y = screenFrame.y + screenFrame.h - win:size().h})
 end
 
 function utils.positionTopRight(win)
-  local win = win or hs.window.focusedWindow()
   local screenFrame = win:screen():frame()
   win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y})
 end
 
 function utils.positionBottomRight(win)
-  local win = win or hs.window.focusedWindow()
   local screenFrame = win:screen():frame()
   win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y + screenFrame.h - win:size().h})
 end
@@ -31,7 +27,6 @@ function utils.snapAll()
 end
 
 function utils.isFullScreen(win)
-  local win = win or hs.window.focusedWindow()
   if not win then return false end
 
   local winFrame = win:frame()
