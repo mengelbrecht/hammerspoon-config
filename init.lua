@@ -20,7 +20,7 @@ hs.grid.HINTS = {
 }
 
 Profile.new('Home', {69671680}, {
-  ["Atom"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Mail"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -29,24 +29,24 @@ Profile.new('Home', {69671680}, {
   ["SourceTree"]    = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Terminal"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.5, 0.5, 0.5)},
   ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"]         = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["Xcode"]         = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]             = {Action.Snap()}
 })
 
 ----------------------------------------------------------------------------------------------------
 
 Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
-  ["Atom"]              = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
-  ["Google Chrome"]     = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
   ["iTunes"]            = {Action.Close()},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
-  ["Safari"]            = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
-  ["SourceTree"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
+  ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
   ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.5, 0.5, 0.5)},
   ["TextMate"]          = {Action.MoveToScreen(2), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
-  ["Tower"]             = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
-  ["Xcode"]             = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
+  ["Tower"]             = {Action.MoveToScreen(1), Action.Maximize()},
+  ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]                 = {Action.Snap()}
 })
 
