@@ -108,6 +108,8 @@ end
 ----------------------------------------------------------------------------------------------------
 hs.window.animationDuration = 0.1
 
+function screenChange() Profile.activateActiveProfile() end
+
 hs.application.watcher.new(
   function(appName, event)
     if event == hs.application.watcher.launched then
@@ -118,8 +120,7 @@ hs.application.watcher.new(
   end
 ):start()
 
-hs.screen.watcher.new(function() Profile.activateActiveProfile() end):start()
+hs.screen.watcher.new(screenChange):start()
 hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
 
-
-Profile.activateActiveProfile()
+screenChange()
