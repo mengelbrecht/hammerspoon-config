@@ -3,8 +3,11 @@ require 'hotkey_modal'
 require 'profile'
 
 ----------------------------------------------------------------------------------------------------
--- Profiles
+-- Settings
 ----------------------------------------------------------------------------------------------------
+
+hs.window.animationDuration = 0.1
+
 hs.hints.fontName = "PragmataPro"
 hs.hints.fontSize = 22
 
@@ -18,6 +21,10 @@ hs.grid.HINTS = {
   {'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K'},
   {'Y', 'X', 'C', 'V', 'B', 'N', 'M', ','}
 }
+
+----------------------------------------------------------------------------------------------------
+-- Profiles
+----------------------------------------------------------------------------------------------------
 
 Profile.new('Home', {69671680}, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
@@ -104,9 +111,8 @@ for shortcut, appName in pairs(appShortcuts) do
 end
 
 ----------------------------------------------------------------------------------------------------
--- Settings and Watcher
+-- Watcher
 ----------------------------------------------------------------------------------------------------
-hs.window.animationDuration = 0.1
 
 function screenChange() Profile.activateActiveProfile() end
 
