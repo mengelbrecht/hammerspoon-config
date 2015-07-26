@@ -4,36 +4,36 @@ Action = {}
 Action.__index = Action
 
 function Action.Close()
-  return function(win) if win then win:close() end end
+  return function(win) win:close() end
 end
 
 function Action.Maximize()
-  return function(win) if win then win:maximize() end end
+  return function(win) win:maximize() end
 end
 
 function Action.FullScreen()
-  return function(Win) if win then win:setFullScreen(true) end end
+  return function(win) win:setFullScreen(true) end
 end
 
 function Action.Snap()
-  return function(win) if win and not utils.isFullScreen(win) then hs.grid.snap(win) end end
+  return function(win) if not utils.isFullScreen(win) then hs.grid.snap(win) end end
 end
 
 function Action.MoveToScreen(screenIndex)
-  return function(win) if win then utils.pushToScreen(win, hs.screen.allScreens()[screenIndex]) end end
+  return function(win) utils.pushToScreen(win, hs.screen.allScreens()[screenIndex]) end
 end
 
 function Action.MoveToNextScreen()
-  return function(win) if win then utils.pushToScreen(win, win:screen():next()) end end
+  return function(win) utils.pushToScreen(win, win:screen():next()) end
 end
 
 function Action.MoveToPreviousScreen()
-  return function(win) if win then utils.pushToScreen(win, win:screen():previous()) end end
+  return function(win) utils.pushToScreen(win, win:screen():previous()) end
 end
 
 function Action.MoveToUnit(x, y, w, h)
   return function(win)
-    if win and not utils.isFullScreen(win) then
+    if not utils.isFullScreen(win) then
       win:moveToUnit({x = x, y = y, w = w, h = h}):ensureIsInScreenBounds()
     end
   end
