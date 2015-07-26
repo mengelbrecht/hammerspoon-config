@@ -1,3 +1,5 @@
+require 'utils'
+
 HotkeyModal = {}
 HotkeyModal.__index = HotkeyModal
 
@@ -25,17 +27,19 @@ function HotkeyModal:_exitSilent()
   self.key:enable()
 end
 
+----------------------------------------------------------------------------------------------------
+
 function HotkeyModal:enter()
   self:_disableOtherModals()
   self.active = true
   self.key:disable()
   for _, key in pairs(self.keys) do hs.hotkey.enable(key) end
-  hs.alert(self.title .. " Mode", 1)
+  utils.notify(self.title .. " Mode", 1.0)
 end
 
 function HotkeyModal:exit()
   self:_exitSilent()
-  hs.alert("done " .. self.title, 0.5)
+  utils.notify("done " .. self.title, 1.0)
 end
 
 function HotkeyModal:isActive()

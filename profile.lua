@@ -1,3 +1,5 @@
+require 'utils'
+
 Profile = {}
 Profile.__index = Profile
 
@@ -40,7 +42,7 @@ function Profile:isActive()
 end
 
 function Profile:activate()
-  hs.alert("Arranging " .. self.title, 1)
+  utils.notify("Arranging " .. self.title, 1.5)
   for _, app in pairs(hs.application.runningApplications()) do self:activateFor(app) end
 end
 
@@ -58,7 +60,7 @@ function Profile.activateActiveProfile()
   if profile then
     profile:activate()
   else
-    hs.alert("unknown profile, see console for screen information", 3)
+    utils.notify("unknown profile, see console for screen information", 3.0)
     for _, screen in pairs(hs.screen.allScreens()) do print("unknown screen: " .. screen:id()) end
   end
 end

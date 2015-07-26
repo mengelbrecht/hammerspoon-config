@@ -121,6 +121,5 @@ hs.application.watcher.new(
 hs.screen.watcher.new(function() Profile.activateActiveProfile() end):start()
 hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
 
-hs.alert("Hammerspoon loaded", 1)
 
 Profile.activateActiveProfile()
