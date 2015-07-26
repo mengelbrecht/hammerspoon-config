@@ -39,6 +39,34 @@ function Action.MoveToUnit(x, y, w, h)
   end
 end
 
+function Action.PositionTopLeft()
+  return function(win)
+    local screenFrame = win:screen():frame()
+    win:setTopLeft({x = screenFrame.x, y = screenFrame.y})
+  end
+end
+
+function Action.PositionBottomLeft()
+  return function(win)
+    local screenFrame = win:screen():frame()
+    win:setTopLeft({x = screenFrame.x, y = screenFrame.y + screenFrame.h - win:size().h})
+  end
+end
+
+function Action.PositionTopRight()
+  return function(win)
+    local screenFrame = win:screen():frame()
+    win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y})
+  end
+end
+
+function Action.PositionBottomRight()
+  return function(win)
+    local screenFrame = win:screen():frame()
+    win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y + screenFrame.h - win:size().h})
+  end
+end
+
 ----------------------------------------------------------------------------------------------------
 
 return Action

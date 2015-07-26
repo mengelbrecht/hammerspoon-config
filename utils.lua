@@ -1,26 +1,6 @@
 utils = {}
 utils.__index = utils
 
-function utils.positionTopLeft(win)
-  local screenFrame = win:screen():frame()
-  win:setTopLeft({x = screenFrame.x, y = screenFrame.y})
-end
-
-function utils.positionBottomLeft(win)
-  local screenFrame = win:screen():frame()
-  win:setTopLeft({x = screenFrame.x, y = screenFrame.y + screenFrame.h - win:size().h})
-end
-
-function utils.positionTopRight(win)
-  local screenFrame = win:screen():frame()
-  win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y})
-end
-
-function utils.positionBottomRight(win)
-  local screenFrame = win:screen():frame()
-  win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y + screenFrame.h - win:size().h})
-end
-
 function utils.snapAll()
   for _, win in pairs(hs.window.visibleWindows()) do hs.grid.snap(win) end
 end
