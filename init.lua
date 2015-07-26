@@ -113,9 +113,7 @@ function screenChange() Profile.activateActiveProfile() end
 hs.application.watcher.new(
   function(appName, event)
     if event == hs.application.watcher.launched then
-      local profile = Profile.activeProfile()
-      local app = hs.appfinder.appFromName(appName)
-      if profile and app then profile:activateFor(app) end
+      Profile.activateForApp(appName)
     end
   end
 ):start()

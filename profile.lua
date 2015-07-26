@@ -55,6 +55,12 @@ function Profile.activeProfile()
   return nil
 end
 
+function Profile.activateForApp(appName)
+  local profile = Profile.activeProfile()
+  local app = hs.appfinder.appFromName(appName)
+  if profile and app then profile:activateFor(app) end
+end
+
 function Profile.activateActiveProfile()
   local profile = Profile.activeProfile()
   if profile then
