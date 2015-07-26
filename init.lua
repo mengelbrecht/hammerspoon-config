@@ -19,7 +19,7 @@ hs.grid.HINTS = {
   {'Y', 'X', 'C', 'V', 'B', 'N', 'M', ','}
 }
 
-local home = Profile.new('Home', {69671680}, {
+Profile.new('Home', {69671680}, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -35,7 +35,7 @@ local home = Profile.new('Home', {69671680}, {
 
 ----------------------------------------------------------------------------------------------------
 
-local work = Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
+Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
   ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 1.0, 1.0)},
