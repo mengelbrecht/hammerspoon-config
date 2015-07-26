@@ -63,20 +63,22 @@ Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
 
 local mash = {'ctrl', 'alt'}
 
-hs.hotkey.bind(mash, 'UP', function() Action.Maximize()(hs.window.focusedWindow()) end)
-hs.hotkey.bind(mash, 'DOWN', function() Action.MoveToNextScreen()(hs.window.focusedWindow()) end)
-hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
-hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
+function focusedWin() return hs.window.focusedWindow() end
+
+hs.hotkey.bind(mash, 'UP', function() Action.Maximize()(focusedWin()) end)
+hs.hotkey.bind(mash, 'DOWN', function() Action.MoveToNextScreen()(focusedWin()) end)
+hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(focusedWin()) end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
 hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
 hs.hotkey.bind(mash, 'H', function() hs.hints.windowHints() end)
 hs.hotkey.bind(mash, 'G', function() hs.grid.show() end)
 hs.hotkey.bind(mash, '^', function() Profile.activateActiveProfile() end)
 
 local position = HotkeyModal.new('Position', mash, '1')
-position:bind({}, 'UP', function() Action.PositionBottomLeft()(hs.window.focusedWindow()) end)
-position:bind({}, 'DOWN', function() Action.PositionBottomRight()(hs.window.focusedWindow()) end)
-position:bind({}, 'LEFT', function() Action.PositionTopLeft()(hs.window.focusedWindow()) end)
-position:bind({}, 'RIGHT', function() Action.PositionTopRight()(hs.window.focusedWindow()) end)
+position:bind({}, 'UP', function() Action.PositionBottomLeft()(focusedWin()) end)
+position:bind({}, 'DOWN', function() Action.PositionBottomRight()(focusedWin()) end)
+position:bind({}, 'LEFT', function() Action.PositionTopLeft()(focusedWin()) end)
+position:bind({}, 'RIGHT', function() Action.PositionTopRight()(focusedWin()) end)
 position:bind({}, 'RETURN', function() position:exit() end)
 
 local resize = HotkeyModal.new('Resize', mash, '2')
