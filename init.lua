@@ -114,17 +114,12 @@ end
 -- Watcher
 ----------------------------------------------------------------------------------------------------
 
-function screenChange() Profile.activateActiveProfile() end
+function appEvent(appName, event) if event == hs.application.watcher.launched then Profile.activateForApp(appName) end end
+function pathEvent(files) hs.reload() end
+function screenEvent() Profile.activateActiveProfile() end
 
-hs.application.watcher.new(
-  function(appName, event)
-    if event == hs.application.watcher.launched then
-      Profile.activateForApp(appName)
-    end
-  end
-):start()
+hs.application.watcher.new(appEvent):start()
+hs.pathwatcher.new(hs.configdir, pathEvent):start()
+hs.screen.watcher.new(screenEvent):start()
 
-hs.screen.watcher.new(screenChange):start()
-hs.pathwatcher.new(hs.configdir, function(files) hs.reload() end):start()
-
-screenChange()
+screenEvent()
