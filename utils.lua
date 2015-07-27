@@ -7,6 +7,7 @@ end
 
 function utils.isFullScreen(win)
   if not win then return false end
+  if win:isFullScreen() then return true end
 
   local winFrame = win:frame()
   local screen = win:screen()
@@ -14,9 +15,8 @@ function utils.isFullScreen(win)
 
   local screenFrame = screen:fullFrame()
 
-  return win:isFullScreen() or
-         (winFrame.x == screenFrame.x and winFrame.y == screenFrame.y and
-          winFrame.w == screenFrame.w and winFrame.h == screenFrame.h)
+  return winFrame.x == screenFrame.x and winFrame.y == screenFrame.y and
+         winFrame.w == screenFrame.w and winFrame.h == screenFrame.h
 end
 
 function utils.pushToScreen(win, screen)
