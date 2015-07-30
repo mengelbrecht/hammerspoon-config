@@ -13,7 +13,6 @@ hs.hints.fontSize = 22
 
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid({6, 4})
---hs.grid.ui.fontName = "PragmataPro"
 hs.grid.HINTS = {
   {'f1', 'f2','f3', 'f4', 'f5', 'f6', 'f7', 'f8'},
   {'1', '2', '3', '4', '5', '6', '7', '8'},
@@ -71,7 +70,7 @@ hs.hotkey.bind(mash, 'LEFT', function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(fo
 hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
 hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
 hs.hotkey.bind(mash, 'H', function() hs.hints.windowHints() end)
-hs.hotkey.bind(mash, 'G', function() hs.grid.show() end)
+hs.hotkey.bind(mash, 'G', function() hs.grid.toggleShow() end)
 hs.hotkey.bind(mash, '^', function() Profile.activateActiveProfile() end)
 
 local position = HotkeyModal.new('Position', mash, '1')
