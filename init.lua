@@ -7,10 +7,6 @@ require 'profile'
 ----------------------------------------------------------------------------------------------------
 
 hs.window.animationDuration = 0.1
-
-hs.hints.fontName = "PragmataPro"
-hs.hints.fontSize = 22
-
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid({6, 4})
 hs.grid.HINTS = {
