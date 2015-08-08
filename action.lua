@@ -67,6 +67,13 @@ function Action.PositionBottomRight()
   end
 end
 
+function Action.Resize(w, h)
+  return function(win)
+    local screenFrame = win:screen():frame()
+    win:setSize({w = w * screenFrame.w, h = h * screenFrame.h})
+  end
+end
+
 ----------------------------------------------------------------------------------------------------
 
 return Action
