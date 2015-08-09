@@ -29,7 +29,7 @@ Profile.new('Home', {69671680}, {
   ["Reeder"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Safari"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["SourceTree"]    = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Terminal"]      = {Action.MoveToScreen(1), Action.PositionTopLeft(), Action.Resize(1.0, 0.5), Action.PositionBottomRight()},
+  ["Terminal"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5), Action.PositionBottomRight()},
   ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
   ["Xcode"]         = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]             = {Action.Snap()}
@@ -45,7 +45,7 @@ Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
   ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
-  ["Terminal"]          = {Action.MoveToScreen(1), Action.PositionTopLeft(), Action.Resize(1.0, 0.5), Action.PositionBottomRight()},
+  ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5), Action.PositionBottomRight()},
   ["TextMate"]          = {Action.MoveToScreen(2), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
   ["Tower"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
