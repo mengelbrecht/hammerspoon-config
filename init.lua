@@ -6,7 +6,7 @@ require 'profile'
 -- Settings
 ----------------------------------------------------------------------------------------------------
 
-hs.window.animationDuration = 0.1
+hs.window.animationDuration = 0.15
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid({6, 4})
 hs.grid.HINTS = {
