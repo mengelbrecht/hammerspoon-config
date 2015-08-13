@@ -34,7 +34,7 @@ end
 function Action.MoveToUnit(x, y, w, h)
   return function(win)
     if not utils.isFullScreen(win) then
-      win:moveToUnit({x = x, y = y, w = w, h = h}, 0):ensureIsInScreenBounds()
+      win:moveToUnit({x = x, y = y, w = w, h = h})
     end
   end
 end
@@ -71,6 +71,12 @@ function Action.Resize(w, h)
   return function(win)
     local screenFrame = win:screen():frame()
     win:setSize({w = w * screenFrame.w, h = h * screenFrame.h})
+  end
+end
+
+function Action.EnsureIsInScreenBounds()
+  return function(win)
+    hs.timer.doAfter(hs.window.animationDuration, function() win:ensureIsInScreenBounds() end)
   end
 end
 
