@@ -76,7 +76,7 @@ end
 
 function Action.EnsureIsInScreenBounds()
   return function(win)
-    hs.timer.doAfter(hs.window.animationDuration, function() win:ensureIsInScreenBounds() end)
+    win:ensureIsInScreenBounds()
   end
 end
 
