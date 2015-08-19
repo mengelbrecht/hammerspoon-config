@@ -45,7 +45,7 @@ Profile.new('Home', {69671680}, {
 
 ----------------------------------------------------------------------------------------------------
 
-Profile.new('Work', {69732352, 188898833, 188898834, 188915586}, {
+Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188915586}, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
