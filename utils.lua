@@ -39,10 +39,7 @@ end
 
 function utils.notify(message, seconds)
   local notification = hs.notify.new(nil, {title = "Hammerspoon", subTitle = message}):send()
-  hs.timer.doAfter(seconds, function()
-    notification:withdraw()
-    notification:release()
-  end)
+  hs.timer.doAfter(seconds, function() notification:withdraw() end)
 end
 
 ----------------------------------------------------------------------------------------------------
