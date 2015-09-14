@@ -57,7 +57,7 @@ end
 
 function Profile.activateForApp(appName)
   local profile = Profile.activeProfile()
-  local app = hs.appfinder.appFromName(appName)
+  local app = hs.application.find(appName)
   if profile and app then profile:activateFor(app) end
 end
 
