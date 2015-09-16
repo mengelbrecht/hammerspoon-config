@@ -34,7 +34,7 @@ end
 function Action.MoveToUnit(x, y, w, h)
   return function(win)
     if not utils.isFullScreen(win) then
-      win:moveToUnit({x = x, y = y, w = w, h = h}):ensureIsInScreenBounds()
+      win:moveToUnit(hs.geometry.rect(x, y, w, h)):ensureIsInScreenBounds()
     end
   end
 end
@@ -42,35 +42,35 @@ end
 function Action.PositionTopLeft()
   return function(win)
     local screenFrame = win:screen():frame()
-    win:setTopLeft({x = screenFrame.x, y = screenFrame.y})
+    win:setTopLeft(hs.geometry.point(screenFrame.x, screenFrame.y))
   end
 end
 
 function Action.PositionBottomLeft()
   return function(win)
     local screenFrame = win:screen():frame()
-    win:setTopLeft({x = screenFrame.x, y = screenFrame.y + screenFrame.h - win:size().h})
+    win:setTopLeft(hs.geometry.point(screenFrame.x, screenFrame.y + screenFrame.h - win:size().h))
   end
 end
 
 function Action.PositionTopRight()
   return function(win)
     local screenFrame = win:screen():frame()
-    win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y})
+    win:setTopLeft(hs.geometry.point(screenFrame.x + screenFrame.w - win:size().w, screenFrame.y))
   end
 end
 
 function Action.PositionBottomRight()
   return function(win)
     local screenFrame = win:screen():frame()
-    win:setTopLeft({x = screenFrame.x + screenFrame.w - win:size().w, y = screenFrame.y + screenFrame.h - win:size().h})
+    win:setTopLeft(hs.geometry.point(screenFrame.x + screenFrame.w - win:size().w, screenFrame.y + screenFrame.h - win:size().h))
   end
 end
 
 function Action.Resize(w, h)
   return function(win)
     local screenFrame = win:screen():frame()
-    win:setSize({w = w * screenFrame.w, h = h * screenFrame.h})
+    win:setSize(hs.geometry.size(w * screenFrame.w, h * screenFrame.h))
   end
 end
 
