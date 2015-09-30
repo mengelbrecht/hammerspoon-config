@@ -34,7 +34,7 @@ end
 function Action.MoveToUnit(x, y, w, h)
   return function(win)
     if not utils.isFullScreen(win) then
-      win:moveToUnit(hs.geometry.rect(x, y, w, h)):ensureIsInScreenBounds()
+      win:moveToUnit(hs.geometry.rect(x, y, w, h))
     end
   end
 end
