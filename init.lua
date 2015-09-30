@@ -8,7 +8,7 @@ require 'profile'
 
 hs.window.animationDuration = 0.15
 hs.grid.setMargins({0, 0})
-hs.grid.setGrid({6, 4})
+hs.grid.setGrid('6x4', nil)
 hs.grid.HINTS = {
   {'f1', 'f2','f3', 'f4', 'f5', 'f6', 'f7', 'f8'},
   {'1', '2', '3', '4', '5', '6', '7', '8'},
