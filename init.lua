@@ -105,8 +105,9 @@ local appShortcuts = {
   ['e'] = 'TextMate',
   ['f'] = 'Finder',
   ['g'] = 'Tower',
-  ['m'] = 'iTunes',
+  ['i'] = 'iTunes',
   ['p'] = 'Parallels Desktop',
+  ['m'] = 'Activity Monitor',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 }
