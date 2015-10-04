@@ -5,11 +5,17 @@ Profile.__index = Profile
 
 local profiles = {}
 
-function Profile.new(title, screens, config)
+function Profile.new(title, screens, modifiers, config, shortcuts)
   local m = setmetatable({}, Profile)
   m.title = title
   m.screens = screens
   m.config = config
+  m.shortcuts = shortcuts
+  m.active = false
+  m.hotkeys = {}
+  for key, app in pairs(shortcuts) do
+    table.insert(m.hotkeys, hs.hotkey.new(modifiers, key, function() hs.application.launchOrFocus(app) end))
+  end
   table.insert(profiles, m)
   return m
 end
@@ -19,7 +25,21 @@ function Profile:_actionsFor(appName)
   if actions then return actions else return self.config["_"] end
 end
 
-function Profile:activateFor(app)
+function Profile:_disableHotkeys()
+  for _, hotkey in pairs(self.hotkeys) do hotkey:disable() end
+end
+
+function Profile:_enableHotkeys()
+  for _, shortcut in pairs(self.hotkeys) do shortcut:enable() end
+end
+
+function Profile:_arrangeAll()
+  for _, app in pairs(hs.application.runningApplications()) do self:arrange(app) end
+end
+
+----------------------------------------------------------------------------------------------------
+
+function Profile:arrange(app)
   local actions = self:_actionsFor(app:title())
   if not actions then return end
 
@@ -35,40 +55,36 @@ function Profile:activateFor(app)
 end
 
 function Profile:isActive()
-  for _, screen in pairs(hs.screen.allScreens()) do
-    if hs.fnutils.contains(self.screens, screen:id()) then return true end
-  end
-  return false
+  return self.active
+end
+
+function Profile:isDesignated()
+  return hs.fnutils.some(hs.screen.allScreens(), function(screen) return hs.fnutils.contains(self.screens, screen:id()) end)
+end
+
+function Profile:deactivate()
+  self:_disableHotkeys()
+  self.active = false
 end
 
 function Profile:activate()
+  local activeProfile = Profile.active()
+  if activeProfile and activeProfile ~= self then activeProfile:deactivate() end
+
   utils.notify("Arranging " .. self.title, 1.5)
-  for _, app in pairs(hs.application.runningApplications()) do self:activateFor(app) end
+  if activeProfile ~= self then self:_enableHotkeys() end
+  self:_arrangeAll()
+  self.active = true
 end
 
 ----------------------------------------------------------------------------------------------------
 
-function Profile.activeProfile()
-  for _, profile in pairs(profiles) do
-    if profile:isActive() then return profile end
-  end
-  return nil
+function Profile.active()
+  return hs.fnutils.find(profiles, function(profile) return profile:isActive() end)
 end
 
-function Profile.activateForApp(appName)
-  local profile = Profile.activeProfile()
-  local app = hs.application.find(appName)
-  if profile and app then profile:activateFor(app) end
-end
-
-function Profile.activateActiveProfile()
-  local profile = Profile.activeProfile()
-  if profile then
-    profile:activate()
-  else
-    utils.notify("unknown profile, see console for screen information", 3.0)
-    for _, screen in pairs(hs.screen.allScreens()) do print("unknown screen: " .. screen:id()) end
-  end
+function Profile.designated()
+  return hs.fnutils.find(profiles, function(profile) return profile:isDesignated() end)
 end
 
 ----------------------------------------------------------------------------------------------------

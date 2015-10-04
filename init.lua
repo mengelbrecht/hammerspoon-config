@@ -4,7 +4,7 @@ require 'profile'
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
-
+local mash = {'ctrl', 'alt'}
 hs.window.animationDuration = 0.15
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid('6x4', nil)
@@ -20,7 +20,7 @@ hs.grid.HINTS = {
 -- Profiles
 ----------------------------------------------------------------------------------------------------
 
-Profile.new('Home', {69671680}, {
+Profile.new('Home', {69671680}, mash, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -32,11 +32,22 @@ Profile.new('Home', {69671680}, {
   ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
   ["Xcode"]         = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]             = {Action.Snap()}
+}, {
+  ['a'] = 'Atom',
+  ['c'] = 'Google Chrome',
+  ['e'] = 'TextMate',
+  ['f'] = 'Finder',
+  ['g'] = 'SourceTree',
+  ['i'] = 'iTunes',
+  ['m'] = 'Activity Monitor',
+  ['r'] = 'Reeder',
+  ['t'] = 'Terminal',
+  ['x'] = 'Xcode',
 })
 
 ----------------------------------------------------------------------------------------------------
 
-Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188915586}, {
+Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188915586}, mash, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
@@ -49,27 +60,7 @@ Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188
   ["Tower"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]                 = {Action.Snap()}
-})
-
-----------------------------------------------------------------------------------------------------
--- Hotkey Bindings
-----------------------------------------------------------------------------------------------------
-
-local mash = {'ctrl', 'alt'}
-
-function focusedWin() return hs.window.focusedWindow() end
-
-hs.hotkey.bind(mash, 'UP',    function() Action.Maximize()(focusedWin()) end)
-hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(focusedWin()) end)
-hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(focusedWin()) end)
-hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
-hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
-hs.hotkey.bind(mash, '1',     function() hs.hints.windowHints() end)
-hs.hotkey.bind(mash, '2',     function() hs.grid.toggleShow() end)
-hs.hotkey.bind(mash, '^',     function() Profile.activateActiveProfile() end)
-
-
-local appShortcuts = {
+}, {
   ['a'] = 'Atom',
   ['c'] = 'Google Chrome',
   ['d'] = 'Dash',
@@ -81,19 +72,47 @@ local appShortcuts = {
   ['m'] = 'Activity Monitor',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
-}
+})
 
-for shortcut, appName in pairs(appShortcuts) do
-  hs.hotkey.bind({'alt', 'cmd'}, shortcut, function() hs.application.launchOrFocus(appName) end)
-end
+----------------------------------------------------------------------------------------------------
+-- Hotkey Bindings
+----------------------------------------------------------------------------------------------------
+
+function focusedWin() return hs.window.focusedWindow() end
+
+hs.hotkey.bind(mash, 'UP',    function() Action.Maximize()(focusedWin()) end)
+hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(focusedWin()) end)
+hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(focusedWin()) end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
+hs.hotkey.bind(mash, 'SPACE', function() utils.snapAll() end)
+hs.hotkey.bind(mash, '1',     function() hs.hints.windowHints() end)
+hs.hotkey.bind(mash, '2',     function() hs.grid.toggleShow() end)
+hs.hotkey.bind(mash, '^',     function()
+  local profile = Profile.designated()
+  if profile then profile:activate() end
+end)
 
 ----------------------------------------------------------------------------------------------------
 -- Watcher
 ----------------------------------------------------------------------------------------------------
 
-function appEvent(appName, event) if event == hs.application.watcher.launched then Profile.activateForApp(appName) end end
+function appEvent(appName, event, app)
+  if event == hs.application.watcher.launched then
+    Profile.active():arrange(app)
+  end
+end
+
 function pathEvent(files) hs.reload() end
-function screenEvent() Profile.activateActiveProfile() end
+
+function screenEvent()
+  local profile = Profile.designated()
+  if not profile then
+      utils.notify("unknown profile, see console for screen information", 3.0, function() hs.toggleConsole() end)
+      for _, screen in pairs(hs.screen.allScreens()) do print("found screen: " .. screen:id()) end
+      return
+  end
+  profile:activate()
+end
 
 hs.application.watcher.new(appEvent):start()
 hs.pathwatcher.new(hs.configdir, pathEvent):start()
