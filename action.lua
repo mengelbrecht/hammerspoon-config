@@ -33,9 +33,7 @@ end
 
 function Action.MoveToUnit(x, y, w, h)
   return function(win)
-    if not utils.isFullScreen(win) then
-      win:moveToUnit(hs.geometry.rect(x, y, w, h))
-    end
+    if not utils.isFullScreen(win) then win:moveToUnit(hs.geometry.rect(x, y, w, h)) end
   end
 end
 
@@ -50,43 +48,41 @@ end
 
 function Action.PositionTopLeft()
   return function(win)
-    local screenFrame = win:screen():frame()
-    win:setTopLeft(hs.geometry.point(screenFrame.x, screenFrame.y))
+    local f = win:screen():frame()
+    win:setTopLeft(hs.geometry.point(f.x, f.y))
   end
 end
 
 function Action.PositionBottomLeft()
   return function(win)
-    local screenFrame = win:screen():frame()
-    win:setTopLeft(hs.geometry.point(screenFrame.x, screenFrame.y + screenFrame.h - win:size().h))
+    local f = win:screen():frame()
+    win:setTopLeft(hs.geometry.point(f.x, f.y + f.h - win:size().h))
   end
 end
 
 function Action.PositionTopRight()
   return function(win)
-    local screenFrame = win:screen():frame()
-    win:setTopLeft(hs.geometry.point(screenFrame.x + screenFrame.w - win:size().w, screenFrame.y))
+    local f = win:screen():frame()
+    win:setTopLeft(hs.geometry.point(f.x + f.w - win:size().w, f.y))
   end
 end
 
 function Action.PositionBottomRight()
   return function(win)
-    local screenFrame = win:screen():frame()
-    win:setTopLeft(hs.geometry.point(screenFrame.x + screenFrame.w - win:size().w, screenFrame.y + screenFrame.h - win:size().h))
+    local f = win:screen():frame()
+    win:setTopLeft(hs.geometry.point(f.x + f.w - win:size().w, f.y + f.h - win:size().h))
   end
 end
 
 function Action.Resize(w, h)
   return function(win)
-    local screenFrame = win:screen():frame()
-    win:setSize(hs.geometry.size(w * screenFrame.w, h * screenFrame.h))
+    local f = win:screen():frame()
+    win:setSize(hs.geometry.size(w * f.w, h * f.h))
   end
 end
 
 function Action.EnsureIsInScreenBounds()
-  return function(win)
-    win:ensureIsInScreenBounds()
-  end
+  return function(win) win:ensureIsInScreenBounds() end
 end
 
 ----------------------------------------------------------------------------------------------------
