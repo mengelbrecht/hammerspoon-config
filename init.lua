@@ -24,6 +24,7 @@ Profile.new('Home', {69671680}, mash, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["MacPass"]       = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Mail"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Reeder"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Safari"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -41,6 +42,7 @@ Profile.new('Home', {69671680}, mash, {
   ['i'] = 'iTunes',
   ['m'] = 'Activity Monitor',
   ['r'] = 'Reeder',
+  ['s'] = 'MacPass',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 })
@@ -52,6 +54,7 @@ Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188
   ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
   ["iTunes"]            = {Action.Close()},
+  ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
   ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
@@ -70,6 +73,7 @@ Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188
   ['i'] = 'iTunes',
   ['p'] = 'Parallels Desktop',
   ['m'] = 'Activity Monitor',
+  ['s'] = 'MacPass',
   ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 })
