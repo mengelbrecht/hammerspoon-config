@@ -1,10 +1,6 @@
 utils = {}
 utils.__index = utils
 
-function utils.snapAll()
-  for _, win in pairs(hs.window.visibleWindows()) do hs.grid.snap(win) end
-end
-
 function utils.isFullScreen(win)
   if not win then return false end
   if win:isFullScreen() then return true end
