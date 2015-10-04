@@ -39,6 +39,15 @@ function Action.MoveToUnit(x, y, w, h)
   end
 end
 
+function Action.MoveToUnitInScreenBounds(x, y, w, h)
+  return function(win)
+    if not utils.isFullScreen(win) then
+      local f = win:screen():frame()
+      win:setFrameInScreenBounds(hs.geometry.rect(f.x + x * f.x, f.y + y * f.h, w * f.w, h * f.h))
+    end
+  end
+end
+
 function Action.PositionTopLeft()
   return function(win)
     local screenFrame = win:screen():frame()
