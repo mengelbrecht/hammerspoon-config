@@ -5,7 +5,18 @@ require 'profile'
 -- Settings
 ----------------------------------------------------------------------------------------------------
 local mash = {'ctrl', 'alt'}
+
+local windowFilter = hs.window.filter.new()
+windowFilter:setDefaultFilter({allowTitles=1})
+
+local expose = hs.expose.new(windowFilter)
+hs.expose.ui.minimizedStripPosition = 'left'
+hs.expose.ui.showExtraKeys = true
+hs.expose.ui.showThumbnails = false
+hs.expose.ui.showTitles = false
+
 hs.window.animationDuration = 0.15
+
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid('6x4', nil)
 hs.grid.HINTS = {
@@ -89,7 +100,7 @@ hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(focusedWin())
 hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(focusedWin()) end)
 hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
 hs.hotkey.bind(mash, 'SPACE', function() for _, win in pairs(hs.window.visibleWindows()) do hs.grid.snap(win) end end)
-hs.hotkey.bind(mash, '1',     function() hs.hints.windowHints() end)
+hs.hotkey.bind(mash, '1',     function() expose:toggleShow() end)
 hs.hotkey.bind(mash, '2',     function() hs.grid.toggleShow() end)
 hs.hotkey.bind(mash, '^',     function()
   local profile = Profile.designated()
