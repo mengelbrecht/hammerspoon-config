@@ -31,9 +31,9 @@ function Action.MoveToPreviousScreen()
   return function(win) utils.pushToScreen(win, win:screen():previous()) end
 end
 
-function Action.MoveToUnit(x, y, w, h)
+function Action.MoveToUnit(x, y, w, h, duration)
   return function(win)
-    if not utils.isFullScreen(win) then win:moveToUnit(hs.geometry.rect(x, y, w, h)) end
+    if not utils.isFullScreen(win) then win:moveToUnit(hs.geometry.rect(x, y, w, h), duration) end
   end
 end
 
