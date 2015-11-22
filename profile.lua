@@ -11,6 +11,15 @@ function Profile.new(title, screens, modifiers, config, shortcuts)
   m.shortcuts = shortcuts
   m.active = false
   m.hotkeys = {}
+
+  m.windowFilter = hs.window.filter.new()
+    :setDefaultFilter({fullscreen=false, allowTitles=1})
+    :subscribe(hs.window.filter.windowVisible, function(win, appName, event)
+      local app = hs.application.find(appName)
+      if app then m:arrange(app) end
+    end)
+    :pause()
+
   for key, app in pairs(shortcuts) do
     table.insert(m.hotkeys, hs.hotkey.new(modifiers, key, function() hs.application.launchOrFocus(app) end))
   end
@@ -39,17 +48,10 @@ end
 
 function Profile:arrange(app)
   local actions = self:_actionsFor(app:title())
-  if not actions then return end
+  local mainWindow = app:mainWindow()
+  if not actions or not mainWindow then return end
 
-  for _, action in pairs(actions) do
-    local mainWindow = app:mainWindow()
-    for _, win in pairs(app:allWindows()) do
-      if win:isStandard() then action(win) end
-      if mainWindow and win:id() == mainWindow:id() then mainWindow = nil end
-    end
-
-    if mainWindow then action(mainWindow) end
-  end
+  for _, action in pairs(actions) do action(mainWindow) end
 end
 
 function Profile:isActive()
@@ -62,6 +64,7 @@ end
 
 function Profile:deactivate()
   self:_disableHotkeys()
+  self.windowFilter:pause()
   self.active = false
 end
 
@@ -69,7 +72,10 @@ function Profile:activate()
   local activeProfile = Profile.active()
   if activeProfile and activeProfile ~= self then activeProfile:deactivate() end
 
-  if activeProfile ~= self then self:_enableHotkeys() end
+  if activeProfile ~= self then
+    self:_enableHotkeys()
+    self.windowFilter:resume()
+  end
   self:_arrangeAll()
   self.active = true
 end

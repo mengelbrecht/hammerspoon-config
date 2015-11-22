@@ -111,12 +111,6 @@ end)
 -- Watcher
 ----------------------------------------------------------------------------------------------------
 
-function appEvent(appName, event, app)
-  if event == hs.application.watcher.launched then
-    Profile.active():arrange(app)
-  end
-end
-
 function screenEvent()
   local profile = Profile.designated()
   if not profile then
@@ -127,7 +121,6 @@ function screenEvent()
   profile:activate()
 end
 
-hs.application.watcher.new(appEvent):start()
 hs.screen.watcher.new(screenEvent):start()
 
 screenEvent()
