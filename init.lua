@@ -117,8 +117,6 @@ function appEvent(appName, event, app)
   end
 end
 
-function pathEvent(files) hs.reload() end
-
 function screenEvent()
   local profile = Profile.designated()
   if not profile then
@@ -130,7 +128,6 @@ function screenEvent()
 end
 
 hs.application.watcher.new(appEvent):start()
-hs.pathwatcher.new(hs.configdir, pathEvent):start()
 hs.screen.watcher.new(screenEvent):start()
 
 screenEvent()
