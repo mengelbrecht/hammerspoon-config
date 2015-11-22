@@ -1,5 +1,3 @@
-require 'utils'
-
 Profile = {}
 Profile.__index = Profile
 
@@ -71,7 +69,6 @@ function Profile:activate()
   local activeProfile = Profile.active()
   if activeProfile and activeProfile ~= self then activeProfile:deactivate() end
 
-  utils.notify("Arranging " .. self.title, 1.5)
   if activeProfile ~= self then self:_enableHotkeys() end
   self:_arrangeAll()
   self.active = true
