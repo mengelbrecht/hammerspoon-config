@@ -51,7 +51,7 @@ end
 function Profile:arrange(app)
   local actions = self:_actionsFor(app:title())
   local mainWindow = app:mainWindow()
-  if not actions or not mainWindow then return end
+  if not actions or not mainWindow or not mainWindow:isStandard() then return end
 
   for _, action in pairs(actions) do action(mainWindow) end
 end

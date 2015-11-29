@@ -16,7 +16,7 @@ function Action.FullScreen()
 end
 
 function Action.Snap()
-  return function(win) if not utils.isFullScreen(win) then hs.grid.snap(win) end end
+  return function(win) hs.grid.snap(win) end
 end
 
 function Action.MoveToScreen(screenIndex)
@@ -33,16 +33,14 @@ end
 
 function Action.MoveToUnit(x, y, w, h, duration)
   return function(win)
-    if not utils.isFullScreen(win) then win:moveToUnit(hs.geometry.rect(x, y, w, h), duration) end
+    win:moveToUnit(hs.geometry.rect(x, y, w, h), duration)
   end
 end
 
 function Action.MoveToUnitInScreenBounds(x, y, w, h)
   return function(win)
-    if not utils.isFullScreen(win) then
-      local f = win:screen():frame()
-      win:setFrameInScreenBounds(hs.geometry.rect(f.x + x * f.x, f.y + y * f.h, w * f.w, h * f.h))
-    end
+    local f = win:screen():frame()
+    win:setFrameInScreenBounds(hs.geometry.rect(f.x + x * f.x, f.y + y * f.h, w * f.w, h * f.h))
   end
 end
 
