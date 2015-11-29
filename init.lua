@@ -6,10 +6,7 @@ require 'profile'
 ----------------------------------------------------------------------------------------------------
 local mash = {'ctrl', 'alt'}
 
-local windowFilter = hs.window.filter.new()
-windowFilter:setDefaultFilter({allowTitles=1})
-
-local expose = hs.expose.new(windowFilter)
+local expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}))
 hs.expose.ui.minimizedStripPosition = 'left'
 hs.expose.ui.showExtraKeys = true
 hs.expose.ui.showThumbnails = false
