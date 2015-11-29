@@ -102,7 +102,7 @@ hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(f
 hs.hotkey.bind(mash, 'SPACE', function() for _, win in pairs(hs.window.visibleWindows()) do hs.grid.snap(win) end end)
 hs.hotkey.bind(mash, '1',     function() expose:toggleShow() end)
 hs.hotkey.bind(mash, '2',     function() hs.grid.toggleShow() end)
-hs.hotkey.bind(mash, '^',     function()
+hs.hotkey.bind(mash, '3',     function()
   local profile = Profile.designated()
   if profile then profile:activate() end
 end)
