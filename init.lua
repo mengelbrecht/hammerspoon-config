@@ -59,7 +59,7 @@ Profile.new('Home', {69671680}, mash, {
 
 Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188915586, 188915587}, mash, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
-  ["Dash"]              = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)},
+  ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
   ["iTunes"]            = {Action.Close()},
   ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -67,7 +67,7 @@ Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188
   ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
   ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["TextMate"]          = {Action.MoveToScreen(2), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
+  ["TextMate"]          = {Action.MoveToScreen(2), Action.Maximize()},
   ["Tower"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]                 = {Action.Snap()}
