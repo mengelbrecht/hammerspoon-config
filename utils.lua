@@ -33,11 +33,6 @@ function utils.pushToScreen(win, screen)
   if fullscreenChange then win:toggleFullScreen() end
 end
 
-function utils.notify(message, seconds, fn)
-  local notification = hs.notify.new(fn, {title = "Hammerspoon", subTitle = message}):send()
-  hs.timer.doAfter(seconds, function() notification:withdraw() end)
-end
-
 ----------------------------------------------------------------------------------------------------
 
 return utils

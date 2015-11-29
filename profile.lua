@@ -2,6 +2,8 @@ Profile = {}
 Profile.__index = Profile
 
 local profiles = {}
+local watcher = nil
+local showConsoleTag = "showconsole"
 
 function Profile.new(title, screens, modifiers, config, shortcuts)
   local m = setmetatable({}, Profile)
@@ -88,6 +90,30 @@ end
 
 function Profile.designated()
   return hs.fnutils.find(profiles, function(profile) return profile:isDesignated() end)
+end
+
+function Profile.detectAndChange()
+  local profile = Profile.designated()
+  if not profile then
+      hs.notify.show("Hammerspoon", "", "unknown profile, see console for screen information", showConsoleTag)
+
+      for _, screen in pairs(hs.screen.allScreens()) do print("found screen: " .. screen:id()) end
+      return
+  end
+  profile:activate()
+end
+
+function Profile.watch()
+  if not watcher then
+    hs.notify.register(showConsoleTag, function() hs.toggleConsole() end)
+    watcher = hs.screen.watcher.new(Profile.detectAndChange)
+  end
+  watcher:start()
+  Profile.detectAndChange() -- initial detection
+end
+
+function Profile.unwatch()
+  if watcher then watcher:stop() end
 end
 
 ----------------------------------------------------------------------------------------------------

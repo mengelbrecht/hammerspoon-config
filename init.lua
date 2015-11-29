@@ -86,6 +86,8 @@ Profile.new('Work', {2077750397, 188898833, 188898834, 188898835, 188898836, 188
   ['x'] = 'Xcode',
 })
 
+Profile.watch()
+
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
@@ -103,21 +105,3 @@ hs.hotkey.bind(mash, '3',     function()
   local profile = Profile.designated()
   if profile then profile:activate() end
 end)
-
-----------------------------------------------------------------------------------------------------
--- Watcher
-----------------------------------------------------------------------------------------------------
-
-function screenEvent()
-  local profile = Profile.designated()
-  if not profile then
-      utils.notify("unknown profile, see console for screen information", 3.0, function() hs.toggleConsole() end)
-      for _, screen in pairs(hs.screen.allScreens()) do print("found screen: " .. screen:id()) end
-      return
-  end
-  profile:activate()
-end
-
-hs.screen.watcher.new(screenEvent):start()
-
-screenEvent()
