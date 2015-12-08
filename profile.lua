@@ -113,7 +113,12 @@ function Profile.watch()
 end
 
 function Profile.unwatch()
-  if watcher then watcher:stop() end
+  if watcher then
+    watcher:stop()
+    hs.notify.unregister(showConsoleTag)
+  end
+  local profile = Profile.active()
+  if profile then profile:deactivate() end
 end
 
 ----------------------------------------------------------------------------------------------------
