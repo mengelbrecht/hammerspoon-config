@@ -61,6 +61,7 @@ Profile.new('Work', 'singularity', mash, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
+  ["iTerm2"]            = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
   ["iTunes"]            = {Action.Close()},
   ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
@@ -82,7 +83,7 @@ Profile.new('Work', 'singularity', mash, {
   ['p'] = 'Parallels Desktop',
   ['m'] = 'Activity Monitor',
   ['s'] = 'MacPass',
-  ['t'] = 'Terminal',
+  ['t'] = 'iTerm',
   ['x'] = 'Xcode',
 })
 
