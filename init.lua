@@ -31,6 +31,7 @@ hs.grid.HINTS = {
 Profile.new('Home', 'eventhorizon', mash, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
+  ["iTerm2"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
   ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["MacPass"]       = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["Mail"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
@@ -51,7 +52,7 @@ Profile.new('Home', 'eventhorizon', mash, {
   ['m'] = 'Activity Monitor',
   ['r'] = 'Reeder',
   ['s'] = 'MacPass',
-  ['t'] = 'Terminal',
+  ['t'] = 'iTerm',
   ['x'] = 'Xcode',
 })
 
