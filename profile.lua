@@ -2,7 +2,6 @@ Profile = {}
 Profile.__index = Profile
 
 local profiles = {}
-local watcher = nil
 
 function Profile.new(title, hostname, modifiers, config, shortcuts)
   local m = setmetatable({}, Profile)
@@ -101,16 +100,10 @@ function Profile.detectAndChange()
 end
 
 function Profile.watch()
-  if not watcher then watcher = hs.screen.watcher.new(Profile.detectAndChange) end
-  watcher:start()
   Profile.detectAndChange() -- initial detection
 end
 
 function Profile.unwatch()
-  if watcher then
-    watcher:stop()
-    hs.notify.unregister(showConsoleTag)
-  end
   local profile = Profile.active()
   if profile then profile:deactivate() end
 end
