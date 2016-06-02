@@ -63,7 +63,7 @@ Profile.new('Work', 'singularity', mash, {
   ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
   ["iTerm2"]            = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["iTunes"]            = {Action.Close()},
+  ["iTunes"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["MacVim"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
