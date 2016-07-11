@@ -89,11 +89,9 @@ Profile.watch()
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
-function focusedWin() return hs.window.focusedWindow() end
-
-hs.hotkey.bind(mash, 'UP',    function() Action.Maximize()(focusedWin()) end)
-hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(focusedWin()) end)
-hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(focusedWin()) end)
-hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(focusedWin()) end)
+hs.hotkey.bind(mash, 'UP',    function() Action.Maximize()(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'SPACE', function() Profile.detectAndChange() end)
 hs.hotkey.bind(mash, '1',     function() hs.grid.toggleShow() end)
