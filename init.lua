@@ -46,7 +46,7 @@ Profile.new('eventhorizon', mash, {
   ['m'] = 'Activity Monitor',
   ['r'] = 'Reeder',
   ['s'] = 'MacPass',
-  ['t'] = 'iTerm',
+  ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 })
 
@@ -61,6 +61,7 @@ Profile.new('singularity', mash, {
   ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["MacVim"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
+  ["Reeder"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
   ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
   ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
@@ -72,14 +73,15 @@ Profile.new('singularity', mash, {
   ['a'] = 'Atom',
   ['c'] = 'Google Chrome',
   ['d'] = 'Dash',
-  ['e'] = 'TextMate',
+  ['e'] = 'MacVim',
   ['f'] = 'Finder',
   ['g'] = 'Tower',
   ['i'] = 'iTunes',
-  ['p'] = 'Parallels Desktop',
   ['m'] = 'Activity Monitor',
+  ['p'] = 'Parallels Desktop',
+  ['r'] = 'Reeder',
   ['s'] = 'MacPass',
-  ['t'] = 'iTerm',
+  ['t'] = 'Terminal',
   ['x'] = 'Xcode',
 })
 
