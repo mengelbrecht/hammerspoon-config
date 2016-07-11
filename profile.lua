@@ -3,9 +3,8 @@ Profile.__index = Profile
 
 local profiles = {}
 
-function Profile.new(title, hostname, modifiers, config, shortcuts)
+function Profile.new(hostname, modifiers, config, shortcuts)
   local m = setmetatable({}, Profile)
-  m.title = title
   m.hostname = hostname
   m.config = config
   m.shortcuts = shortcuts

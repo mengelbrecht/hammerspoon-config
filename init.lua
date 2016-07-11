@@ -22,7 +22,7 @@ hs.grid.HINTS = {
 -- Profiles
 ----------------------------------------------------------------------------------------------------
 
-Profile.new('Home', 'eventhorizon', mash, {
+Profile.new('eventhorizon', mash, {
   ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
   ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
   ["iTerm2"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
@@ -52,7 +52,7 @@ Profile.new('Home', 'eventhorizon', mash, {
 
 ----------------------------------------------------------------------------------------------------
 
-Profile.new('Work', 'singularity', mash, {
+Profile.new('singularity', mash, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
