@@ -15,6 +15,16 @@ function Action.FullScreen()
   return function(win) win:setFullScreen(true) end
 end
 
+function Action.Grid(x, y, w, h, screenIndex)
+  return function(win)
+    local gridSize = hs.grid.getGrid()
+    local cell = hs.geometry.rect(gridSize.w * x, gridSize.h * y, gridSize.w * w, gridSize.h * h)
+    local screen = nil
+    if screenIndex then screen = hs.screen.allScreens()[screenIndex] end
+    hs.grid.set(win, cell, screen)
+  end
+end
+
 function Action.Snap()
   return function(win) hs.grid.snap(win) end
 end
@@ -81,6 +91,10 @@ end
 
 function Action.EnsureIsInScreenBounds()
   return function(win) win:ensureIsInScreenBounds() end
+end
+
+function Action.DoAfter(secs, fn)
+  return function(win) hs.timer.doAfter(secs, function() fn(win) end) end
 end
 
 ----------------------------------------------------------------------------------------------------
