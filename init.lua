@@ -7,6 +7,7 @@ require 'profile'
 local mash = {'ctrl', 'alt'}
 
 hs.window.animationDuration = 0.15
+local animationDelay = hs.window.animationDuration + 0.06
 
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid('6x4', nil)
@@ -23,18 +24,18 @@ hs.grid.HINTS = {
 ----------------------------------------------------------------------------------------------------
 
 Profile.new('eventhorizon', mash, {
-  ["Atom"]          = {Action.MoveToScreen(1), Action.Maximize()},
-  ["Google Chrome"] = {Action.MoveToScreen(2), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["iTerm2"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["iTunes"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["MacPass"]       = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Mail"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Reeder"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Safari"]        = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["SourceTree"]    = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["Terminal"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["TextMate"]      = {Action.MoveToScreen(1), Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)},
-  ["Xcode"]         = {Action.MoveToScreen(1), Action.Maximize()},
+  ["Atom"]          = {Action.Grid(0, 0, 1, 1, 1)},
+  ["Google Chrome"] = {Action.Grid(0, 0, 2/3, 1, 2)},
+  ["iTerm2"]        = {Action.Grid(0, 1/2, 1, 1/2, 1)},
+  ["iTunes"]        = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["MacPass"]       = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["Mail"]          = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["Reeder"]        = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["Safari"]        = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["SourceTree"]    = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["Terminal"]      = {Action.Grid(0, 1/2, 1, 1/2, 1), Action.DoAfter(animationDelay, Action.PositionBottomRight())},
+  ["TextMate"]      = {Action.Grid(1/2, 0, 1/2, 1, 1)},
+  ["Xcode"]         = {Action.Grid(0, 0, 1, 1, 1)},
   ["_"]             = {Action.Snap()}
 }, {
   ['a'] = 'Atom',
@@ -52,28 +53,29 @@ Profile.new('eventhorizon', mash, {
 
 ----------------------------------------------------------------------------------------------------
 
+
 Profile.new('singularity', mash, {
-  ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
-  ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
-  ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
-  ["iTerm2"]            = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["iTunes"]            = {Action.MoveToScreen(2), Action.Maximize()},
-  ["MacPass"]           = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.0, 0.7, 1.0)},
-  ["MacVim"]            = {Action.MoveToScreen(2), Action.Maximize()},
+  ["Atom"]              = {Action.Grid(0, 0, 1, 1, 1)},
+  ["Dash"]              = {Action.Grid(0, 0, 1, 1, 2)},
+  ["Google Chrome"]     = {Action.Grid(0, 0, 1, 1, 2)},
+  ["iTerm2"]            = {Action.Grid(0, 1/2, 1, 1, 1)},
+  ["iTunes"]            = {Action.Grid(0, 0, 1, 1, 2)},
+  ["MacPass"]           = {Action.Grid(0, 0, 2/3, 1, 1)},
+  ["MacVim"]            = {Action.Grid(0, 0, 1, 1, 2)},
   ["Parallels Desktop"] = {Action.MoveToScreen(2), Action.FullScreen()},
-  ["Reeder"]            = {Action.MoveToScreen(2), Action.Maximize()},
-  ["Safari"]            = {Action.MoveToScreen(2), Action.Maximize()},
-  ["SourceTree"]        = {Action.MoveToScreen(1), Action.Maximize()},
-  ["Terminal"]          = {Action.MoveToScreen(1), Action.MoveToUnit(0.0, 0.5, 1.0, 0.5, 0), Action.PositionBottomRight()},
-  ["TextMate"]          = {Action.MoveToScreen(2), Action.Maximize()},
-  ["Tower"]             = {Action.MoveToScreen(2), Action.Maximize()},
-  ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
+  ["Reeder"]            = {Action.Grid(0, 0, 1, 1, 2)},
+  ["Safari"]            = {Action.Grid(0, 0, 1, 1, 2)},
+  ["SourceTree"]        = {Action.Grid(0, 0, 1, 1, 1)},
+  ["Sublime Text"]      = {Action.Grid(0, 0, 1, 1, 1)},
+  ["Terminal"]          = {Action.Grid(0, 1/2, 1, 1/2, 1), Action.DoAfter(animationDelay, Action.PositionBottomRight())},
+  ["TextMate"]          = {Action.Grid(0, 0, 1, 1, 2)},
+  ["Tower"]             = {Action.Grid(0, 0, 1, 1, 2)},
+  ["Xcode"]             = {Action.Grid(0, 0, 1, 1, 1)},
   ["_"]                 = {Action.Snap()}
 }, {
-  ['a'] = 'Atom',
-  ['c'] = 'Google Chrome',
+  ['b'] = 'Safari',
   ['d'] = 'Dash',
-  ['e'] = 'MacVim',
+  ['e'] = 'Sublime Text',
   ['f'] = 'Finder',
   ['g'] = 'Tower',
   ['i'] = 'iTunes',
@@ -81,7 +83,7 @@ Profile.new('singularity', mash, {
   ['p'] = 'Parallels Desktop',
   ['r'] = 'Reeder',
   ['s'] = 'MacPass',
-  ['t'] = 'Terminal',
+  ['t'] = 'iTerm',
   ['x'] = 'Xcode',
 })
 
@@ -91,9 +93,9 @@ Profile.watch()
 -- Hotkey Bindings
 ----------------------------------------------------------------------------------------------------
 
-hs.hotkey.bind(mash, 'UP',    function() Action.Maximize()(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'UP',    function() Action.Grid(0, 0, 1, 1)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(hs.window.focusedWindow()) end)
-hs.hotkey.bind(mash, 'LEFT',  function() Action.MoveToUnit(0.0, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
-hs.hotkey.bind(mash, 'RIGHT', function() Action.MoveToUnit(0.5, 0.0, 0.5, 1.0)(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'LEFT',  function() Action.Grid(0, 0, 1/2, 1)(hs.window.focusedWindow()) end)
+hs.hotkey.bind(mash, 'RIGHT', function() Action.Grid(1/2, 0, 1/2, 1)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'SPACE', function() Profile.detectAndChange() end)
 hs.hotkey.bind(mash, '1',     function() hs.grid.toggleShow() end)
