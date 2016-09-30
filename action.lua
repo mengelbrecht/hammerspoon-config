@@ -17,6 +17,7 @@ end
 
 function Action.Grid(x, y, w, h, screenIndex)
   return function(win)
+    if win:isFullScreen() then return end
     local gridSize = hs.grid.getGrid()
     local cell = hs.geometry.rect(gridSize.w * x, gridSize.h * y, gridSize.w * w, gridSize.h * h)
     local screen = nil
@@ -26,7 +27,7 @@ function Action.Grid(x, y, w, h, screenIndex)
 end
 
 function Action.Snap()
-  return function(win) hs.grid.snap(win) end
+  return function(win) if not win:isFullScreen() then hs.grid.snap(win) end end
 end
 
 function Action.MoveToScreen(screenIndex)
