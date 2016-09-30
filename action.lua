@@ -11,8 +11,14 @@ function Action.Maximize()
   return function(win) win:maximize() end
 end
 
-function Action.FullScreen()
-  return function(win) win:setFullScreen(true) end
+function Action.FullScreen(screenIndex)
+  return function(win)
+    local screen = hs.screen.allScreens()[screenIndex]
+    if not win:isFullScreen() then
+      if win:screen() ~= screen then win:moveToScreen(screen) end
+      win:setFullScreen(true)
+    end
+  end
 end
 
 function Action.Grid(x, y, w, h, screenIndex)
