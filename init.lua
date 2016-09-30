@@ -9,6 +9,19 @@ local mash = {'ctrl', 'alt'}
 hs.window.animationDuration = 0.15
 local animationDelay = hs.window.animationDuration + 0.06
 
+expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),{
+  backgroundColor = {0.03, 0.03, 0.03, 0.75},
+  closeModeBackgroundColor = {0.7, 0.1, 0.1, 0.75},
+  highlightColor = {0.6, 0.3, 0.0, 0.75},
+  minimizeModeBackgroundColor = {0.1, 0.2, 0.3, 0.75},
+  nonVisibleStripBackgroundColor = {0.03, 0.1, 0.15, 0.75},
+  nonVisibleStripPosition = 'left',
+  otherSpacesStripBackgroundColor = {0.1, 0.1, 0.1, 0.75},
+  otherSpacesStripWidth = 0.15,
+  showThumbnails = false,
+  showTitles = false
+})
+
 hs.grid.setMargins({0, 0})
 hs.grid.setGrid('6x4', nil)
 hs.grid.HINTS = {
@@ -98,4 +111,5 @@ hs.hotkey.bind(mash, 'DOWN',  function() Action.MoveToNextScreen()(hs.window.foc
 hs.hotkey.bind(mash, 'LEFT',  function() Action.Grid(0, 0, 1/2, 1)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'RIGHT', function() Action.Grid(1/2, 0, 1/2, 1)(hs.window.focusedWindow()) end)
 hs.hotkey.bind(mash, 'SPACE', function() Profile.detectAndChange() end)
-hs.hotkey.bind(mash, '1',     function() hs.grid.toggleShow() end)
+hs.hotkey.bind(mash, '1',     function() expose:toggleShow() end)
+hs.hotkey.bind(mash, '2',     function() hs.grid.toggleShow() end)
