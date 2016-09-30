@@ -88,7 +88,7 @@ Profile.new('singularity', mash, {
 }, {
   ['b'] = 'Safari',
   ['d'] = 'Dash',
-  ['e'] = 'Sublime Text',
+  ['e'] = 'MacVim',
   ['f'] = 'Finder',
   ['g'] = 'Tower',
   ['i'] = 'iTunes',
