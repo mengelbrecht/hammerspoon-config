@@ -70,6 +70,7 @@ Profile.new('eventhorizon', mash, {
 Profile.new('singularity', mash, {
   ["Atom"]              = {Action.MoveToScreen(1), Action.Maximize()},
   ["Dash"]              = {Action.MoveToScreen(2), Action.Maximize()},
+  ["Firefox"]           = {Action.MoveToScreen(2), Action.Maximize()},
   ["Google Chrome"]     = {Action.MoveToScreen(2), Action.Maximize()},
   ["iTerm2"]            = {Action.MoveToScreen(1), Action.Maximize()},
   ["iTunes"]            = {Action.MoveToScreen(2), Action.Maximize()},
@@ -85,7 +86,7 @@ Profile.new('singularity', mash, {
   ["Xcode"]             = {Action.MoveToScreen(1), Action.Maximize()},
   ["_"]                 = {Action.Snap()}
 }, {
-  ['b'] = 'Safari',
+  ['b'] = 'Firefox',
   ['d'] = 'Dash',
   ['e'] = 'MacVim',
   ['f'] = 'Finder',
