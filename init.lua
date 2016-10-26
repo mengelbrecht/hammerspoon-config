@@ -10,16 +10,16 @@ hs.window.animationDuration = 0.15
 local animationDelay = hs.window.animationDuration + 0.06
 
 expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),{
-  backgroundColor = {0.03, 0.03, 0.03, 0.75},
-  closeModeBackgroundColor = {0.7, 0.1, 0.1, 0.75},
-  highlightColor = {0.6, 0.3, 0.0, 0.75},
-  minimizeModeBackgroundColor = {0.1, 0.2, 0.3, 0.75},
-  nonVisibleStripBackgroundColor = {0.03, 0.1, 0.15, 0.75},
-  nonVisibleStripPosition = 'left',
+  backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
+  closeModeBackgroundColor        = {0.7, 0.1, 0.1, 0.75},
+  highlightColor                  = {0.6, 0.3, 0.0, 0.75},
+  minimizeModeBackgroundColor     = {0.1, 0.2, 0.3, 0.75},
+  nonVisibleStripBackgroundColor  = {0.03, 0.1, 0.15, 0.75},
+  nonVisibleStripPosition         = 'left',
   otherSpacesStripBackgroundColor = {0.1, 0.1, 0.1, 0.75},
-  otherSpacesStripWidth = 0.15,
-  showThumbnails = false,
-  showTitles = false
+  otherSpacesStripWidth           = 0.15,
+  showThumbnails                  = false,
+  showTitles                      = false
 })
 
 hs.grid.setMargins({0, 0})
