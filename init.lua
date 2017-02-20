@@ -95,6 +95,10 @@ windowLayout = {
     win:moveToScreen(screenEast()):maximize()
   end),
 
+  ['com.google.Chrome'] = (function(win)
+    win:moveToScreen(screenEast()):maximize()
+  end),
+
   ['com.googlecode.iterm2'] = (function(win)
     win:moveToScreen(hs.screen.primaryScreen()):maximize()
   end),
