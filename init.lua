@@ -181,8 +181,8 @@ function key(modifiers, k)
   return function() hs.eventtap.keyStroke(modifiers, k, 0) end
 end
 
-function app(name)
-  return function() hs.application.launchOrFocus(name) end
+function app(bundleID)
+  return function() hs.application.launchOrFocusByBundleID(bundleID) end
 end
 
 function mouseMove(offset)
@@ -288,18 +288,18 @@ hs.hotkey.bind({'shift'}, 'delete', key({}, 'forwarddelete'), nil, key({}, 'forw
 -- └────────┴──────┴────────┴───────────────────────────────────┴────────┴──────┴────────┘
 
 createMomentaryLayer(hyper, {
-  {k = 'a', f = app('Activity Monitor')},
-  {k = 'b', f = app('Safari Technology Preview')},
-  {k = 'd', f = app('Dash')},
-  {k = 'f', f = app('Finder')},
-  {k = 'g', f = app('Tower')},
-  {k = 'm', f = app('iTunes')},
-  {k = 'p', f = app('Parallels Desktop')},
-  {k = 'r', f = app('Reeder')},
-  {k = 's', f = app('MacPass')},
-  {k = 't', f = app('iTerm')},
-  {k = 'v', f = app('MacVim')},
-  {k = 'x', f = app('IntelliJ Idea')},
+  {k = 'a', f = app('com.apple.ActivityMonitor')},
+  {k = 'b', f = app('com.google.Chrome')},
+  {k = 'd', f = app('com.kapeli.dash')},
+  {k = 'f', f = app('com.apple.Finder')},
+  {k = 'g', f = app('com.fournova.Tower2')},
+  {k = 'm', f = app('com.apple.iTunes')},
+  {k = 'p', f = app('com.parallels.desktop.console')},
+  {k = 'r', f = app('com.reederapp.rkit2.mac')},
+  {k = 's', f = app('com.hicknhacksoftware.MacPass')},
+  {k = 't', f = app('com.googlecode.iterm2')},
+  {k = 'v', f = app('org.vim.MacVim')},
+  {k = 'x', f = app('com.jetbrains.intellij')},
 
   {k = 'n',      f = key({}, 'left')},
   {k = 'u',      f = key({}, 'up')},
