@@ -74,13 +74,17 @@ usbWatcher:start()
 -- Window Layout
 ----------------------------------------------------------------------------------------------------
 
+function primaryScreen()
+  return hs.screen.primaryScreen()
+end
+
 function screenEast()
   return hs.screen.primaryScreen():toEast() or hs.screen.primaryScreen()
 end
 
 windowLayout = {
   ['com.googlecode.iterm2'] = (function(win)
-    win:moveToScreen(hs.screen.primaryScreen()):maximize()
+    win:moveToScreen(screenEast()):maximize()
   end),
 
   ['com.kapeli.dash'] = (function(win)
@@ -100,10 +104,14 @@ windowLayout = {
   end),
 
   ['com.googlecode.iterm2'] = (function(win)
-    win:moveToScreen(hs.screen.primaryScreen()):maximize()
+    win:moveToScreen(screenEast()):maximize()
   end),
 
   ['com.apple.iTunes'] = (function(win)
+    win:moveToScreen(screenEast()):maximize()
+  end),
+
+  ['com.agilebits.onepassword-osx'] = (function(win)
     win:moveToScreen(screenEast()):maximize()
   end),
 
@@ -112,10 +120,14 @@ windowLayout = {
   end),
 
   ['org.vim.MacVim'] = (function(win)
-    win:moveToScreen(hs.screen.primaryScreen()):maximize()
+    win:moveToScreen(primaryScreen()):maximize()
   end),
 
   ['com.parallels.desktop.console'] = (function(win)
+    win:moveToScreen(screenEast()):maximize()
+  end),
+
+  ['com.vmware.fusion'] = (function(win)
     win:moveToScreen(screenEast()):maximize()
   end),
 
@@ -128,7 +140,7 @@ windowLayout = {
   end),
 
   ['com.apple.dt.Xcode'] = (function(win)
-    win:moveToScreen(hs.screen.primaryScreen()):maximize()
+    win:moveToScreen(primaryScreen()):maximize()
   end),
 
   ['_'] = (function(win)
@@ -137,7 +149,7 @@ windowLayout = {
 }
 
 function canLayoutWindow(win)
-  return win:isStandard()
+  return win:isStandard() and not win:isFullScreen()
 end
 
 function handleWindowLayout(win)
@@ -289,14 +301,15 @@ hs.hotkey.bind({'shift'}, 'delete', key({}, 'forwarddelete'), nil, key({}, 'forw
 
 createMomentaryLayer(hyper, {
   {k = 'a', f = app('com.apple.ActivityMonitor')},
-  {k = 'b', f = app('com.google.Chrome')},
+  {k = 'b', f = app('com.apple.SafariTechnologyPreview')},
+  {k = 'c', f = app('com.google.Chrome')},
   {k = 'd', f = app('com.kapeli.dash')},
   {k = 'f', f = app('com.apple.Finder')},
   {k = 'g', f = app('com.fournova.Tower2')},
   {k = 'm', f = app('com.apple.iTunes')},
-  {k = 'p', f = app('com.parallels.desktop.console')},
+  {k = 'p', f = app('com.vmware.fusion')},
   {k = 'r', f = app('com.reederapp.rkit2.mac')},
-  {k = 's', f = app('com.hicknhacksoftware.MacPass')},
+  {k = 's', f = app('com.agilebits.onepassword-osx')},
   {k = 't', f = app('com.googlecode.iterm2')},
   {k = 'v', f = app('org.vim.MacVim')},
   {k = 'x', f = app('com.jetbrains.intellij')},
