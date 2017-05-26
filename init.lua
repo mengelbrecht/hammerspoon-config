@@ -103,10 +103,6 @@ windowLayout = {
     win:moveToScreen(screenEast()):maximize()
   end),
 
-  ['com.googlecode.iterm2'] = (function(win)
-    win:moveToScreen(screenEast()):maximize()
-  end),
-
   ['com.apple.iTunes'] = (function(win)
     win:moveToScreen(screenEast()):maximize()
   end),
