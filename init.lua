@@ -168,6 +168,10 @@ function key(modifiers, k)
   return function() hs.eventtap.keyStroke(modifiers, k, 0) end
 end
 
+function appByName(name)
+  return function() hs.application.launchOrFocus(name) end
+end
+
 function app(bundleID)
   return function() hs.application.launchOrFocusByBundleID(bundleID) end
 end
@@ -285,7 +289,7 @@ createMomentaryLayer(hyper, {
   {k = 'p', f = app('com.vmware.fusion')},
   {k = 'r', f = app('com.reederapp.rkit2.mac')},
   {k = 's', f = app('com.agilebits.onepassword-osx')},
-  {k = 't', f = app('com.googlecode.iterm2')},
+  {k = 't', f = appByName('Alacritty')},
   {k = 'v', f = app('org.vim.MacVim')},
   {k = 'x', f = app('com.jetbrains.intellij')},
 
