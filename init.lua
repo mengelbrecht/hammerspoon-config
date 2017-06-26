@@ -113,6 +113,11 @@ windowLayout = {
     win:moveToScreen(primaryScreen()):maximize()
   end),
 
+  ['Alacritty'] = (function(win)
+    win:moveToScreen(screenEast()):maximize()
+  end),
+
+
   ['_'] = (function(win)
     if not win:isFullScreen() then hs.grid.snap(win) end
   end),
