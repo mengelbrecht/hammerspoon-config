@@ -302,7 +302,7 @@ createMomentaryLayer(hyper, {
   {k = 'space',  f = function() expose:toggleShow() end},
   {k = '2',      f = function() hs.grid.toggleShow() end},
   {k = 'tab',    f = function() switcher:next() end},
-  {k = '§',      f = function() switcher:previous() end},
+  {k = '`',      f = function() switcher:previous() end},
 })
 
 createMomentaryLayer(meh, {
