@@ -124,7 +124,7 @@ end
 
 function handleWindowLayout(win)
   if not canLayoutWindow(win) then return end
-  local layout = windowLayout[win:application():bundleID()] or windowLayout['_']
+  local layout = windowLayout[win:application():bundleID()] or windowLayout[win:application():name()] or windowLayout['_']
   layout(win)
 end
 
