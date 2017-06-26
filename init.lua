@@ -45,39 +45,6 @@ hs.grid.HINTS = {
 }
 
 ----------------------------------------------------------------------------------------------------
--- Karabiner Configuration Automation
-----------------------------------------------------------------------------------------------------
-local karabinerConfig = os.getenv('HOME') .. '/.dotfiles/config/karabiner/karabiner.json'
-local karabinerConfigs = {
-  ['USB Keyboard'] = karabinerConfig .. '.external',
-  ['_']            = karabinerConfig .. '.internal',
-}
-
-local function determineKarabinerConfigFile()
-  for _, device in pairs(hs.usb.attachedDevices()) do
-    local config = karabinerConfigs[device.productName]
-    if config then return config end
-  end
-  -- no external device found, use internal config
-  return karabinerConfigs['_']
-end
-
-local function selectKarabinerConfig()
-  local config = determineKarabinerConfigFile()
-  local currentConfig = hs.fs.pathToAbsolute(karabinerConfig)
-  if currentConfig ~= config then
-    log.df('switching karabiner config to %s', config)
-    os.remove(karabinerConfig)
-    hs.fs.link(config, karabinerConfig, true)
-  end
-end
-
-selectKarabinerConfig()
-
-usbWatcher = hs.usb.watcher.new(function(event) selectKarabinerConfig() end)
-usbWatcher:start()
-
-----------------------------------------------------------------------------------------------------
 -- Window Layout
 ----------------------------------------------------------------------------------------------------
 
