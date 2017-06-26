@@ -6,6 +6,13 @@ local log = hs.logger.new('init', 'debug')
 local hyper = {'shift', 'cmd', 'ctrl', 'alt'}
 local meh = {'shift', 'ctrl', 'alt'}
 
+hs.autoLaunch(true)
+hs.automaticallyCheckForUpdates(true)
+hs.consoleOnTop(true)
+hs.dockIcon(false)
+hs.menuIcon(true)
+hs.uploadCrashData(false)
+
 expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),{
   backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
   closeModeBackgroundColor        = {0.7, 0.1, 0.1, 0.75},
