@@ -89,17 +89,25 @@ function primaryScreen()
 end
 
 function screenEast()
-  return hs.screen.primaryScreen():toEast() or hs.screen.primaryScreen()
+  return primaryScreen():toEast() or primaryScreen()
 end
 
 function maximize(win)
   win:setFrame(win:screen():fullFrame(), 0.0)
 end
 
-function fillsGrid(win)
-  local gridSize = hs.grid.getGrid()
-  local winGrid = hs.grid.get(win)
-  return winGrid.x == 0 and winGrid.y == 0 and winGrid.w == gridSize.w and winGrid.h == gridSize.h
+function correctWindowPosition(win)
+  if hs.grid.get(win).x == 0 then
+    local winFrame = win:frame()
+    winFrame.w = winFrame.w + winFrame.x
+    winFrame.x = 0
+    win:setFrame(winFrame)
+  end
+end
+
+function snap(win, cell)
+  hs.grid.set(win, cell or hs.grid.get(win))
+  correctWindowPosition(win)
 end
 
 windowLayout = {
@@ -118,16 +126,7 @@ windowLayout = {
   ['com.fournova.Tower2']               = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['com.apple.dt.Xcode']                = function(win) maximize(win:moveToScreen(primaryScreen())) end,
   ['Alacritty']                         = function(win) maximize(win:moveToScreen(screenEast())) end,
-
-  ['_'] = (function(win)
-    if not win:isFullScreen() then
-      if fillsGrid(win) then
-        maximize(win)
-      else
-        hs.grid.snap(win)
-      end
-    end
-  end),
+  ['_']                                 = function(win) snap(win) end,
 }
 
 function canLayoutWindow(win)
@@ -151,17 +150,19 @@ function maximizeCurrentWindow()
 end
 
 function moveCurrentWindowToNextScreen()
-  hs.window.focusedWindow():moveToScreen(hs.window.focusedWindow():screen():next())
+  local win = hs.window.focusedWindow()
+  win:moveToScreen(win:screen():next())
+  snap(win)
 end
 
 function moveCurrentWindowToLeftHalf()
-  local frame = hs.window.focusedWindow():screen():fullFrame()
-  hs.window.focusedWindow():setFrame({x = 0, y = 0, w = frame.w / 2.0, h = frame.h})
+  local gridSize = hs.grid.getGrid()
+  snap(hs.window.focusedWindow(), hs.geometry({0, 0, gridSize.w / 2.0, gridSize.h}))
 end
 
 function moveCurrentWindowToRightHalf()
-  local frame = hs.window.focusedWindow():screen():fullFrame()
-  hs.window.focusedWindow():setFrame({x = frame.w / 2.0, y = 0, w = frame.w / 2.0, h = frame.h})
+  local gridSize = hs.grid.getGrid()
+  snap(hs.window.focusedWindow(), hs.geometry({gridSize.w / 2.0, 0, gridSize.w / 2.0, gridSize.h}))
 end
 
 function applyLayoutToAllWindows()
