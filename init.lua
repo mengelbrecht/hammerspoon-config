@@ -114,6 +114,7 @@ windowLayout = {
   ['com.googlecode.iterm2']             = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['com.kapeli.dash']                   = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['org.mozilla.firefox']               = function(win) maximize(win:moveToScreen(screenEast())) end,
+  ['com.apple.Safari']                  = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['com.apple.SafariTechnologyPreview'] = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['com.google.Chrome']                 = function(win) maximize(win:moveToScreen(screenEast())) end,
   ['com.apple.iTunes']                  = function(win) maximize(win:moveToScreen(screenEast())) end,
