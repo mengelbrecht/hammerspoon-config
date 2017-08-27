@@ -44,41 +44,64 @@ hs.grid.HINTS = {
 }
 
 ----------------------------------------------------------------------------------------------------
--- Menu
+-- Colehack Mode
 ----------------------------------------------------------------------------------------------------
 
-function makeMenu()
-  return {
-       { title = 'Hammerspoon ' .. hs.processInfo.version, disabled = true },
-       { title = '-' },
-       { title = 'Reload', fn = function() hs.reload() end },
-       { title = 'Console...', fn = function() hs.openConsole() end },
-       { title = '-' },
-       { title = 'Input Source', disabled = true },
-       { title = 'Colehack', checked = hs.keycodes.currentLayout() == 'U.S.', fn = function() changeToColehack() end },
-       { title = 'German', checked = hs.keycodes.currentLayout() == 'German', fn = function() changeToGerman() end },
-       { title = '-' },
-       { title = 'Quit', fn = function() hs.application.get(hs.processInfo.processID):kill() end }
-  }
-end
+colehackActive = false
+colehackActiveBeforeLogout = false
 
 function selectKarabinerProfile(profile)
   hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile '" .. profile .. "'")
 end
 
-function changeToColehack()
+function activateColehack()
   hs.keycodes.setLayout('U.S.')
   selectKarabinerProfile('Colehack')
-  menu:setMenu(makeMenu())
+  colehackActive = true
+  updateMenu()
 end
 
-function changeToGerman()
+function deactivateColehack()
   hs.keycodes.setLayout('German')
   selectKarabinerProfile('German')
-  menu:setMenu(makeMenu())
+  colehackActive = false
+  updateMenu()
 end
 
-menu = hs.menubar.new():setIcon(hs.configdir .. '/statusicon.tiff'):setMenu(makeMenu())
+function toggleColehack()
+  if colehackActive then deactivateColehack() else activateColehack() end
+end
+
+colehackCaffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+  if event == hs.caffeinate.watcher.screensDidLock or event == hs.caffeinate.watcher.sessionDidResignActive or event == hs.caffeinate.watcher.systemWillPowerOff then
+    colehackActiveBeforeLogout = colehackActive
+    deactivateColehack()
+  end
+  if (event == hs.caffeinate.watcher.screensDidUnlock or event == hs.caffeinate.watcher.sessionDidBecomeActive) and colehackActiveBeforeLogout then
+      activateColehack()
+  end
+  return false
+end):start()
+
+----------------------------------------------------------------------------------------------------
+-- Menu
+----------------------------------------------------------------------------------------------------
+
+function updateMenu()
+  menu:setIcon(hs.configdir .. '/assets/statusicon_' .. (colehackActive and 'on' or 'off') .. '.tiff')
+  menu:setMenu({
+       { title = 'Hammerspoon ' .. hs.processInfo.version, disabled = true },
+       { title = '-' },
+       { title = 'Reload', fn = hs.reload },
+       { title = 'Console...', fn = hs.openConsole },
+       { title = '-' },
+       { title = 'Colehack', checked = colehackActive, fn = toggleColehack },
+       { title = '-' },
+       { title = 'Quit', fn = function() hs.application.get(hs.processInfo.processID):kill() end }
+  })
+end
+
+menu = hs.menubar.new()
 
 ----------------------------------------------------------------------------------------------------
 -- Window Layout
@@ -97,12 +120,11 @@ function maximize(win)
 end
 
 function correctWindowPosition(win)
-  if hs.grid.get(win).x == 0 then
-    local winFrame = win:frame()
-    winFrame.w = winFrame.w + winFrame.x
-    winFrame.x = 0
-    win:setFrame(winFrame)
-  end
+  if hs.grid.get(win).x ~= 0 then return end
+  local winFrame = win:frame()
+  winFrame.w = winFrame.w + winFrame.x
+  winFrame.x = 0
+  win:setFrame(winFrame)
 end
 
 function snap(win, cell)
@@ -143,7 +165,7 @@ end
 hs.window.filter.new():subscribe(hs.window.filter.windowCreated, handleWindowLayout)
 
 ----------------------------------------------------------------------------------------------------
--- Hotkey functions invoked from karabiner
+-- Hotkey Functions (invoked from karabiner)
 ----------------------------------------------------------------------------------------------------
 
 function maximizeCurrentWindow()
@@ -182,5 +204,5 @@ end
 -- Startup Settings
 ----------------------------------------------------------------------------------------------------
 
-changeToColehack()
+activateColehack()
 
