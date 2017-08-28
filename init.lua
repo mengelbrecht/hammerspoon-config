@@ -123,7 +123,8 @@ function maximize(win)
 end
 
 function correctWindowPosition(win)
-  if hs.grid.get(win).x ~= 0 then return end
+  local winGrid = hs.grid.get(win)
+  if winGrid.x ~= 0 or winGrid.y ~= 0 then return end
   local winFrame = win:frame()
   winFrame.w = winFrame.w + winFrame.x
   winFrame.x = 0
@@ -166,6 +167,7 @@ function handleWindowLayout(win)
 end
 
 hs.window.filter.new():subscribe(hs.window.filter.windowCreated, handleWindowLayout)
+hs.window.filter.new():subscribe(hs.window.filter.windowFocused, correctWindowPosition)
 
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Functions (invoked from karabiner)
