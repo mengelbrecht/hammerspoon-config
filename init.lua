@@ -193,6 +193,11 @@ function moveCurrentWindowToRightHalf()
   snap(hs.window.focusedWindow(), hs.geometry({gridSize.w / 2.0, 0, gridSize.w / 2.0, gridSize.h}))
 end
 
+function toggleFullscreen()
+  local win = hs.window.focusedWindow()
+  win:setFullScreen(not win:isFullScreen())
+end
+
 function applyLayoutToAllWindows()
   for _, win in pairs(hs.window.visibleWindows()) do handleWindowLayout(win) end
 end
