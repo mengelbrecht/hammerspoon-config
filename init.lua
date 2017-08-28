@@ -12,7 +12,7 @@ hs.dockIcon(false)
 hs.menuIcon(false)
 hs.uploadCrashData(false)
 
-expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),{
+expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}), {
   backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
   closeModeBackgroundColor        = {0.7, 0.1, 0.1, 0.75},
   highlightColor                  = {0.6, 0.3, 0.0, 0.75},
@@ -25,7 +25,7 @@ expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),
   showTitles                      = false
 })
 
-switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}),{
+switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}), {
   backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
   highlightColor                  = {0.6, 0.3, 0.0, 0.75},
   showThumbnails                  = false,
