@@ -118,42 +118,13 @@ function screenEast()
   return primaryScreen():toEast() or primaryScreen()
 end
 
-function maximize(win)
-  win:setFrame(win:screen():fullFrame(), 0.0)
-end
-
-function correctWindowPosition(win)
-  local winGrid = hs.grid.get(win)
-  if winGrid.x ~= 0 or winGrid.y ~= 0 then return end
-  local winFrame = win:frame()
-  winFrame.w = winFrame.w + winFrame.x
-  winFrame.x = 0
-  win:setFrame(winFrame)
-end
-
 function snap(win, cell)
   hs.grid.set(win, cell or hs.grid.get(win))
-  correctWindowPosition(win)
 end
 
 windowLayout = {
-  ['com.googlecode.iterm2']             = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.kapeli.dash']                   = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['org.mozilla.firefox']               = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.apple.Safari']                  = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.apple.SafariTechnologyPreview'] = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.google.Chrome']                 = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.apple.iTunes']                  = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.agilebits.onepassword-osx']     = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.hicknhacksoftware.MacPass']     = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['org.vim.MacVim']                    = function(win) maximize(win:moveToScreen(primaryScreen())) end,
-  ['com.parallels.desktop.console']     = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.vmware.fusion']                 = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.reederapp.rkit2.mac']           = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.fournova.Tower2']               = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['com.apple.dt.Xcode']                = function(win) maximize(win:moveToScreen(primaryScreen())) end,
-  ['Alacritty']                         = function(win) maximize(win:moveToScreen(screenEast())) end,
-  ['_']                                 = function(win) snap(win) end,
+  ['com.apple.iTunes'] = function(win) win:maximize() end,
+  ['_']                = function(win) snap(win) end,
 }
 
 function canLayoutWindow(win)
@@ -162,19 +133,18 @@ end
 
 function handleWindowLayout(win)
   if not canLayoutWindow(win) then return end
-  local layout = windowLayout[win:application():bundleID()] or windowLayout[win:application():name()] or windowLayout['_']
+  local layout = windowLayout[win:application():bundleID()] or windowLayout['_']
   layout(win)
 end
 
 hs.window.filter.new():subscribe(hs.window.filter.windowCreated, handleWindowLayout)
-hs.window.filter.new():subscribe(hs.window.filter.windowFocused, correctWindowPosition)
 
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Functions (invoked from karabiner)
 ----------------------------------------------------------------------------------------------------
 
 function maximizeCurrentWindow()
-  maximize(hs.window.focusedWindow())
+  hs.window.focusedWindow():maximize()
 end
 
 function moveCurrentWindowToNextScreen()
