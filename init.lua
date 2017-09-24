@@ -35,14 +35,15 @@ switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter({allow
 })
 
 hs.grid.setMargins({0, 0})
-hs.grid.setGrid('6x4', nil)
+hs.grid.setGrid('6x4')
 hs.grid.HINTS = {
   {'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8'},
   {'1',  '2',  '3',  '4',  '5',  '6',  '7',  '8'},
-  {'Q',  'W',  'E',  'R',  'T',  'Z',  'U',  'I'},
-  {'A',  'S',  'D',  'F',  'G',  'H',  'J',  'K'},
-  {'Y',  'X',  'C',  'V',  'B',  'N',  'M',  ','}
+  {'Q',  'W',  'F',  'P',  'B',  'J',  'L',  'U'},
+  {'A',  'R',  'S',  'T',  'G',  'K',  'N',  'E'},
+  {'Z',  'X',  'C',  'D',  'V',  'M',  'H',  ','}
 }
+hs.grid.ui.showExtraKeys = false
 
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
 
