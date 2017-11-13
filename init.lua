@@ -31,7 +31,7 @@ switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter({allow
   highlightColor                  = {0.6, 0.3, 0.0, 0.75},
   showThumbnails                  = false,
   showSelectedTitle               = false,
-  showTitles                      = false,
+  showTitles                      = false
 })
 
 hs.grid.setMargins({0, 0})
@@ -173,8 +173,8 @@ function applyLayoutToAllWindows()
   for _, win in pairs(hs.window.visibleWindows()) do handleWindowLayout(win) end
 end
 
-function lockScreen()
-  hs.caffeinate.lockScreen()
+function systemSleep()
+  hs.caffeinate.systemSleep()
 end
 
 function toggleGrid()
@@ -185,9 +185,16 @@ function toggleExpose()
   expose:toggleShow()
 end
 
+function nextWindow()
+  switcher:next()
+end
+
+function previousWindow()
+  switcher:previous()
+end
+
 ----------------------------------------------------------------------------------------------------
 -- Startup Settings
 ----------------------------------------------------------------------------------------------------
 
 activateColehack()
-
