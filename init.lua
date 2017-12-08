@@ -58,15 +58,25 @@ function selectKarabinerProfile(profile)
   hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile '" .. profile .. "'")
 end
 
+function selectLayout(layout)
+  local tries = 1
+  local maxTries = 5
+  while tries <= maxTries do
+    if hs.keycodes.setLayout(layout) then return end
+    hs.timer.usleep(100 * 1000)
+    tries = tries + 1
+  end
+end
+
 function activateColehack()
-  hs.keycodes.setLayout('U.S.')
+  selectLayout('U.S.')
   selectKarabinerProfile('Colehack')
   colehackActive = true
   updateMenu()
 end
 
 function deactivateColehack()
-  hs.keycodes.setLayout('German')
+  selectLayout('German')
   selectKarabinerProfile('German')
   colehackActive = false
   updateMenu()
