@@ -148,7 +148,7 @@ function handleWindowLayout(win)
   layout(win)
 end
 
-hs.window.filter.new():subscribe(hs.window.filter.windowCreated, handleWindowLayout)
+hs.window.filter.new({['default'] = {hasTitlebar = true}}):subscribe(hs.window.filter.windowCreated, handleWindowLayout)
 
 ----------------------------------------------------------------------------------------------------
 -- Hotkey Functions (invoked from karabiner)
