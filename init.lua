@@ -1,10 +1,6 @@
-require("hs.ipc")
-local log = hs.logger.new('init', 'debug')
-
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
-
 hs.autoLaunch(true)
 hs.automaticallyCheckForUpdates(true)
 hs.consoleOnTop(true)
@@ -12,199 +8,130 @@ hs.dockIcon(false)
 hs.menuIcon(false)
 hs.uploadCrashData(false)
 
-expose = hs.expose.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}), {
-  backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
-  closeModeBackgroundColor        = {0.7, 0.1, 0.1, 0.75},
-  highlightColor                  = {0.6, 0.3, 0.0, 0.75},
-  minimizeModeBackgroundColor     = {0.1, 0.2, 0.3, 0.75},
-  minimizeModeModifier            = 'ctrl',
-  nonVisibleStripBackgroundColor  = {0.03, 0.1, 0.15, 0.75},
-  nonVisibleStripPosition         = 'left',
-  otherSpacesStripBackgroundColor = {0.1, 0.1, 0.1, 0.75},
-  otherSpacesStripWidth           = 0.15,
-  showThumbnails                  = false,
-  showTitles                      = false
-})
-
-switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter({allowTitles=1}), {
-  backgroundColor                 = {0.03, 0.03, 0.03, 0.75},
-  highlightColor                  = {0.6, 0.3, 0.0, 0.75},
-  showThumbnails                  = false,
-  showSelectedTitle               = false,
-  showTitles                      = false
-})
-
-hs.grid.setMargins({0, 0})
-hs.grid.setGrid('6x4')
-hs.grid.HINTS = {
-  {'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8'},
-  {'1',  '2',  '3',  '4',  '5',  '6',  '7',  '8'},
-  {'Q',  'W',  'F',  'P',  'B',  'J',  'L',  'U'},
-  {'A',  'R',  'S',  'T',  'G',  'K',  'N',  'E'},
-  {'X',  'C',  'D',  'V',  'Z',  'M',  'H',  ','}
-}
-hs.grid.ui.showExtraKeys = false
+local log = hs.logger.new('init', 'debug')
 
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
-
-----------------------------------------------------------------------------------------------------
--- Colehack Mode
-----------------------------------------------------------------------------------------------------
-
-colehackActive = false
-colehackActiveBeforeLogout = false
-
-function selectKarabinerProfile(profile)
-  hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile '" .. profile .. "'")
-end
-
-function selectLayout(layout)
-  local tries = 1
-  local maxTries = 5
-  while tries <= maxTries do
-    if hs.keycodes.setLayout(layout) then return end
-    hs.timer.usleep(100 * 1000)
-    tries = tries + 1
-  end
-end
-
-function activateColehack()
-  selectLayout('U.S.')
-  selectKarabinerProfile('Colehack')
-  colehackActive = true
-  updateMenu()
-end
-
-function deactivateColehack()
-  selectLayout('German')
-  selectKarabinerProfile('German')
-  colehackActive = false
-  updateMenu()
-end
-
-function toggleColehack()
-  if colehackActive then deactivateColehack() else activateColehack() end
-end
-
-colehackCaffeinateWatcher = hs.caffeinate.watcher.new(function(event)
-  if event == hs.caffeinate.watcher.screensDidLock or event == hs.caffeinate.watcher.sessionDidResignActive or event == hs.caffeinate.watcher.systemWillPowerOff then
-    colehackActiveBeforeLogout = colehackActive
-    deactivateColehack()
-  end
-  if (event == hs.caffeinate.watcher.screensDidUnlock or event == hs.caffeinate.watcher.sessionDidBecomeActive) and colehackActiveBeforeLogout then
-      activateColehack()
-  end
-  return false
-end):start()
 
 ----------------------------------------------------------------------------------------------------
 -- Menu
 ----------------------------------------------------------------------------------------------------
 
-function updateMenu()
-  menu:setIcon(hs.configdir .. '/assets/statusicon_' .. (colehackActive and 'on' or 'off') .. '.tiff')
-  menu:setMenu({
-       { title = 'Hammerspoon ' .. hs.processInfo.version, disabled = true },
-       { title = '-' },
-       { title = 'Reload', fn = hs.reload },
-       { title = 'Console...', fn = hs.openConsole },
-       { title = '-' },
-       { title = 'Colehack', checked = colehackActive, fn = toggleColehack },
-       { title = '-' },
-       { title = 'Quit', fn = function() hs.application.get(hs.processInfo.processID):kill() end }
-  })
-end
-
 menu = hs.menubar.new()
+menu:setMenu({
+  { title = 'Hammerspoon ' .. hs.processInfo.version, disabled = true },
+  { title = '-' },
+  { title = 'Reload', fn = hs.reload },
+  { title = 'Console...', fn = hs.openConsole },
+  { title = '-' },
+  { title = 'Quit', fn = function() hs.application.get(hs.processInfo.processID):kill() end }
+})
 
 ----------------------------------------------------------------------------------------------------
--- Window Layout
+-- Moonlander Detection
 ----------------------------------------------------------------------------------------------------
 
-function primaryScreen()
-  return hs.screen.primaryScreen()
+function isDeviceMoonlander(device) 
+  return device.productName == "Moonlander Mark I" 
 end
 
-function screenEast()
-  return primaryScreen():toEast() or primaryScreen()
+function moonlanderDetected(connected)
+  if connected then
+    hs.keycodes.setLayout("U.S.")
+    menu:setIcon(hs.configdir .. '/assets/statusicon_on.tiff')
+  else
+    hs.keycodes.setLayout("German")
+    menu:setIcon(hs.configdir .. '/assets/statusicon_off.tiff')
+  end
 end
 
-function snap(win, cell)
-  hs.grid.set(win, cell or hs.grid.get(win))
+function searchMoonlander()
+  local usbDevices = hs.usb.attachedDevices()
+  local moonlanderConnected = hs.fnutils.find(usbDevices, isDeviceMoonlander) ~= nil
+  
+  moonlanderDetected(moonlanderConnected)  
 end
 
-windowLayout = {
-  ['com.apple.iTunes'] = function(win) win:maximize() end,
-  ['_']                = function(win) snap(win) end,
-}
+searchMoonlander()
 
-function canLayoutWindow(win)
-  return win:isStandard() and not win:isFullScreen()
-end
+usbWatcher = hs.usb.watcher.new(function(event)
+  if event.productName == "Moonlander Mark I" then
+    moonlanderDetected(event.eventType == "added")
+  end
+end):start()
 
-function handleWindowLayout(win)
-  if not canLayoutWindow(win) then return end
-  local layout = windowLayout[win:application():bundleID()] or windowLayout['_']
-  layout(win)
-end
-
-hs.window.filter.new({['default'] = {hasTitlebar = true}}):subscribe(hs.window.filter.windowCreated, handleWindowLayout)
+caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+  if event == hs.caffeinate.watcher.systemDidWake then
+    searchMoonlander()
+  end
+end):start()
 
 ----------------------------------------------------------------------------------------------------
--- Hotkey Functions (invoked from karabiner)
+-- Shortcuts
 ----------------------------------------------------------------------------------------------------
 
-function maximizeCurrentWindow()
-  hs.window.focusedWindow():maximize()
+local hyperModifier = {"cmd", "shift", "ctrl", "alt"}
+local windowModifier = {"ctrl", "alt"}
+
+function maximizeCurrentWindow() 
+  hs.window.focusedWindow():maximize() 
 end
 
 function moveCurrentWindowToNextScreen()
   local win = hs.window.focusedWindow()
   win:moveToScreen(win:screen():next())
-  snap(win)
 end
 
 function moveCurrentWindowToLeftHalf()
-  local gridSize = hs.grid.getGrid()
-  snap(hs.window.focusedWindow(), hs.geometry({0, 0, gridSize.w / 2.0, gridSize.h}))
+  local win = hs.window.focusedWindow()
+  local screenFrame = win:screen():frame()
+  win:setFrame(hs.geometry.rect(screenFrame.x, screenFrame.y, screenFrame.w / 2, screenFrame.h))
 end
 
 function moveCurrentWindowToRightHalf()
-  local gridSize = hs.grid.getGrid()
-  snap(hs.window.focusedWindow(), hs.geometry({gridSize.w / 2.0, 0, gridSize.w / 2.0, gridSize.h}))
-end
-
-function toggleFullscreen()
   local win = hs.window.focusedWindow()
-  win:setFullScreen(not win:isFullScreen())
+  local screenFrame = win:screen():frame()
+  win:setFrame(hs.geometry.rect(screenFrame.x + screenFrame.w / 2, screenFrame.y, screenFrame.w / 2, screenFrame.h))
 end
 
-function applyLayoutToAllWindows()
-  for _, win in pairs(hs.window.visibleWindows()) do handleWindowLayout(win) end
+function moveMouseToWindowCenter()
+  local windowCenter = hs.window.frontmostWindow():frame().center
+  hs.mouse.absolutePosition(windowCenter)
 end
 
-function systemSleep()
-  hs.caffeinate.systemSleep()
+function moveMouseToUpperLeft()
+  local screenFrame = hs.window.focusedWindow():screen():frame()
+  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h / 4))
 end
 
-function toggleGrid()
-  hs.grid.toggleShow()
+function moveMouseToUpperRight()
+  local screenFrame = hs.window.focusedWindow():screen():frame()
+  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h / 4))
 end
 
-function toggleExpose()
-  expose:toggleShow()
+function moveMouseToLowerLeft()
+  local screenFrame = hs.window.focusedWindow():screen():frame()
+  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h * 3 / 4))
 end
 
-function nextWindow()
-  switcher:next()
+function moveMouseToLowerRight()
+  local screenFrame = hs.window.focusedWindow():screen():frame()
+  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4))
 end
 
-function previousWindow()
-  switcher:previous()
-end
-
-----------------------------------------------------------------------------------------------------
--- Startup Settings
-----------------------------------------------------------------------------------------------------
-
-activateColehack()
+hs.hotkey.bind(windowModifier, "return", maximizeCurrentWindow)
+hs.hotkey.bind(windowModifier, "left", moveCurrentWindowToLeftHalf)
+hs.hotkey.bind(windowModifier, "right", moveCurrentWindowToRightHalf)
+hs.hotkey.bind(hyperModifier, "[", moveMouseToWindowCenter)
+hs.hotkey.bind(hyperModifier, "m", moveMouseToUpperLeft)
+hs.hotkey.bind(hyperModifier, "o", moveMouseToUpperRight)
+hs.hotkey.bind(hyperModifier, "up", moveMouseToLowerLeft)
+hs.hotkey.bind(hyperModifier, "down", moveMouseToLowerRight)
+hs.hotkey.bind(hyperModifier, "delete", function() hs.caffeinate.lockScreen() end)
+hs.hotkey.bind(hyperModifier, "c", function() hs.application.launchOrFocusByBundleID("org.mozilla.nightly") end)
+hs.hotkey.bind(hyperModifier, "d", function() hs.application.launchOrFocusByBundleID("com.microsoft.VSCode") end)
+hs.hotkey.bind(hyperModifier, "f", function() hs.application.launchOrFocusByBundleID("com.apple.finder") end)
+hs.hotkey.bind(hyperModifier, "g", function() hs.application.launchOrFocusByBundleID("com.fournova.Tower3") end)
+hs.hotkey.bind(hyperModifier, "r", function() hs.application.launchOrFocusByBundleID("com.reederapp.5.macOS") end)
+hs.hotkey.bind(hyperModifier, "s", function() hs.application.launchOrFocusByBundleID("com.agilebits.onepassword7") end)
+hs.hotkey.bind(hyperModifier, "t", function() hs.application.launchOrFocusByBundleID("com.googlecode.iterm2") end)
+hs.hotkey.bind(hyperModifier, "w", function() hs.application.launchOrFocusByBundleID("com.jetbrains.intellij") end)
