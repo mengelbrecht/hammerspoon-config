@@ -120,9 +120,9 @@ function moveMouseToLowerRight()
   hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4))
 end
 
-hs.hotkey.bind(windowModifier, "return", maximizeCurrentWindow)
-hs.hotkey.bind(windowModifier, "left", moveCurrentWindowToLeftHalf)
-hs.hotkey.bind(windowModifier, "right", moveCurrentWindowToRightHalf)
+--hs.hotkey.bind(windowModifier, "return", maximizeCurrentWindow)
+--hs.hotkey.bind(windowModifier, "left", moveCurrentWindowToLeftHalf)
+--hs.hotkey.bind(windowModifier, "right", moveCurrentWindowToRightHalf)
 hs.hotkey.bind(hyperModifier, "[", moveMouseToWindowCenter)
 hs.hotkey.bind(hyperModifier, "m", moveMouseToUpperLeft)
 hs.hotkey.bind(hyperModifier, "o", moveMouseToUpperRight)
