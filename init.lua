@@ -8,6 +8,8 @@ hs.dockIcon(false)
 hs.menuIcon(false)
 hs.uploadCrashData(false)
 
+hs.window.animationDuration = 0
+
 local log = hs.logger.new('init', 'debug')
 
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
