@@ -101,22 +101,22 @@ function moveMouseToWindowCenter()
 end
 
 function moveMouseToUpperLeft()
-  local screenFrame = hs.window.focusedWindow():screen():frame()
+  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
   hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h / 4))
 end
 
 function moveMouseToUpperRight()
-  local screenFrame = hs.window.focusedWindow():screen():frame()
+  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
   hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h / 4))
 end
 
 function moveMouseToLowerLeft()
-  local screenFrame = hs.window.focusedWindow():screen():frame()
+  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
   hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h * 3 / 4))
 end
 
 function moveMouseToLowerRight()
-  local screenFrame = hs.window.focusedWindow():screen():frame()
+  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
   hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4))
 end
 
