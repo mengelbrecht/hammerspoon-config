@@ -134,6 +134,7 @@ hs.hotkey.bind(hyperModifier, "c", function() hs.application.launchOrFocusByBund
 hs.hotkey.bind(hyperModifier, "d", function() hs.application.launchOrFocusByBundleID("com.microsoft.VSCode") end)
 hs.hotkey.bind(hyperModifier, "f", function() hs.application.launchOrFocusByBundleID("com.apple.finder") end)
 hs.hotkey.bind(hyperModifier, "g", function() hs.application.launchOrFocusByBundleID("com.fournova.Tower3") end)
+hs.hotkey.bind(hyperModifier, "p", function() hs.application.launchOrFocusByBundleID("com.postmanlabs.mac") end)
 hs.hotkey.bind(hyperModifier, "r", function() hs.application.launchOrFocusByBundleID("com.reederapp.5.macOS") end)
 hs.hotkey.bind(hyperModifier, "s", function() hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac") end)
 hs.hotkey.bind(hyperModifier, "t", function() hs.application.launchOrFocusByBundleID("com.googlecode.iterm2") end)
