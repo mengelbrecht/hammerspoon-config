@@ -138,3 +138,11 @@ hs.hotkey.bind(hyperModifier, "t", function() hs.application.launchOrFocusByBund
 hs.hotkey.bind(hyperModifier, "v", function() hs.application.launchOrFocusByBundleID("com.microsoft.Outlook") end)
 hs.hotkey.bind(hyperModifier, "w", function() hs.application.launchOrFocusByBundleID("com.jetbrains.intellij") end)
 hs.hotkey.bind(hyperModifier, "x", function() hs.application.launchOrFocusByBundleID("com.microsoft.Teams") end)
+hs.hotkey.bind({'cmd'}, "\\", function()
+  local application = hs.application.frontmostApplication()
+  if (application:bundleID() == "com.markmcguill.strongbox.mac") then
+    application:mainWindow():minimize()
+  else
+    hs.eventtap.keyStroke({'cmd', 'alt'}, "k")
+  end
+end)
