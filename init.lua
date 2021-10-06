@@ -143,6 +143,10 @@ hs.hotkey.bind({'cmd'}, "\\", function()
   if (application:bundleID() == "com.markmcguill.strongbox.mac") then
     application:mainWindow():minimize()
   else
-    hs.eventtap.keyStroke({'cmd', 'alt'}, "k")
+    if (hs.application.find("com.markmcguill.strongbox.mac") == nil) then
+      hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac")
+    else
+      hs.eventtap.keyStroke({'cmd', 'alt'}, "k")
+    end
   end
 end)
