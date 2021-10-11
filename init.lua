@@ -141,12 +141,8 @@ hs.hotkey.bind(hyperModifier, "x", function() hs.application.launchOrFocusByBund
 hs.hotkey.bind({'cmd'}, "\\", function()
   local application = hs.application.frontmostApplication()
   if (application:bundleID() == "com.markmcguill.strongbox.mac") then
-    application:mainWindow():minimize()
+    application:hide()
   else
-    if (hs.application.find("com.markmcguill.strongbox.mac") == nil) then
-      hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac")
-    else
-      hs.eventtap.keyStroke({'cmd', 'alt'}, "k")
-    end
+    hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac")
   end
 end)
