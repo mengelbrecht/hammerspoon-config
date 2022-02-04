@@ -10,139 +10,313 @@ hs.uploadCrashData(false)
 
 hs.window.animationDuration = 0
 
-local log = hs.logger.new('init', 'debug')
+local configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
+configWatcher:start()
 
-configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
+local moonlanderModeActive = false
+
+----------------------------------------------------------------------------------------------------
+-- Utilities
+----------------------------------------------------------------------------------------------------
+
+local modifier = {
+    cmd = "cmd",
+    shift = "shift",
+    ctrl = "ctrl",
+    option = "alt",
+}
+
+local modifiers = {
+    hyper = { modifier.cmd, modifier.shift, modifier.ctrl, modifier.option },
+    window = { modifier.ctrl, modifier.option },
+    clipboard = { modifier.ctrl, modifier.cmd }
+}
+
+local bundleID = {
+    activityMonitor = "com.apple.ActivityMonitor",
+    finder = "com.apple.finder",
+    intellij = "com.jetbrains.intellij",
+    iterm = "com.googlecode.iterm2",
+    outlook = "com.microsoft.Outlook",
+    postman = "com.postmanlabs.mac",
+    reeder = "com.reederapp.5.macOS",
+    safari = "com.apple.Safari",
+    spotify = "com.spotify.client",
+    strongbox = "com.markmcguill.strongbox.mac",
+    teams = "com.microsoft.teams",
+    tower = "com.fournova.Tower3",
+    vsCode = "com.microsoft.VSCode"
+}
+
+local usbDevice = {
+    moonlander = "Moonlander Mark I"
+}
+
+local function languageIsGerman() return hs.host.locale.preferredLanguages()[1]:sub(0, 2) == "de" end
+
+local function maximizeCurrentWindow() hs.window.focusedWindow():maximize() end
+
+local function centerCurrentWindow() hs.window.focusedWindow():centerOnScreen() end
+
+local function moveCurrentWindowToLeftHalf()
+    local win = hs.window.focusedWindow()
+    local screenFrame = win:screen():frame()
+    local newFrame = hs.geometry.rect(screenFrame.x, screenFrame.y, screenFrame.w / 2, screenFrame.h)
+    win:setFrame(newFrame)
+end
+
+local function moveCurrentWindowToRightHalf()
+    local win = hs.window.focusedWindow()
+    local screenFrame = win:screen():frame()
+    local newFrame = hs.geometry.rect(screenFrame.x + screenFrame.w / 2, screenFrame.y, screenFrame.w / 2, screenFrame.h)
+    win:setFrame(newFrame)
+end
+
+local function moveMouseToWindowCenter()
+    local windowCenter = hs.window.frontmostWindow():frame().center
+    hs.mouse.absolutePosition(windowCenter)
+end
+
+local function moveMouseToUpperLeft()
+    local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h / 4)
+    hs.mouse.absolutePosition(newPoint)
+end
+
+local function moveMouseToUpperRight()
+    local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h / 4)
+    hs.mouse.absolutePosition(newPoint)
+end
+
+local function moveMouseToLowerLeft()
+    local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h * 3 / 4)
+    hs.mouse.absolutePosition(newPoint)
+end
+
+local function moveMouseToLowerRight()
+    local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4)
+    hs.mouse.absolutePosition(newPoint)
+end
 
 ----------------------------------------------------------------------------------------------------
 -- Menu
 ----------------------------------------------------------------------------------------------------
 
-menu = hs.menubar.new()
-menu:setMenu({
-  { title = 'Hammerspoon ' .. hs.processInfo.version, disabled = true },
-  { title = '-' },
-  { title = 'Reload', fn = hs.reload },
-  { title = 'Console...', fn = hs.openConsole },
-  { title = '-' },
-  { title = 'Quit', fn = function() hs.application.get(hs.processInfo.processID):kill() end }
-})
+local function menuItems()
+    return {
+        {
+            title = "Hammerspoon " .. hs.processInfo.version,
+            disabled = true
+        },
+        { title = "-" },
+        {
+            title = "Moonlander Mode",
+            checked = moonlanderModeActive,
+            fn = function() moonlanderDetected(not moonlanderModeActive) end
+        },
+        { title = "-" },
+        {
+            title = "Reload",
+            fn = hs.reload
+        },
+        {
+            title = "Console...",
+            fn = hs.openConsole
+        },
+        { title = "-" },
+        {
+            title = "Quit",
+            fn = function() hs.application.get(hs.processInfo.processID):kill() end
+        }
+    }
+end
+
+local menu = hs.menubar.new()
+menu:setMenu(menuItems)
 
 ----------------------------------------------------------------------------------------------------
 -- Moonlander Detection
 ----------------------------------------------------------------------------------------------------
 
-function isDeviceMoonlander(device) 
-  return device.productName == "Moonlander Mark I" 
-end
+local moonlanderMode = {
+    [false] = {
+        keyboardLayout = "German",
+        icon = hs.configdir .. "/assets/statusicon_off.tiff"
+    },
+    [true] = {
+        keyboardLayout = "U.S.",
+        icon = hs.configdir .. "/assets/statusicon_on.tiff"
+    }
+}
+
+local function isDeviceMoonlander(device) return device.productName == usbDevice.moonlander end
 
 function moonlanderDetected(connected)
-  if connected then
-    hs.keycodes.setLayout("U.S.")
-    menu:setIcon(hs.configdir .. '/assets/statusicon_on.tiff')
-  else
-    hs.keycodes.setLayout("German")
-    menu:setIcon(hs.configdir .. '/assets/statusicon_off.tiff')
-  end
+    moonlanderModeActive = connected
+    hs.keycodes.setLayout(moonlanderMode[connected].keyboardLayout)
+    menu:setIcon(moonlanderMode[connected].icon)
 end
 
-function searchMoonlander()
-  local usbDevices = hs.usb.attachedDevices()
-  local moonlanderConnected = hs.fnutils.find(usbDevices, isDeviceMoonlander) ~= nil
-  
-  moonlanderDetected(moonlanderConnected)  
+local function searchMoonlander()
+    local usbDevices = hs.usb.attachedDevices()
+    local moonlanderConnected = hs.fnutils.find(usbDevices, isDeviceMoonlander) ~= nil
+
+    moonlanderDetected(moonlanderConnected)
 end
 
 searchMoonlander()
 
-usbWatcher = hs.usb.watcher.new(function(event)
-  if event.productName == "Moonlander Mark I" then
-    moonlanderDetected(event.eventType == "added")
-  end
-end):start()
-
-caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
-  if event == hs.caffeinate.watcher.systemDidWake then
-    searchMoonlander()
-  end
-end):start()
-
-----------------------------------------------------------------------------------------------------
--- Shortcuts
-----------------------------------------------------------------------------------------------------
-
-local hyperModifier = {"cmd", "shift", "ctrl", "alt"}
-local windowModifier = {"ctrl", "alt"}
-
-function maximizeCurrentWindow() 
-  hs.window.focusedWindow():maximize() 
-end
-
-function moveCurrentWindowToNextScreen()
-  local win = hs.window.focusedWindow()
-  win:moveToScreen(win:screen():next())
-end
-
-function moveCurrentWindowToLeftHalf()
-  local win = hs.window.focusedWindow()
-  local screenFrame = win:screen():frame()
-  win:setFrame(hs.geometry.rect(screenFrame.x, screenFrame.y, screenFrame.w / 2, screenFrame.h))
-end
-
-function moveCurrentWindowToRightHalf()
-  local win = hs.window.focusedWindow()
-  local screenFrame = win:screen():frame()
-  win:setFrame(hs.geometry.rect(screenFrame.x + screenFrame.w / 2, screenFrame.y, screenFrame.w / 2, screenFrame.h))
-end
-
-function moveMouseToWindowCenter()
-  local windowCenter = hs.window.frontmostWindow():frame().center
-  hs.mouse.absolutePosition(windowCenter)
-end
-
-function moveMouseToUpperLeft()
-  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h / 4))
-end
-
-function moveMouseToUpperRight()
-  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h / 4))
-end
-
-function moveMouseToLowerLeft()
-  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h * 3 / 4))
-end
-
-function moveMouseToLowerRight()
-  local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-  hs.mouse.absolutePosition(hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4))
-end
-
-hs.hotkey.bind(hyperModifier, "[", moveMouseToWindowCenter)
-hs.hotkey.bind(hyperModifier, "m", moveMouseToUpperLeft)
-hs.hotkey.bind(hyperModifier, "o", moveMouseToUpperRight)
-hs.hotkey.bind(hyperModifier, "up", moveMouseToLowerLeft)
-hs.hotkey.bind(hyperModifier, "down", moveMouseToLowerRight)
-hs.hotkey.bind(hyperModifier, "delete", function() hs.caffeinate.lockScreen() end)
-hs.hotkey.bind(hyperModifier, "a", function() hs.application.launchOrFocusByBundleID("com.apple.ActivityMonitor") end)
-hs.hotkey.bind(hyperModifier, "c", function() hs.application.launchOrFocusByBundleID("com.apple.Safari") end)
-hs.hotkey.bind(hyperModifier, "d", function() hs.application.launchOrFocusByBundleID("com.microsoft.VSCode") end)
-hs.hotkey.bind(hyperModifier, "f", function() hs.application.launchOrFocusByBundleID("com.apple.finder") end)
-hs.hotkey.bind(hyperModifier, "g", function() hs.application.launchOrFocusByBundleID("com.fournova.Tower3") end)
-hs.hotkey.bind(hyperModifier, "p", function() hs.application.launchOrFocusByBundleID("com.postmanlabs.mac") end)
-hs.hotkey.bind(hyperModifier, "r", function() hs.application.launchOrFocusByBundleID("com.reederapp.5.macOS") end)
-hs.hotkey.bind(hyperModifier, "s", function() hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac") end)
-hs.hotkey.bind(hyperModifier, "t", function() hs.application.launchOrFocusByBundleID("com.googlecode.iterm2") end)
-hs.hotkey.bind(hyperModifier, "v", function() hs.application.launchOrFocusByBundleID("com.microsoft.Outlook") end)
-hs.hotkey.bind(hyperModifier, "w", function() hs.application.launchOrFocusByBundleID("com.jetbrains.intellij") end)
-hs.hotkey.bind(hyperModifier, "x", function() hs.application.launchOrFocusByBundleID("com.microsoft.Teams") end)
-hs.hotkey.bind({'cmd'}, "\\", function()
-  local application = hs.application.frontmostApplication()
-  if (application:bundleID() == "com.markmcguill.strongbox.mac") then
-    application:hide()
-  else
-    hs.application.launchOrFocusByBundleID("com.markmcguill.strongbox.mac")
-  end
+local usbWatcher = hs.usb.watcher.new(function(event)
+    if event.productName == usbDevice.moonlander then
+        moonlanderDetected(event.eventType == "added")
+    end
 end)
+usbWatcher:start()
+
+local caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+    if event == hs.caffeinate.watcher.systemDidWake then
+        searchMoonlander()
+    end
+end)
+caffeinateWatcher:start()
+
+----------------------------------------------------------------------------------------------------
+-- Keyboard Shortcuts
+----------------------------------------------------------------------------------------------------
+
+hs.hotkey.bind(modifiers.window, hs.keycodes.map.left, moveCurrentWindowToLeftHalf)
+hs.hotkey.bind(modifiers.window, hs.keycodes.map.right, moveCurrentWindowToRightHalf)
+hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], maximizeCurrentWindow)
+hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
+
+hs.hotkey.bind(modifiers.hyper, "[", moveMouseToWindowCenter)
+hs.hotkey.bind(modifiers.hyper, "m", moveMouseToUpperLeft)
+hs.hotkey.bind(modifiers.hyper, "o", moveMouseToUpperRight)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.up, moveMouseToLowerLeft)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.down, moveMouseToLowerRight)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.delete, function() hs.caffeinate.lockScreen() end)
+hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
+hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
+hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
+hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
+hs.hotkey.bind(modifiers.hyper, "g", function() hs.application.launchOrFocusByBundleID(bundleID.tower) end)
+hs.hotkey.bind(modifiers.hyper, "p", function() hs.application.launchOrFocusByBundleID(bundleID.postman) end)
+hs.hotkey.bind(modifiers.hyper, "r", function() hs.application.launchOrFocusByBundleID(bundleID.reeder) end)
+hs.hotkey.bind(modifiers.hyper, "s", function() hs.application.launchOrFocusByBundleID(bundleID.strongbox) end)
+hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBundleID(bundleID.iterm) end)
+hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
+hs.hotkey.bind(modifiers.hyper, "w", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
+hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
+hs.hotkey.bind({ modifier.cmd }, "\\", function()
+    local application = hs.application.frontmostApplication()
+
+    if application:bundleID() == bundleID.strongbox then
+        application:hide()
+    else
+        hs.application.launchOrFocusByBundleID(bundleID.strongbox)
+    end
+end)
+
+----------------------------------------------------------------------------------------------------
+-- Mouse Shortcuts
+----------------------------------------------------------------------------------------------------
+
+local function handleMouse2()
+    local application = hs.application.frontmostApplication()
+
+    -- Safari: Close tab
+    if application:bundleID() == bundleID.safari then
+        hs.eventtap.keyStroke({ modifier.cmd }, "w")
+
+        -- Teams: End call
+    elseif application:bundleID() == bundleID.teams then
+        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "h")
+
+        -- Spotify: Toggle play
+    elseif application:bundleID() == bundleID.spotify then
+        hs.eventtap.keyStroke({}, "space")
+    end
+end
+
+local function handleMouse3()
+    local application = hs.application.frontmostApplication()
+
+    -- Safari: Back
+    if application:bundleID() == bundleID.safari then
+        if languageIsGerman() then
+            application:selectMenuItem({ "Verlauf", "Zurück" })
+        else
+            application:selectMenuItem({ "History", "Back" })
+        end
+
+        -- Teams: Toggle mute
+    elseif application:bundleID() == bundleID.teams then
+        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "m")
+
+        -- Spotify: Next
+    elseif application:bundleID() == bundleID.spotify then
+        hs.eventtap.keyStroke({ modifier.cmd }, "right")
+
+        -- Reeder: Open in Safari
+    elseif application:bundleID() == bundleID.reeder then
+        hs.eventtap.keyStroke({}, "b")
+
+        -- Other: Copy to clipboard
+    else
+        hs.eventtap.keyStroke({ "cmd" }, "c")
+    end
+end
+
+local function handleMouse4()
+    local application = hs.application.frontmostApplication()
+
+    -- Safari: Forward
+    if application:bundleID() == bundleID.safari then
+        if languageIsGerman() then
+            application:selectMenuItem({ "Verlauf", "Vorwärts" })
+        else
+            application:selectMenuItem({ "History", "Forward" })
+        end
+
+        -- Teams: Toggle video
+    elseif application:bundleID() == bundleID.teams then
+        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "o")
+
+        -- Spotify: Previous
+    elseif application:bundleID() == bundleID.spotify then
+        hs.eventtap.keyStroke({ modifier.cmd }, "left")
+
+        -- Reeder: Mark all as read
+    elseif application:bundleID() == bundleID.reeder then
+        hs.eventtap.keyStroke({}, "a")
+
+        -- Other: Paste from clipboard
+    else
+        hs.eventtap.keyStroke({ modifier.cmd }, "v")
+    end
+end
+
+local mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
+    if event:getButtonState(2) then
+        handleMouse2()
+    elseif event:getButtonState(3) then
+        handleMouse3()
+    elseif event:getButtonState(4) then
+        handleMouse4()
+    end
+    return true
+end)
+mouseTap:start()
+
+----------------------------------------------------------------------------------------------------
+-- Clipboard Manager
+----------------------------------------------------------------------------------------------------
+
+local clipboard = require("clipboard")
+clipboard:start()
+
+hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
+hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard:clearAll() end)
