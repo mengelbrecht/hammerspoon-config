@@ -117,13 +117,11 @@ local function shouldIgnoreLatestPasteboardEntry()
 end
 
 local function handleNewPasteboardContent(content)
-    if shouldIgnoreLatestPasteboardEntry() then
+    if shouldIgnoreLatestPasteboardEntry() or content == nil then
         return
     end
 
-    if content ~= nil then
-        addContentToClipboardHistory(content)
-    end
+    addContentToClipboardHistory(content)
 end
 
 function clipboard.start()
