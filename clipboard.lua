@@ -101,16 +101,12 @@ local function populateChooser()
 end
 
 local function shouldIgnoreLatestPasteboardEntry()
-    for _, v in ipairs(hs.pasteboard.pasteboardTypes()) do
-        if clipboard.ignoredIdentifiers[v] then
-            return true
-        end
+    if hs.fnutils.some(hs.pasteboard.pasteboardTypes(), function(v) return clipboard.ignoredIdentifiers[v] end) then
+        return true
     end
 
-    for _, v in ipairs(hs.pasteboard.contentTypes()) do
-        if clipboard.ignoredIdentifiers[v] then
-            return true
-        end
+    if hs.fnutils.some(hs.pasteboard.contentTypes(), function(v) return clipboard.ignoredIdentifiers[v] end) then
+        return true
     end
 
     if clipboard.ignoredApplications[hs.application.frontmostApplication():bundleID()] then
