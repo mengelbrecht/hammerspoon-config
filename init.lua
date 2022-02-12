@@ -13,7 +13,8 @@ hs.window.animationDuration = 0
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
 configWatcher:start()
 
-local moonlanderModeActive = false
+local moonlanderMode = false
+local maximizeMode = true
 
 ----------------------------------------------------------------------------------------------------
 -- Utilities
@@ -115,8 +116,13 @@ local function menuItems()
         { title = "-" },
         {
             title = "Moonlander Mode",
-            checked = moonlanderModeActive,
-            fn = function() moonlanderDetected(not moonlanderModeActive) end
+            checked = moonlanderMode,
+            fn = function() moonlanderDetected(not moonlanderMode) end
+        },
+        {
+            title = "Maximize Mode",
+            checked = maximizeMode,
+            fn = function() maximizeMode = not maximizeMode end
         },
         { title = "-" },
         {
@@ -142,7 +148,7 @@ menu:setMenu(menuItems)
 -- Moonlander Detection
 ----------------------------------------------------------------------------------------------------
 
-local moonlanderMode = {
+local moonlanderModeConfig = {
     [false] = {
         keyboardLayout = "German",
         icon = hs.configdir .. "/assets/statusicon_off.tiff"
@@ -156,9 +162,9 @@ local moonlanderMode = {
 local function isDeviceMoonlander(device) return device.productName == usbDevice.moonlander end
 
 function moonlanderDetected(connected)
-    moonlanderModeActive = connected
-    hs.keycodes.setLayout(moonlanderMode[connected].keyboardLayout)
-    menu:setIcon(moonlanderMode[connected].icon)
+    moonlanderMode = connected
+    hs.keycodes.setLayout(moonlanderModeConfig[connected].keyboardLayout)
+    menu:setIcon(moonlanderModeConfig[connected].icon)
 end
 
 local function searchMoonlander()
@@ -183,6 +189,38 @@ caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
     end
 end)
 caffeinateWatcher:start()
+
+----------------------------------------------------------------------------------------------------
+-- Window Management
+----------------------------------------------------------------------------------------------------
+
+local applicationMaximized = {
+    ["Code"] = true,
+    ["Firefox"] = true,
+    ["IntelliJ IDEA"] = true,
+    ["Microsoft Outlook"] = true,
+    ["Microsoft Teams"] = true,
+    ["Music"] = true,
+    ["Postman"] = true,
+    ["Reeder"] = true,
+    ["Safari"] = true,
+    ["Strongbox"] = true,
+    ["Tower"] = true,
+}
+
+appWatcher = hs.application.watcher.new(function(applicationName, eventType, application)
+    if not maximizeMode then
+        return
+    end
+    local activated = (eventType == hs.application.watcher.activated)
+    if activated and applicationMaximized[applicationName] then
+        local window = application:focusedWindow()
+        if window ~= nil and window:isStandard() and window:frame().h > 300 then
+            window:maximize()
+        end
+    end
+end)
+appWatcher:start()
 
 ----------------------------------------------------------------------------------------------------
 -- Keyboard Shortcuts
