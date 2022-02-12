@@ -10,7 +10,7 @@ hs.uploadCrashData(false)
 
 hs.window.animationDuration = 0
 
-local configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
+configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
 configWatcher:start()
 
 local moonlanderModeActive = false
@@ -134,7 +134,7 @@ local function menuItems()
     }
 end
 
-local menu = hs.menubar.new()
+menu = hs.menubar.new()
 menu:setMenu(menuItems)
 
 ----------------------------------------------------------------------------------------------------
@@ -169,14 +169,14 @@ end
 
 searchMoonlander()
 
-local usbWatcher = hs.usb.watcher.new(function(event)
+usbWatcher = hs.usb.watcher.new(function(event)
     if event.productName == usbDevice.moonlander then
         moonlanderDetected(event.eventType == "added")
     end
 end)
 usbWatcher:start()
 
-local caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
     if event == hs.caffeinate.watcher.systemDidWake then
         searchMoonlander()
     end
@@ -299,7 +299,7 @@ local function handleMouse4()
     end
 end
 
-local mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
+mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
     if event:getButtonState(2) then
         handleMouse2()
     elseif event:getButtonState(3) then
@@ -315,7 +315,7 @@ mouseTap:start()
 -- Clipboard Manager
 ----------------------------------------------------------------------------------------------------
 
-local clipboard = require("clipboard")
+clipboard = require("clipboard")
 clipboard:start()
 
 hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
