@@ -35,6 +35,7 @@ local modifiers = {
 local bundleID = {
     activityMonitor = "com.apple.ActivityMonitor",
     finder = "com.apple.finder",
+    firefox = "org.mozilla.firefox",
     intellij = "com.jetbrains.intellij",
     iterm = "com.googlecode.iterm2",
     outlook = "com.microsoft.Outlook",
@@ -230,6 +231,10 @@ local function handleMouse2()
     -- Safari: Close tab
     if application:bundleID() == bundleID.safari then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
+    
+        -- Firefox: Close tab
+    elseif application:bundleID() == bundleID.firefox then
+        hs.eventtap.keyStroke({ modifier.cmd }, "w")
 
         -- Teams: End call
     elseif application:bundleID() == bundleID.teams then
@@ -251,6 +256,10 @@ local function handleMouse3()
         else
             application:selectMenuItem({ "History", "Back" })
         end
+    
+        -- Firefox: Back
+    elseif application:bundleID() == bundleID.firefox then
+        hs.eventtap.keyStroke({ modifier.cmd }, "left")
 
         -- Teams: Toggle mute
     elseif application:bundleID() == bundleID.teams then
@@ -280,6 +289,10 @@ local function handleMouse4()
         else
             application:selectMenuItem({ "History", "Forward" })
         end
+    
+        -- Firefox: Forward
+    elseif application:bundleID() == bundleID.firefox then
+        hs.eventtap.keyStroke({ modifier.cmd }, "right")
 
         -- Teams: Toggle video
     elseif application:bundleID() == bundleID.teams then
