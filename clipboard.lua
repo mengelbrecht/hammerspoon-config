@@ -32,7 +32,6 @@ clipboard.clearHistoryItem = {
 ----------------------------------------------------------------------
 
 local itemSetting = "clipboard.items"
-local pasteboardWatcher
 local clipboardHistory
 local chooser
 local previousFocusedWindow
