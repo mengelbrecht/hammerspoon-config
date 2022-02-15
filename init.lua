@@ -194,33 +194,27 @@ caffeinateWatcher:start()
 -- Window Management
 ----------------------------------------------------------------------------------------------------
 
-local applicationMaximized = {
-    ["Code"] = true,
-    ["Firefox"] = true,
-    ["IntelliJ IDEA"] = true,
-    ["Microsoft Outlook"] = true,
-    ["Microsoft Teams"] = true,
-    ["Music"] = true,
-    ["Postman"] = true,
-    ["Reeder"] = true,
-    ["Safari"] = true,
-    ["Strongbox"] = true,
-    ["Tower"] = true,
-}
-
-appWatcher = hs.application.watcher.new(function(applicationName, eventType, application)
-    if not maximizeMode then
-        return
-    end
-    local activated = (eventType == hs.application.watcher.activated)
-    if activated and applicationMaximized[applicationName] then
-        local window = application:focusedWindow()
-        if window ~= nil and window:isStandard() and window:frame().h > 300 then
-            window:maximize()
-        end
+windowFilter = hs.window.filter.new({
+    "App Store",
+    "Code",
+    "Firefox",
+    "IntelliJ IDEA",
+    "Mail",
+    "Microsoft Outlook",
+    "Microsoft Teams",
+    "Music",
+    "Musik",
+    "Postman",
+    "Reeder",
+    "Safari",
+    "Strongbox",
+    "Tower",
+})
+windowFilter:subscribe({ hs.window.filter.windowCreated, hs.window.filter.windowFocused }, function(window)
+    if window ~= nil and window:isStandard() and window:frame().h > 300 then
+        window:maximize()
     end
 end)
-appWatcher:start()
 
 ----------------------------------------------------------------------------------------------------
 -- Keyboard Shortcuts
@@ -269,7 +263,7 @@ local function handleMouse2()
     -- Safari: Close tab
     if application:bundleID() == bundleID.safari then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
-    
+
         -- Firefox: Close tab
     elseif application:bundleID() == bundleID.firefox then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
@@ -294,7 +288,7 @@ local function handleMouse3()
         else
             application:selectMenuItem({ "History", "Back" })
         end
-    
+
         -- Firefox: Back
     elseif application:bundleID() == bundleID.firefox then
         hs.eventtap.keyStroke({ modifier.cmd }, "left")
@@ -327,7 +321,7 @@ local function handleMouse4()
         else
             application:selectMenuItem({ "History", "Forward" })
         end
-    
+
         -- Firefox: Forward
     elseif application:bundleID() == bundleID.firefox then
         hs.eventtap.keyStroke({ modifier.cmd }, "right")
