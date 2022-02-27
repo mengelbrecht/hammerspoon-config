@@ -194,6 +194,20 @@ caffeinateWatcher:start()
 -- Window Management
 ----------------------------------------------------------------------------------------------------
 
+hs.window.filter.ignoreAlways = {
+    ["Mail Web Content"] = true,
+    ["Mail-Webinhalt"] = true,
+    ["QLPreviewGenerationExtension (Finder)"] = true,
+    ["Reeder Web Content"] = true,
+    ["Reeder-Webinhalt"] = true,
+    ["Safari Web Content (Cached)"] = true,
+    ["Safari Web Content (Prewarmed)"] = true,
+    ["Safari Web Content"] = true,
+    ["Safari-Webinhalt (im Cache)"] = true,
+    ["Safari-Webinhalt (vorgeladen)"] = true,
+    ["Safari-Webinhalt"] = true,
+    ["Strongbox (Safari)"] = true,
+}
 windowFilter = hs.window.filter.new({
     "App Store",
     "Code",
