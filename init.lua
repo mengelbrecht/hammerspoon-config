@@ -230,7 +230,7 @@ windowFilter = hs.window.filter.new({
     "Tower",
 })
 windowFilter:subscribe({ hs.window.filter.windowCreated, hs.window.filter.windowFocused }, function(window)
-    if window ~= nil and window:isStandard() and window:frame().h > 300 then
+    if window ~= nil and window:isStandard() and window:frame().h > 500 then
         window:maximize()
     end
 end)
