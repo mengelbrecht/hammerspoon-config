@@ -37,6 +37,7 @@ local bundleID = {
     activityMonitor = "com.apple.ActivityMonitor",
     finder = "com.apple.finder",
     firefox = "org.mozilla.firefox",
+    googleChrome = "com.google.Chrome",
     intellij = "com.jetbrains.intellij",
     iterm = "com.googlecode.iterm2",
     outlook = "com.microsoft.Outlook",
@@ -219,6 +220,7 @@ windowFilter = hs.window.filter.new({
     "Firefox",
     "Fork",
     "Fotos",
+    "Google Chrome",
     "IntelliJ IDEA",
     "Mail",
     "Microsoft Outlook",
@@ -292,6 +294,10 @@ local function handleMouse2()
     elseif application:bundleID() == bundleID.safariTechnologyPreview then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
 
+        -- Google Chrome: Close tab
+    elseif application:bundleID() == bundleID.googleChrome then
+        hs.eventtap.keyStroke({ modifier.cmd }, "w")
+
         -- Firefox: Close tab
     elseif application:bundleID() == bundleID.firefox then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
@@ -320,6 +326,14 @@ local function handleMouse3()
         -- Safari Technology Preview: Back
     elseif application:bundleID() == bundleID.safariTechnologyPreview then
         application:selectMenuItem({ "History", "Back" })
+
+        -- Google Chrome: Back
+    elseif application:bundleID() == bundleID.googleChrome then
+        if languageIsGerman() then
+            application:selectMenuItem({ "Verlauf", "Zurück" })
+        else
+            application:selectMenuItem({ "History", "Back" })
+        end
 
         -- Firefox: Back
     elseif application:bundleID() == bundleID.firefox then
@@ -357,6 +371,14 @@ local function handleMouse4()
         -- Safari Technology Preview: Forward
     elseif application:bundleID() == bundleID.safariTechnologyPreview then
         application:selectMenuItem({ "History", "Forward" })
+
+        -- Google Chrome: Forward
+    elseif application:bundleID() == bundleID.googleChrome then
+        if languageIsGerman() then
+            application:selectMenuItem({ "Verlauf", "Vorwärts" })
+        else
+            application:selectMenuItem({ "History", "Forward" })
+        end
 
         -- Firefox: Forward
     elseif application:bundleID() == bundleID.firefox then
