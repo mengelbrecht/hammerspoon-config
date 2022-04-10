@@ -43,6 +43,7 @@ local bundleID = {
     postman = "com.postmanlabs.mac",
     reeder = "com.reederapp.5.macOS",
     safari = "com.apple.Safari",
+    safariTechnologyPreview = "com.apple.SafariTechnologyPreview",
     spotify = "com.spotify.client",
     strongbox = "com.markmcguill.strongbox.mac",
     teams = "com.microsoft.teams",
@@ -203,6 +204,9 @@ hs.window.filter.ignoreAlways = {
     ["Safari Web Content (Cached)"] = true,
     ["Safari Web Content (Prewarmed)"] = true,
     ["Safari Web Content"] = true,
+    ["Safari Technology Preview Web Content (Cached)"] = true,
+    ["Safari Technology Preview Web Content (Prewarmed)"] = true,
+    ["Safari Technology Preview Web Content"] = true,
     ["Safari-Webinhalt (im Cache)"] = true,
     ["Safari-Webinhalt (vorgeladen)"] = true,
     ["Safari-Webinhalt"] = true,
@@ -225,6 +229,7 @@ windowFilter = hs.window.filter.new({
     "Postman",
     "Reeder",
     "Safari",
+    "Safari Technology Preview",
     "Spotify",
     "Strongbox",
     "Tower",
@@ -251,7 +256,7 @@ hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.up, moveMouseToLowerLeft)
 hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.down, moveMouseToLowerRight)
 hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.delete, function() hs.caffeinate.lockScreen() end)
 hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
-hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
+hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.safariTechnologyPreview) end)
 hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
 hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
 hs.hotkey.bind(modifiers.hyper, "g", function() hs.application.launchOrFocusByBundleID(bundleID.tower) end)
@@ -283,6 +288,10 @@ local function handleMouse2()
     if application:bundleID() == bundleID.safari then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
 
+        -- Safari Technology Preview: Close tab
+    elseif application:bundleID() == bundleID.safariTechnologyPreview then
+        hs.eventtap.keyStroke({ modifier.cmd }, "w")
+
         -- Firefox: Close tab
     elseif application:bundleID() == bundleID.firefox then
         hs.eventtap.keyStroke({ modifier.cmd }, "w")
@@ -307,6 +316,10 @@ local function handleMouse3()
         else
             application:selectMenuItem({ "History", "Back" })
         end
+
+        -- Safari Technology Preview: Back
+    elseif application:bundleID() == bundleID.safariTechnologyPreview then
+        application:selectMenuItem({ "History", "Back" })
 
         -- Firefox: Back
     elseif application:bundleID() == bundleID.firefox then
@@ -340,6 +353,10 @@ local function handleMouse4()
         else
             application:selectMenuItem({ "History", "Forward" })
         end
+
+        -- Safari Technology Preview: Forward
+    elseif application:bundleID() == bundleID.safariTechnologyPreview then
+        application:selectMenuItem({ "History", "Forward" })
 
         -- Firefox: Forward
     elseif application:bundleID() == bundleID.firefox then
