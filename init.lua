@@ -76,6 +76,11 @@ local function moveCurrentWindowToRightHalf()
     win:setFrame(newFrame)
 end
 
+local function moveCurentWindowToNextScreen()
+    local win = hs.window.focusedWindow()
+    win:moveToScreen(win:screen():next())
+end
+
 local function moveMouseToWindowCenter()
     local windowCenter = hs.window.frontmostWindow():frame().center
     hs.mouse.absolutePosition(windowCenter)
@@ -248,6 +253,7 @@ end)
 
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.left, moveCurrentWindowToLeftHalf)
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.right, moveCurrentWindowToRightHalf)
+hs.hotkey.bind(modifiers.window, hs.keycodes.map.down, moveCurentWindowToNextScreen)
 hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], maximizeCurrentWindow)
 hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
 
