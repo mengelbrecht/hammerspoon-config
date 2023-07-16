@@ -48,6 +48,10 @@ local bundleID = {
     vsCode = "com.microsoft.VSCode",
 }
 
+local font = {
+    monospace = "Pragmasevka"
+}
+
 local usbDevice = {
     moonlander = "Moonlander Mark I"
 }
@@ -414,3 +418,18 @@ clipboard:start()
 
 hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
 hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard:clearAll() end)
+
+----------------------------------------------------------------------------------------------------
+-- Window Switcher
+----------------------------------------------------------------------------------------------------
+
+windowSwitcher = hs.window.switcher.new()
+windowSwitcher.ui.showSelectedTitle = false
+windowSwitcher.ui.showThumbnails = false
+windowSwitcher.ui.showSelectedThumbnail = false
+windowSwitcher.ui.fontName = font.monospace
+windowSwitcher.ui.titleBackgroundColor = {0,0,0,0.5}
+
+hs.hotkey.bind({ modifier.option }, 'tab', function() windowSwitcher:next() end)
+hs.hotkey.bind({ modifier.option, modifier.shift }, 'tab', function() windowSwitcher:previous() end)
+
