@@ -245,7 +245,7 @@ end)
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.left, moveCurrentWindowToLeftHalf)
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.right, moveCurrentWindowToRightHalf)
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.down, moveCurentWindowToNextScreen)
-hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], maximizeCurrentWindow)
+hs.hotkey.bind(modifiers.window, hs.keycodes.map.up, maximizeCurrentWindow)
 hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
 
 hs.hotkey.bind(modifiers.hyper, "[", moveMouseToWindowCenter)
@@ -433,3 +433,13 @@ windowSwitcher.ui.titleBackgroundColor = {0,0,0,0.5}
 hs.hotkey.bind({ modifier.option }, 'tab', function() windowSwitcher:next() end)
 hs.hotkey.bind({ modifier.option, modifier.shift }, 'tab', function() windowSwitcher:previous() end)
 
+----------------------------------------------------------------------------------------------------
+-- Hints
+----------------------------------------------------------------------------------------------------
+
+hs.hints.fontName = font.monospace
+hs.hints.fontSize = 16.0
+hs.hints.hintChars = { "R", "S", "T", "N", "E", "I", "G", "M", "O", "A", "F", "P", "U", "Y", "W", "L", "C", "D", "K", "H", "X", "V", "Q" }
+hs.hints.showTitleThresh = 10
+
+hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
