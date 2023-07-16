@@ -439,7 +439,7 @@ hs.hotkey.bind({ modifier.option, modifier.shift }, 'tab', function() windowSwit
 
 hs.hints.fontName = font.monospace
 hs.hints.fontSize = 16.0
-hs.hints.hintChars = { "R", "S", "T", "N", "E", "I", "G", "M", "O", "A", "F", "P", "U", "Y", "W", "L", "C", "D", "K", "H", "X", "V", "Q" }
-hs.hints.showTitleThresh = 10
+hs.hints.showTitleThresh = 7
+hs.hints.style = "vimperator"
 
 hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
