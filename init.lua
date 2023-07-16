@@ -202,6 +202,7 @@ caffeinateWatcher:start()
 ----------------------------------------------------------------------------------------------------
 
 hs.window.filter.ignoreAlways = {
+    ["Family"] = true,
     ["Mail Web Content"] = true,
     ["Mail-Webinhalt"] = true,
     ["Reeder Web Content"] = true,
@@ -213,6 +214,7 @@ hs.window.filter.ignoreAlways = {
     ["Safari-Webinhalt (vorgeladen)"] = true,
     ["Safari-Webinhalt"] = true,
 }
+
 windowFilter = hs.window.filter.new({
     "App Store",
     "Code",
