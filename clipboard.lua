@@ -36,10 +36,6 @@ local clipboardHistory
 local chooser
 local previousFocusedWindow
 
-local function loadHistory() return hs.settings.get(itemSetting) or {} end
-
-local function saveHistory() hs.settings.set(itemSetting, clipboardHistory) end
-
 local function getItem(content)
     return {
         text = content:gsub("\n", " "):gsub("%s+", " "),
@@ -68,7 +64,6 @@ end
 local function addContentToClipboardHistory(content)
     table.insert(clipboardHistory, 1, content)
     clipboardHistory = dedupeAndResize(clipboardHistory)
-    saveHistory()
 end
 
 local function processSelectedItem(value)
@@ -124,7 +119,7 @@ local function handleNewPasteboardContent(content)
 end
 
 function clipboard.start()
-    clipboardHistory = dedupeAndResize(loadHistory())
+    clipboardHistory = {}
 
     chooser = hs.chooser.new(processSelectedItem)
     chooser:choices(populateChooser)
@@ -137,7 +132,6 @@ end
 function clipboard.clearAll()
     hs.pasteboard.clearContents()
     clipboardHistory = {}
-    saveHistory()
 end
 
 function clipboard.toggleClipboard()
