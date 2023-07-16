@@ -40,16 +40,12 @@ local bundleID = {
     googleChrome = "com.google.Chrome",
     intellij = "com.jetbrains.intellij",
     iterm = "com.googlecode.iterm2",
+    kitty = "net.kovidgoyal.kitty",
     outlook = "com.microsoft.Outlook",
     postman = "com.postmanlabs.mac",
-    reeder = "com.reederapp.5.macOS",
     safari = "com.apple.Safari",
-    safariTechnologyPreview = "com.apple.SafariTechnologyPreview",
-    spotify = "com.spotify.client",
-    strongbox = "com.markmcguill.strongbox.mac",
     teams = "com.microsoft.teams",
-    tower = "com.fournova.Tower3",
-    vsCode = "com.microsoft.VSCode"
+    vsCode = "com.microsoft.VSCode",
 }
 
 local usbDevice = {
@@ -204,29 +200,23 @@ caffeinateWatcher:start()
 hs.window.filter.ignoreAlways = {
     ["Mail Web Content"] = true,
     ["Mail-Webinhalt"] = true,
-    ["QLPreviewGenerationExtension (Finder)"] = true,
     ["Reeder Web Content"] = true,
     ["Reeder-Webinhalt"] = true,
     ["Safari Web Content (Cached)"] = true,
     ["Safari Web Content (Prewarmed)"] = true,
     ["Safari Web Content"] = true,
-    ["Safari Technology Preview Web Content (Cached)"] = true,
-    ["Safari Technology Preview Web Content (Prewarmed)"] = true,
-    ["Safari Technology Preview Web Content"] = true,
     ["Safari-Webinhalt (im Cache)"] = true,
     ["Safari-Webinhalt (vorgeladen)"] = true,
     ["Safari-Webinhalt"] = true,
-    ["Strongbox (Safari)"] = true,
 }
 windowFilter = hs.window.filter.new({
     "App Store",
     "Code",
-    "DataGrip",
     "Firefox",
-    "Fork",
     "Fotos",
     "Google Chrome",
     "IntelliJ IDEA",
+    "kitty",
     "Mail",
     "Microsoft Outlook",
     "Microsoft Teams",
@@ -236,10 +226,7 @@ windowFilter = hs.window.filter.new({
     "Postman",
     "Reeder",
     "Safari",
-    "Safari Technology Preview",
     "Spotify",
-    "Strongbox",
-    "Tower",
 })
 windowFilter:subscribe({ hs.window.filter.windowCreated, hs.window.filter.windowFocused }, function(window)
     if maximizeMode and window ~= nil and window:isStandard() and window:frame().h > 500 then
@@ -264,14 +251,12 @@ hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.up, moveMouseToLowerLeft)
 hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.down, moveMouseToLowerRight)
 hs.hotkey.bind(modifiers.hyper, hs.keycodes.map.delete, function() hs.caffeinate.lockScreen() end)
 hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
-hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.safariTechnologyPreview) end)
+hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
 hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
 hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
-hs.hotkey.bind(modifiers.hyper, "g", function() hs.application.launchOrFocusByBundleID(bundleID.tower) end)
 hs.hotkey.bind(modifiers.hyper, "p", function() hs.application.launchOrFocusByBundleID(bundleID.postman) end)
 hs.hotkey.bind(modifiers.hyper, "r", function() hs.application.launchOrFocusByBundleID(bundleID.reeder) end)
-hs.hotkey.bind(modifiers.hyper, "s", function() hs.application.launchOrFocusByBundleID(bundleID.strongbox) end)
-hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBundleID(bundleID.iterm) end)
+hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
 hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
 hs.hotkey.bind(modifiers.hyper, "w", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
 hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
