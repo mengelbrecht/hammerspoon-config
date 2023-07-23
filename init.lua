@@ -43,6 +43,7 @@ local bundleID = {
     kitty = "net.kovidgoyal.kitty",
     outlook = "com.microsoft.Outlook",
     postman = "com.postmanlabs.mac",
+    reeder = "com.reederapp.5.macOS",
     safari = "com.apple.Safari",
     teams = "com.microsoft.teams",
     vsCode = "com.microsoft.VSCode",
