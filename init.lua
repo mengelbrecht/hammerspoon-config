@@ -266,15 +266,6 @@ hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBu
 hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
 hs.hotkey.bind(modifiers.hyper, "w", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
 hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
-hs.hotkey.bind({ modifier.cmd }, "\\", function()
-    local application = hs.application.frontmostApplication()
-
-    if application:bundleID() == bundleID.strongbox then
-        application:hide()
-    else
-        hs.application.launchOrFocusByBundleID(bundleID.strongbox)
-    end
-end)
 
 ----------------------------------------------------------------------------------------------------
 -- Mouse Shortcuts
