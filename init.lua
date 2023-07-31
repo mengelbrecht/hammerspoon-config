@@ -202,6 +202,8 @@ caffeinateWatcher:start()
 -- Window Management
 ----------------------------------------------------------------------------------------------------
 
+-- hs.inspect(hs.window._timed_allWindows())
+-- hs.window.filter._showCandidates()
 hs.window.filter.ignoreAlways = {
     ["AirPlayUIAgent"] = true,
     ["AXVisualSupportAgent"] = true,
