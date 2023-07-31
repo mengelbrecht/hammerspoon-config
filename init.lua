@@ -472,3 +472,4 @@ hs.hints.showTitleThresh = 7
 hs.hints.style = "vimperator"
 
 hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
