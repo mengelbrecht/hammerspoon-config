@@ -447,6 +447,8 @@ clipboard:start()
 
 hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
 hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard:clearAll() end)
+hs.hotkey.bind(modifiers.hyper, "o", function() clipboard:toggleClipboard() end)
+hs.hotkey.bind(modifiers.hyper, "j", function() clipboard:clearAll() end)
 
 ----------------------------------------------------------------------------------------------------
 -- Window Switcher
