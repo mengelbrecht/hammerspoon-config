@@ -290,18 +290,17 @@ hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
 hs.hotkey.bind(modifiers.hyper, "n", moveCurrentWindowToLeftHalf)
 hs.hotkey.bind(modifiers.hyper, "i", moveCurrentWindowToRightHalf)
 hs.hotkey.bind(modifiers.hyper, "e", moveCurentWindowToNextScreen)
-hs.hotkey.bind(modifiers.hyper, "u", maximizeCurrentWindow)
-hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
-hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
-hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
-hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
-hs.hotkey.bind(modifiers.hyper, "p", function() hs.application.launchOrFocusByBundleID(bundleID.postman) end)
+hs.hotkey.bind(modifiers.hyper, "o", maximizeCurrentWindow)
+hs.hotkey.bind(modifiers.hyper, "l", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
+hs.hotkey.bind(modifiers.hyper, "y", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
+hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
 hs.hotkey.bind(modifiers.hyper, "r", function() hs.application.launchOrFocusByBundleID(bundleID.reeder) end)
 hs.hotkey.bind(modifiers.hyper, "s", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
 hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
-hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
 hs.hotkey.bind(modifiers.hyper, "w", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
-hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
+hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
+hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
+hs.hotkey.bind(modifiers.hyper, "k", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
 
 ----------------------------------------------------------------------------------------------------
 -- Mouse Shortcuts
@@ -447,8 +446,8 @@ clipboard:start()
 
 hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
 hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard:clearAll() end)
-hs.hotkey.bind(modifiers.hyper, "o", function() clipboard:toggleClipboard() end)
-hs.hotkey.bind(modifiers.hyper, "j", function() clipboard:clearAll() end)
+hs.hotkey.bind(modifiers.hyper, "a", function() clipboard:toggleClipboard() end)
+hs.hotkey.bind(modifiers.hyper, "z", function() clipboard:clearAll() end)
 
 ----------------------------------------------------------------------------------------------------
 -- Window Switcher
