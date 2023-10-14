@@ -53,10 +53,6 @@ local font = {
     monospace = "Pragmasevka"
 }
 
-local usbDevice = {
-    moonlander = "Moonlander Mark I"
-}
-
 local function languageIsGerman() return hs.host.locale.preferredLanguages()[1]:sub(0, 2) == "de" end
 
 local function maximizeCurrentWindow() hs.window.focusedWindow():maximize() end
@@ -123,11 +119,6 @@ local function menuItems()
         },
         { title = "-" },
         {
-            title = "Moonlander Mode",
-            checked = moonlanderMode,
-            fn = function() moonlanderDetected(not moonlanderMode) end
-        },
-        {
             title = "Maximize Mode",
             checked = maximizeMode,
             fn = function() maximizeMode = not maximizeMode end
@@ -151,52 +142,7 @@ end
 
 menu = hs.menubar.new()
 menu:setMenu(menuItems)
-
-----------------------------------------------------------------------------------------------------
--- Moonlander Detection
-----------------------------------------------------------------------------------------------------
-
-local moonlanderModeConfig = {
-    [false] = {
-        keyboardLayout = "German",
-        icon = hs.configdir .. "/assets/statusicon_off.tiff"
-    },
-    [true] = {
-        keyboardLayout = "U.S.",
-        icon = hs.configdir .. "/assets/statusicon_on.tiff"
-    }
-}
-
-local function isDeviceMoonlander(device) return device.productName == usbDevice.moonlander end
-
-function moonlanderDetected(connected)
-    moonlanderMode = connected
-    hs.keycodes.setLayout(moonlanderModeConfig[connected].keyboardLayout)
-    menu:setIcon(moonlanderModeConfig[connected].icon)
-end
-
-local function searchMoonlander()
-    local usbDevices = hs.usb.attachedDevices()
-    local moonlanderConnected = hs.fnutils.find(usbDevices, isDeviceMoonlander) ~= nil
-
-    moonlanderDetected(moonlanderConnected)
-end
-
-searchMoonlander()
-
-usbWatcher = hs.usb.watcher.new(function(event)
-    if event.productName == usbDevice.moonlander then
-        moonlanderDetected(event.eventType == "added")
-    end
-end)
-usbWatcher:start()
-
-caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
-    if event == hs.caffeinate.watcher.systemDidWake then
-        searchMoonlander()
-    end
-end)
-caffeinateWatcher:start()
+menu:setIcon(hs.configdir .. "/assets/statusicon_on.tiff")
 
 ----------------------------------------------------------------------------------------------------
 -- Window Management
