@@ -200,8 +200,10 @@ hs.window.filter.ignoreAlways = {
 
 windowFilter = hs.window.filter.new({
     "App Store",
+    "Brave Browser",
     "Code",
     "Firefox",
+    "Fork",
     "Fotos",
     "Google Chrome",
     "IntelliJ IDEA",
