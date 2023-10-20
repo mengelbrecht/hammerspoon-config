@@ -28,7 +28,7 @@ local modifier = {
 }
 
 local modifiers = {
-    meh = { modifier.shift, modifier.ctrl, modifier.option },
+    hyper = { modifier.shift, modifier.ctrl, modifier.option, modifier.cmd },
     window = { modifier.ctrl, modifier.option },
     clipboard = { modifier.ctrl, modifier.cmd }
 }
@@ -85,25 +85,25 @@ end
 
 local function moveMouseToUpperLeft()
     local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h / 4)
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 6, screenFrame.y + screenFrame.h / 6)
     hs.mouse.absolutePosition(newPoint)
 end
 
 local function moveMouseToUpperRight()
     local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h / 4)
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 5 / 6, screenFrame.y + screenFrame.h / 6)
     hs.mouse.absolutePosition(newPoint)
 end
 
 local function moveMouseToLowerLeft()
     local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 4, screenFrame.y + screenFrame.h * 3 / 4)
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w / 6, screenFrame.y + screenFrame.h * 5 / 6)
     hs.mouse.absolutePosition(newPoint)
 end
 
 local function moveMouseToLowerRight()
     local screenFrame = (hs.window.focusedWindow():screen() or hs.screen.primaryScreen()):frame()
-    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 3 / 4, screenFrame.y + screenFrame.h * 3 / 4)
+    local newPoint = hs.geometry.point(screenFrame.x + screenFrame.w * 5 / 6, screenFrame.y + screenFrame.h * 5 / 6)
     hs.mouse.absolutePosition(newPoint)
 end
 
@@ -235,17 +235,22 @@ hs.hotkey.bind(modifiers.window, hs.keycodes.map.down, moveCurentWindowToNextScr
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.up, maximizeCurrentWindow)
 hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
 
-hs.hotkey.bind(modifiers.meh, "n", moveCurrentWindowToLeftHalf)
-hs.hotkey.bind(modifiers.meh, "i", moveCurrentWindowToRightHalf)
-hs.hotkey.bind(modifiers.meh, "e", moveCurentWindowToNextScreen)
-hs.hotkey.bind(modifiers.meh, "o", maximizeCurrentWindow)
-hs.hotkey.bind(modifiers.meh, "8", centerCurrentWindow)
-hs.hotkey.bind(modifiers.meh, ",", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
-hs.hotkey.bind(modifiers.meh, "u", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
-hs.hotkey.bind(modifiers.meh, "f", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
-hs.hotkey.bind(modifiers.meh, "m", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
-hs.hotkey.bind(modifiers.meh, "a", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
-hs.hotkey.bind(modifiers.meh, "h", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
+hs.hotkey.bind(modifiers.hyper, "n", moveCurrentWindowToLeftHalf)
+hs.hotkey.bind(modifiers.hyper, "i", moveCurrentWindowToRightHalf)
+hs.hotkey.bind(modifiers.hyper, "e", moveCurentWindowToNextScreen)
+hs.hotkey.bind(modifiers.hyper, "o", maximizeCurrentWindow)
+hs.hotkey.bind(modifiers.hyper, "8", centerCurrentWindow)
+hs.hotkey.bind(modifiers.hyper, "l", moveMouseToUpperLeft)
+hs.hotkey.bind(modifiers.hyper, "p", moveMouseToUpperRight)
+hs.hotkey.bind(modifiers.hyper, "r", moveMouseToLowerLeft)
+hs.hotkey.bind(modifiers.hyper, "t", moveMouseToLowerRight)
+hs.hotkey.bind(modifiers.hyper, "s", moveMouseToWindowCenter)
+hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
+hs.hotkey.bind(modifiers.hyper, "u", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
+hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
+hs.hotkey.bind(modifiers.hyper, "m", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
+hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
+hs.hotkey.bind(modifiers.hyper, "h", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
 
 ----------------------------------------------------------------------------------------------------
 -- Mouse Shortcuts
@@ -416,4 +421,4 @@ hs.hints.showTitleThresh = 7
 hs.hints.style = "vimperator"
 
 hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
-hs.hotkey.bind(modifiers.meh, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
