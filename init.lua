@@ -28,7 +28,7 @@ local modifier = {
 }
 
 local modifiers = {
-    hyper = { modifier.cmd, modifier.shift, modifier.ctrl, modifier.option },
+    meh = { modifier.shift, modifier.ctrl, modifier.option },
     window = { modifier.ctrl, modifier.option },
     clipboard = { modifier.ctrl, modifier.cmd }
 }
@@ -235,20 +235,17 @@ hs.hotkey.bind(modifiers.window, hs.keycodes.map.down, moveCurentWindowToNextScr
 hs.hotkey.bind(modifiers.window, hs.keycodes.map.up, maximizeCurrentWindow)
 hs.hotkey.bind(modifiers.window, "c", centerCurrentWindow)
 
-hs.hotkey.bind(modifiers.hyper, "n", moveCurrentWindowToLeftHalf)
-hs.hotkey.bind(modifiers.hyper, "i", moveCurrentWindowToRightHalf)
-hs.hotkey.bind(modifiers.hyper, "e", moveCurentWindowToNextScreen)
-hs.hotkey.bind(modifiers.hyper, "o", maximizeCurrentWindow)
-hs.hotkey.bind(modifiers.hyper, "l", function() hs.application.launchOrFocusByBundleID(bundleID.activityMonitor) end)
-hs.hotkey.bind(modifiers.hyper, "y", function() hs.application.launchOrFocusByBundleID(bundleID.finder) end)
-hs.hotkey.bind(modifiers.hyper, "c", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
-hs.hotkey.bind(modifiers.hyper, "r", function() hs.application.launchOrFocusByBundleID(bundleID.reeder) end)
-hs.hotkey.bind(modifiers.hyper, "s", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
-hs.hotkey.bind(modifiers.hyper, "t", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
-hs.hotkey.bind(modifiers.hyper, "w", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
-hs.hotkey.bind(modifiers.hyper, "v", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
-hs.hotkey.bind(modifiers.hyper, "d", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
-hs.hotkey.bind(modifiers.hyper, "k", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
+hs.hotkey.bind(modifiers.meh, "n", moveCurrentWindowToLeftHalf)
+hs.hotkey.bind(modifiers.meh, "i", moveCurrentWindowToRightHalf)
+hs.hotkey.bind(modifiers.meh, "e", moveCurentWindowToNextScreen)
+hs.hotkey.bind(modifiers.meh, "o", maximizeCurrentWindow)
+hs.hotkey.bind(modifiers.meh, "8", centerCurrentWindow)
+hs.hotkey.bind(modifiers.meh, ",", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
+hs.hotkey.bind(modifiers.meh, "u", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
+hs.hotkey.bind(modifiers.meh, "f", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
+hs.hotkey.bind(modifiers.meh, "m", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
+hs.hotkey.bind(modifiers.meh, "a", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
+hs.hotkey.bind(modifiers.meh, "h", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
 
 ----------------------------------------------------------------------------------------------------
 -- Mouse Shortcuts
@@ -394,8 +391,6 @@ clipboard:start()
 
 hs.hotkey.bind(modifiers.clipboard, "v", function() clipboard:toggleClipboard() end)
 hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard:clearAll() end)
-hs.hotkey.bind(modifiers.hyper, "a", function() clipboard:toggleClipboard() end)
-hs.hotkey.bind(modifiers.hyper, "z", function() clipboard:clearAll() end)
 
 ----------------------------------------------------------------------------------------------------
 -- Window Switcher
@@ -421,4 +416,4 @@ hs.hints.showTitleThresh = 7
 hs.hints.style = "vimperator"
 
 hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
-hs.hotkey.bind(modifiers.hyper, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
+hs.hotkey.bind(modifiers.meh, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
