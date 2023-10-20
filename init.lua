@@ -251,6 +251,7 @@ hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBu
 hs.hotkey.bind(modifiers.hyper, "m", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
 hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
 hs.hotkey.bind(modifiers.hyper, "h", function() hs.application.launchOrFocusByBundleID(bundleID.firefox) end)
+hs.hotkey.bind(modifiers.hyper, "z", function() hs.application.launchOrFocusByBundleID(bundleID.outlook) end)
 
 ----------------------------------------------------------------------------------------------------
 -- Mouse Shortcuts
