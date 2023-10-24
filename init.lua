@@ -209,7 +209,7 @@ hs.window.filter.ignoreAlways = {
     ["WindowManager"] = true,
 }
 
-windowFilter = hs.window.filter.new({
+maximizeWindows = {
     "App Store",
     "Brave Browser",
     "Code",
@@ -218,6 +218,7 @@ windowFilter = hs.window.filter.new({
     "Fotos",
     "Google Chrome",
     "IntelliJ IDEA",
+    "Kalender",
     "kitty",
     "Mail",
     "Microsoft Outlook",
@@ -229,9 +230,16 @@ windowFilter = hs.window.filter.new({
     "Reeder",
     "Safari",
     "Spotify",
-})
+}
+
+windowFilter = hs.window.filter.new()
 windowFilter:subscribe({ hs.window.filter.windowCreated, hs.window.filter.windowFocused }, function(window)
-    if maximizeMode and window ~= nil and window:isStandard() and window:frame().h > 500 then
+    if maximizeMode and 
+       window ~= nil and 
+       window:isStandard() and 
+       window:frame().h > 500 and 
+       hs.fnutils.contains(maximizeWindows, window:application():name()) 
+    then
         window:maximize()
     end
 end)
