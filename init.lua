@@ -421,12 +421,13 @@ hs.hotkey.bind(modifiers.clipboard, hs.keycodes.map.delete, function() clipboard
 -- Window Switcher
 ----------------------------------------------------------------------------------------------------
 
-windowSwitcher = hs.window.switcher.new()
-windowSwitcher.ui.showSelectedTitle = false
-windowSwitcher.ui.showThumbnails = false
-windowSwitcher.ui.showSelectedThumbnail = false
-windowSwitcher.ui.fontName = font.monospace
-windowSwitcher.ui.titleBackgroundColor = {0,0,0,0.5}
+windowSwitcher = hs.window.switcher.new(windowFilter, {
+    showSelectedTitle = false,
+    showThumbnails = false,
+    showSelectedThumbnail = false,
+    fontName = font.monospace,
+    titleBackgroundColor = {0,0,0,0.5},
+})
 
 hs.hotkey.bind({ modifier.option }, 'tab', function() windowSwitcher:next() end)
 hs.hotkey.bind({ modifier.option, modifier.shift }, 'tab', function() windowSwitcher:previous() end)
@@ -440,5 +441,5 @@ hs.hints.fontSize = 16.0
 hs.hints.showTitleThresh = 7
 hs.hints.style = "vimperator"
 
-hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
-hs.hotkey.bind(modifiers.hyper, hs.keycodes.map["return"], function() hs.hints.windowHints() end)
+hs.hotkey.bind(modifiers.window, hs.keycodes.map["return"], function() hs.hints.windowHints(windowFilter:getWindows()) end)
+hs.hotkey.bind(modifiers.hyper, hs.keycodes.map["return"], function() hs.hints.windowHints(windowFilter:getWindows()) end)
