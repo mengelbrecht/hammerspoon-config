@@ -13,7 +13,7 @@ hs.window.animationDuration = 0
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
 configWatcher:start()
 
-local moonlanderMode = false
+local codingMode = false
 local maximizeMode = true
 
 ----------------------------------------------------------------------------------------------------
@@ -54,7 +54,8 @@ local font = {
 }
 
 local usbDevice = {
-    moonlander = "Moonlander Mark I"
+    moonlander = "Moonlander Mark I",
+    voyager = "Voyager"
 }
 
 local function languageIsGerman() return hs.host.locale.preferredLanguages()[1]:sub(0, 2) == "de" end
@@ -123,9 +124,9 @@ local function menuItems()
         },
         { title = "-" },
         {
-            title = "Moonlander Mode",
-            checked = moonlanderMode,
-            fn = function() moonlanderDetected(not moonlanderMode) end
+            title = "Coding Mode",
+            checked = codingMode,
+            fn = function() codingDetected(not codingMode) end
         },
         {
             title = "Maximize Mode",
@@ -153,10 +154,10 @@ menu = hs.menubar.new()
 menu:setMenu(menuItems)
 
 ----------------------------------------------------------------------------------------------------
--- Moonlander Detection
+-- Coding Device Detection
 ----------------------------------------------------------------------------------------------------
 
-local moonlanderModeConfig = {
+local codingModeConfig = {
     [false] = {
         keyboardLayout = "German",
         icon = hs.configdir .. "/assets/statusicon_off.tiff"
@@ -167,33 +168,35 @@ local moonlanderModeConfig = {
     }
 }
 
-local function isDeviceMoonlander(device) return device.productName == usbDevice.moonlander end
-
-function moonlanderDetected(connected)
-    moonlanderMode = connected
-    hs.keycodes.setLayout(moonlanderModeConfig[connected].keyboardLayout)
-    menu:setIcon(moonlanderModeConfig[connected].icon)
+local function isCodingDevice(device) 
+    return device.productName == usbDevice.moonlander or device.productName == usbDevice.voyager
 end
 
-local function searchMoonlander()
+function codingDetected(connected)
+    codingMode = connected
+    hs.keycodes.setLayout(codingModeConfig[connected].keyboardLayout)
+    menu:setIcon(codingModeConfig[connected].icon)
+end
+
+local function searchCodingDevice()
     local usbDevices = hs.usb.attachedDevices()
-    local moonlanderConnected = hs.fnutils.find(usbDevices, isDeviceMoonlander) ~= nil
+    local codingDeviceConnected = hs.fnutils.find(usbDevices, isCodingDevice) ~= nil
 
-    moonlanderDetected(moonlanderConnected)
+    codingDetected(codingDeviceConnected)
 end
 
-searchMoonlander()
+searchCodingDevice()
 
 usbWatcher = hs.usb.watcher.new(function(event)
-    if event.productName == usbDevice.moonlander then
-        moonlanderDetected(event.eventType == "added")
+    if event.productName == usbDevice.moonlander or event.productName == usbDevice.voyager then
+        codingDetected(event.eventType == "added")
     end
 end)
 usbWatcher:start()
 
 caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
     if event == hs.caffeinate.watcher.systemDidWake then
-        searchMoonlander()
+        searchCodingDevice()
     end
 end)
 caffeinateWatcher:start()
