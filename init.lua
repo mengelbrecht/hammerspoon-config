@@ -275,6 +275,7 @@ maximizeWindows = {
     "Fotos",
     "Google Chrome",
     "IntelliJ IDEA",
+    "iTerm2",
     "Kalender",
     "kitty",
     "Mail",
@@ -322,7 +323,7 @@ hs.hotkey.bind(modifiers.hyper, "r", moveMouseToLowerLeft)
 hs.hotkey.bind(modifiers.hyper, "t", moveMouseToLowerRight)
 hs.hotkey.bind(modifiers.hyper, "s", moveMouseToWindowCenter)
 hs.hotkey.bind(modifiers.hyper, "x", function() hs.application.launchOrFocusByBundleID(bundleID.teams) end)
-hs.hotkey.bind(modifiers.hyper, "u", function() hs.application.launchOrFocusByBundleID(bundleID.kitty) end)
+hs.hotkey.bind(modifiers.hyper, "u", function() hs.application.launchOrFocusByBundleID(bundleID.iterm) end)
 hs.hotkey.bind(modifiers.hyper, "f", function() hs.application.launchOrFocusByBundleID(bundleID.safari) end)
 hs.hotkey.bind(modifiers.hyper, "m", function() hs.application.launchOrFocusByBundleID(bundleID.intellij) end)
 hs.hotkey.bind(modifiers.hyper, "a", function() hs.application.launchOrFocusByBundleID(bundleID.vsCode) end)
