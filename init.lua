@@ -13,7 +13,6 @@ hs.window.animationDuration = 0
 configWatcher = hs.pathwatcher.new(hs.configdir, hs.reload)
 configWatcher:start()
 
-local codingMode = false
 local maximizeMode = true
 
 ----------------------------------------------------------------------------------------------------
@@ -50,12 +49,7 @@ local bundleID = {
 }
 
 local font = {
-    monospace = "Pragmasevka"
-}
-
-local usbDevice = {
-    moonlander = "Moonlander Mark I",
-    voyager = "Voyager"
+    monospace = "Iosevka Code"
 }
 
 local function languageIsGerman() return hs.host.locale.preferredLanguages()[1]:sub(0, 2) == "de" end
@@ -124,11 +118,6 @@ local function menuItems()
         },
         { title = "-" },
         {
-            title = "Coding Mode",
-            checked = codingMode,
-            fn = function() codingDetected(not codingMode) end
-        },
-        {
             title = "Maximize Mode",
             checked = maximizeMode,
             fn = function() maximizeMode = not maximizeMode end
@@ -152,54 +141,7 @@ end
 
 menu = hs.menubar.new()
 menu:setMenu(menuItems)
-
-----------------------------------------------------------------------------------------------------
--- Coding Device Detection
-----------------------------------------------------------------------------------------------------
-
-local codingModeConfig = {
-    [false] = {
-        keyboardLayout = "German",
-        icon = hs.configdir .. "/assets/statusicon_off.tiff"
-    },
-    [true] = {
-        keyboardLayout = "U.S.",
-        icon = hs.configdir .. "/assets/statusicon_on.tiff"
-    }
-}
-
-local function isCodingDevice(device) 
-    return device.productName == usbDevice.moonlander or device.productName == usbDevice.voyager
-end
-
-function codingDetected(connected)
-    codingMode = connected
-    hs.keycodes.setLayout(codingModeConfig[connected].keyboardLayout)
-    menu:setIcon(codingModeConfig[connected].icon)
-end
-
-local function searchCodingDevice()
-    local usbDevices = hs.usb.attachedDevices()
-    local codingDeviceConnected = hs.fnutils.find(usbDevices, isCodingDevice) ~= nil
-
-    codingDetected(codingDeviceConnected)
-end
-
-searchCodingDevice()
-
-usbWatcher = hs.usb.watcher.new(function(event)
-    if event.productName == usbDevice.moonlander or event.productName == usbDevice.voyager then
-        codingDetected(event.eventType == "added")
-    end
-end)
-usbWatcher:start()
-
-caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
-    if event == hs.caffeinate.watcher.systemDidWake then
-        searchCodingDevice()
-    end
-end)
-caffeinateWatcher:start()
+menu:setIcon(hs.configdir .. "/assets/statusicon_on.tiff")
 
 ----------------------------------------------------------------------------------------------------
 -- Window Management
