@@ -39,9 +39,7 @@ local bundleID = {
     googleChrome = "com.google.Chrome",
     intellij = "com.jetbrains.intellij",
     iterm = "com.googlecode.iterm2",
-    kitty = "net.kovidgoyal.kitty",
     outlook = "com.microsoft.Outlook",
-    postman = "com.postmanlabs.mac",
     reeder = "com.reederapp.5.macOS",
     safari = "com.apple.Safari",
     teams = "com.microsoft.teams",
@@ -147,65 +145,30 @@ menu:setIcon(hs.configdir .. "/assets/statusicon_on.tiff")
 -- Window Management
 ----------------------------------------------------------------------------------------------------
 
--- hs.inspect(hs.window._timed_allWindows())
--- hs.window.filter._showCandidates()
+local function timedAllWindows()
+    local appTimes = {}
+    for _, app in ipairs(hs.application.runningApplications()) do
+        local name = app:name()
+        if not hs.window.filter.ignoreAlways[name] then
+            local start = hs.timer.absoluteTime()
+            app:allWindows()
+            appTimes[name] = (appTimes[name] or 0) + hs.timer.absoluteTime() - start
+        end
+    end
+    for appName, time in hs.fnutils.sortByKeys(appTimes) do
+        local timeMillis = time / 1000 / 1000
+        if timeMillis >= 50 then
+            print(string.format('took %.0fms for "%s"', timeMillis, appName))
+        end
+    end
+end
+
 hs.window.filter.ignoreAlways = {
-    ["AccessibilityVisualsAgent"] = true,
-    ["AirPlayUIAgent"] = true,
-    ["AutoFillPanelService"] = true,
-    ["AXVisualSupportAgent"] = true,
-    ["BackgroundTaskManagementAgent"] = true,
-    ["coreautha"] = true,
-    ["CoreLocationAgent"] = true,
-    ["CoreServicesUIAgent"] = true,
-    ["DFRHUD"] = true,
-    ["Dock-Extra"] = true,
-    ["Dock"] = true,
-    ["DockHelper"] = true,
     ["Familie"] = true,
-    ["Family"] = true,
-    ["Finder"] = true,
-    ["Fork Networking"] = true,
-    ["Hintergrundbild"] = true,
-    ["Keychain Circle Notification"] = true,
-    ["Kontrollzentrum"] = true,
-    ["Kurzbefehle"] = true,
-    ["Mail Graphics and Media"] = true,
-    ["Mail Networking"] = true,
-    ["Mail Web Content"] = true,
     ["Mail-Webinhalt"] = true,
-    ["MirrorDisplays"] = true,
-    ["Mitteilungszentrale"] = true,
-    ["MobileDeviceUpdater"] = true,
-    ["nbagent"] = true,
-    ["NowPlayingTouchUI"] = true,
-    ["Numbers Networking"] = true,
-    ["OSDUIHelper"] = true,
-    ["PowerChime"] = true,
-    ["Reeder Graphics and Media"] = true,
-    ["Reeder Networking"] = true,
     ["Reeder Web Content"] = true,
-    ["Reeder-Webinhalt"] = true,
-    ["Safari Graphics and Media"] = true,
-    ["Safari Networking"] = true,
-    ["Safari Web Content (Cached)"] = true,
-    ["Safari Web Content (Prewarmed)"] = true,
-    ["Safari Web Content"] = true,
-    ["Safari-Webinhalt (im Cache)"] = true,
-    ["Safari-Webinhalt (vorgeladen)"] = true,
     ["Safari-Webinhalt"] = true,
-    ["Single Sign-On"] = true,
-    ["SoftwareUpdateNotificationManager"] = true,
-    ["storeuid"] = true,
-    ["SystemUIServer"] = true,
-    ["talagent"] = true,
-    ["TextInputMenuAgent"] = true,
-    ["TextInputSwitcher"] = true,
-    ["universalAccessAuthWarn"] = true,
-    ["Universelle Steuerung"] = true,
-    ["UserNotificationCenter"] = true,
-    ["Wi-Fi"] = true,
-    ["WindowManager"] = true,
+    ["Safari-Webinhalt (im Cache)"] = true,
 }
 
 maximizeWindows = {
@@ -219,14 +182,12 @@ maximizeWindows = {
     "IntelliJ IDEA",
     "iTerm2",
     "Kalender",
-    "kitty",
     "Mail",
     "Microsoft Outlook",
     "Microsoft Teams",
     "Music",
     "Musik",
     "Photos",
-    "Postman",
     "Reeder",
     "Safari",
     "Spotify",
