@@ -194,11 +194,11 @@ maximizeWindows = {
 
 windowFilter = hs.window.filter.new()
 windowFilter:subscribe({ hs.window.filter.windowCreated, hs.window.filter.windowFocused }, function(window)
-    if maximizeMode and 
-       window ~= nil and 
-       window:isStandard() and 
-       window:frame().h > 500 and 
-       hs.fnutils.contains(maximizeWindows, window:application():name()) 
+    if maximizeMode and
+       window ~= nil and
+       window:isStandard() and
+       window:frame().h > 500 and
+       hs.fnutils.contains(maximizeWindows, window:application():name())
     then
         window:maximize()
     end
@@ -284,7 +284,7 @@ mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(
         if event:getButtonState(i) then
             local application = hs.application.frontmostApplication()
             local action = mouseBindings[i][application:bundleID()] or mouseBindings[i][bundleID.other]
-            if action then 
+            if action then
                 action(application)
                 return true
             end
