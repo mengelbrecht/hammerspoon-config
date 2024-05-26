@@ -279,28 +279,18 @@ local mouseBindings = {
     },
 }
 
-local function getMouseButton(event)
-    if event:getButtonState(2) then 
-        return 2 
-    elseif event:getButtonState(3) then 
-        return 3 
-    elseif event:getButtonState(4) then 
-        return 4
-    else
-        return nil
-    end
-end
-
 mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
-    local application = hs.application.frontmostApplication()
-    local button = getMouseButton(event)
-    if button then
-        local action = mouseBindings[button][application:bundleID()] or mouseBindings[button][bundleID.other]
-        if action then 
-            action(application)
+    for i = 2, 4 do
+        if event:getButtonState(i) then
+            local application = hs.application.frontmostApplication()
+            local action = mouseBindings[i][application:bundleID()] or mouseBindings[i][bundleID.other]
+            if action then 
+                action(application)
+                return true
+            end
         end
     end
-    return true
+    return false
 end)
 mouseTap:start()
 
