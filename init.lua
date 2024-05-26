@@ -236,61 +236,66 @@ hs.hotkey.bind(modifiers.hyper, "z", function() hs.application.launchOrFocusByBu
 -- Mouse Shortcuts
 ----------------------------------------------------------------------------------------------------
 
+local function tap_key(mods, key)
+    return false, {
+        hs.eventtap.event.newKeyEvent(mods, key, true),
+        hs.eventtap.event.newKeyEvent(mods, key, false),
+    }
+end
+
 local mouseBindings = {
     [2] = {
         -- Safari: Close tab
-        [bundleID.safari] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
+        [bundleID.safari] = function() return tap_key({ modifier.cmd }, "w") end,
         -- Google Chrome: Close tab
-        [bundleID.googleChrome] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
+        [bundleID.googleChrome] = function() return tap_key({ modifier.cmd }, "w") end,
         -- Firefox: Close tab
-        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
+        [bundleID.firefox] = function() return tap_key({ modifier.cmd }, "w") end,
         -- Teams: End call
-        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "h") end,
+        [bundleID.teams] = function() return tap_key({ modifier.cmd, modifier.shift }, "h") end,
          -- Other: Close window
-        [bundleID.other] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
+        [bundleID.other] = function() return tap_key({ modifier.cmd }, "w") end,
     },
     [3] = {
         -- Safari: Back
-        [bundleID.safari] = function(application) application:selectMenuItem({ "Verlauf", "Zurück" }) end,
+        [bundleID.safari] = function() return tap_key({ modifier.cmd }, 41) end,
         -- Google Chrome: Back
-        [bundleID.googleChrome] = function(application) application:selectMenuItem({ "Verlauf", "Zurück" }) end,
+        [bundleID.googleChrome] = function() return tap_key({ modifier.cmd }, 41) end,
         -- Firefox: Back
-        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "left") end,
+        [bundleID.firefox] = function() return tap_key({ modifier.cmd }, "left") end,
         -- Teams: Toggle mute
-        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "m") end,
+        [bundleID.teams] = function() return tap_key({ modifier.cmd, modifier.shift }, "m") end,
         -- Reeder: Open in Safari
-        [bundleID.reeder] = function(application) hs.eventtap.keyStroke({}, "b") end,
+        [bundleID.reeder] = function() return tap_key({}, "b") end,
         -- Other: Copy to clipboard
-        [bundleID.other] = function(application) hs.eventtap.keyStroke({ "cmd" }, "c") end,
+        [bundleID.other] = function() return tap_key({ "cmd" }, "c") end,
     },
     [4] = {
         -- Safari: Forward
-        [bundleID.safari] = function(application) application:selectMenuItem({ "Verlauf", "Vorwärts" }) end,
+        [bundleID.safari] = function() return tap_key({ modifier.cmd }, 39) end,
         -- Google Chrome: Forward
-        [bundleID.googleChrome] = function(application) application:selectMenuItem({ "Verlauf", "Vorwärts" }) end,
+        [bundleID.googleChrome] = function() return tap_key({ modifier.cmd }, 39) end,
         -- Firefox: Forward
-        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "right") end,
+        [bundleID.firefox] = function() return tap_key({ modifier.cmd }, "right") end,
         -- Teams: Toggle video
-        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "o") end,
+        [bundleID.teams] = function() return tap_key({ modifier.cmd, modifier.shift }, "o") end,
         -- Reeder: Mark all as read
-        [bundleID.reeder] = function(application) hs.eventtap.keyStroke({}, "a") end,
+        [bundleID.reeder] = function() return tap_key({}, "a") end,
         -- Other: Paste from clipboard
-        [bundleID.other] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "v") end,
+        [bundleID.other] = function() return tap_key({ modifier.cmd }, "v") end,
     },
 }
 
 mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
     for i = 2, 4 do
         if event:getButtonState(i) then
-            local application = hs.application.frontmostApplication()
-            local action = mouseBindings[i][application:bundleID()] or mouseBindings[i][bundleID.other]
-            if action then
-                action(application)
-                return true
-            end
+            local action = mouseBindings[i][hs.application.frontmostApplication():bundleID()]
+                        or mouseBindings[i][bundleID.other]
+                        or (function() return true end)
+            return action()
         end
     end
-    return false
+    return true
 end)
 mouseTap:start()
 
