@@ -44,13 +44,12 @@ local bundleID = {
     safari = "com.apple.Safari",
     teams = "com.microsoft.teams",
     vsCode = "com.microsoft.VSCode",
+    other = "other",
 }
 
 local font = {
     monospace = "Iosevka Code"
 }
-
-local function languageIsGerman() return hs.host.locale.preferredLanguages()[1]:sub(0, 2) == "de" end
 
 local function maximizeCurrentWindow() hs.window.focusedWindow():maximize() end
 
@@ -237,132 +236,69 @@ hs.hotkey.bind(modifiers.hyper, "z", function() hs.application.launchOrFocusByBu
 -- Mouse Shortcuts
 ----------------------------------------------------------------------------------------------------
 
-local function handleMouse2()
-    local application = hs.application.frontmostApplication()
-
-    -- Safari: Close tab
-    if application:bundleID() == bundleID.safari then
-        hs.eventtap.keyStroke({ modifier.cmd }, "w")
-
-        -- Safari Technology Preview: Close tab
-    elseif application:bundleID() == bundleID.safariTechnologyPreview then
-        hs.eventtap.keyStroke({ modifier.cmd }, "w")
-
+local mouseBindings = {
+    [2] = {
+        -- Safari: Close tab
+        [bundleID.safari] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
         -- Google Chrome: Close tab
-    elseif application:bundleID() == bundleID.googleChrome then
-        hs.eventtap.keyStroke({ modifier.cmd }, "w")
-
+        [bundleID.googleChrome] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
         -- Firefox: Close tab
-    elseif application:bundleID() == bundleID.firefox then
-        hs.eventtap.keyStroke({ modifier.cmd }, "w")
-
+        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
         -- Teams: End call
-    elseif application:bundleID() == bundleID.teams then
-        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "h")
-
-        -- Spotify: Toggle play
-    elseif application:bundleID() == bundleID.spotify then
-        hs.eventtap.keyStroke({}, "space")
-    end
-end
-
-local function handleMouse3()
-    local application = hs.application.frontmostApplication()
-
-    -- Safari: Back
-    if application:bundleID() == bundleID.safari then
-        if languageIsGerman() then
-            application:selectMenuItem({ "Verlauf", "Zurück" })
-        else
-            application:selectMenuItem({ "History", "Back" })
-        end
-
-        -- Safari Technology Preview: Back
-    elseif application:bundleID() == bundleID.safariTechnologyPreview then
-        application:selectMenuItem({ "History", "Back" })
-
+        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "h") end,
+         -- Other: Close window
+        [bundleID.other] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "w") end,
+    },
+    [3] = {
+        -- Safari: Back
+        [bundleID.safari] = function(application) application:selectMenuItem({ "Verlauf", "Zurück" }) end,
         -- Google Chrome: Back
-    elseif application:bundleID() == bundleID.googleChrome then
-        if languageIsGerman() then
-            application:selectMenuItem({ "Verlauf", "Zurück" })
-        else
-            application:selectMenuItem({ "History", "Back" })
-        end
-
+        [bundleID.googleChrome] = function(application) application:selectMenuItem({ "Verlauf", "Zurück" }) end,
         -- Firefox: Back
-    elseif application:bundleID() == bundleID.firefox then
-        hs.eventtap.keyStroke({ modifier.cmd }, "left")
-
+        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "left") end,
         -- Teams: Toggle mute
-    elseif application:bundleID() == bundleID.teams then
-        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "m")
-
-        -- Spotify: Next
-    elseif application:bundleID() == bundleID.spotify then
-        hs.eventtap.keyStroke({ modifier.cmd }, "right")
-
+        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "m") end,
         -- Reeder: Open in Safari
-    elseif application:bundleID() == bundleID.reeder then
-        hs.eventtap.keyStroke({}, "b")
-
+        [bundleID.reeder] = function(application) hs.eventtap.keyStroke({}, "b") end,
         -- Other: Copy to clipboard
-    else
-        hs.eventtap.keyStroke({ "cmd" }, "c")
-    end
-end
-
-local function handleMouse4()
-    local application = hs.application.frontmostApplication()
-
-    -- Safari: Forward
-    if application:bundleID() == bundleID.safari then
-        if languageIsGerman() then
-            application:selectMenuItem({ "Verlauf", "Vorwärts" })
-        else
-            application:selectMenuItem({ "History", "Forward" })
-        end
-
-        -- Safari Technology Preview: Forward
-    elseif application:bundleID() == bundleID.safariTechnologyPreview then
-        application:selectMenuItem({ "History", "Forward" })
-
+        [bundleID.other] = function(application) hs.eventtap.keyStroke({ "cmd" }, "c") end,
+    },
+    [4] = {
+        -- Safari: Forward
+        [bundleID.safari] = function(application) application:selectMenuItem({ "Verlauf", "Vorwärts" }) end,
         -- Google Chrome: Forward
-    elseif application:bundleID() == bundleID.googleChrome then
-        if languageIsGerman() then
-            application:selectMenuItem({ "Verlauf", "Vorwärts" })
-        else
-            application:selectMenuItem({ "History", "Forward" })
-        end
-
+        [bundleID.googleChrome] = function(application) application:selectMenuItem({ "Verlauf", "Vorwärts" }) end,
         -- Firefox: Forward
-    elseif application:bundleID() == bundleID.firefox then
-        hs.eventtap.keyStroke({ modifier.cmd }, "right")
-
+        [bundleID.firefox] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "right") end,
         -- Teams: Toggle video
-    elseif application:bundleID() == bundleID.teams then
-        hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "o")
-
-        -- Spotify: Previous
-    elseif application:bundleID() == bundleID.spotify then
-        hs.eventtap.keyStroke({ modifier.cmd }, "left")
-
+        [bundleID.teams] = function(application) hs.eventtap.keyStroke({ modifier.cmd, modifier.shift }, "o") end,
         -- Reeder: Mark all as read
-    elseif application:bundleID() == bundleID.reeder then
-        hs.eventtap.keyStroke({}, "a")
-
+        [bundleID.reeder] = function(application) hs.eventtap.keyStroke({}, "a") end,
         -- Other: Paste from clipboard
+        [bundleID.other] = function(application) hs.eventtap.keyStroke({ modifier.cmd }, "v") end,
+    },
+}
+
+local function getMouseButton(event)
+    if event:getButtonState(2) then 
+        return 2 
+    elseif event:getButtonState(3) then 
+        return 3 
+    elseif event:getButtonState(4) then 
+        return 4
     else
-        hs.eventtap.keyStroke({ modifier.cmd }, "v")
+        return nil
     end
 end
 
 mouseTap = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(event)
-    if event:getButtonState(2) then
-        handleMouse2()
-    elseif event:getButtonState(3) then
-        handleMouse3()
-    elseif event:getButtonState(4) then
-        handleMouse4()
+    local application = hs.application.frontmostApplication()
+    local button = getMouseButton(event)
+    if button then
+        local action = mouseBindings[button][application:bundleID()] or mouseBindings[button][bundleID.other]
+        if action then 
+            action(application)
+        end
     end
     return true
 end)
