@@ -144,7 +144,7 @@ menu:setIcon(hs.configdir .. "/assets/statusicon_on.tiff")
 -- Window Management
 ----------------------------------------------------------------------------------------------------
 
-local function timedAllWindows()
+function timedAllWindows()
     local appTimes = {}
     for _, app in ipairs(hs.application.runningApplications()) do
         local name = app:name()
