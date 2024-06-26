@@ -42,7 +42,7 @@ local bundleID = {
     outlook = "com.microsoft.Outlook",
     reeder = "com.reederapp.5.macOS",
     safari = "com.apple.Safari",
-    teams = "com.microsoft.teams",
+    teams = "com.microsoft.teams2",
     vsCode = "com.microsoft.VSCode",
     other = "other",
 }
