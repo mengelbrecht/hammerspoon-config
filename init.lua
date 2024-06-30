@@ -72,6 +72,7 @@ end
 local function moveCurentWindowToNextScreen()
     local win = hs.window.focusedWindow()
     win:moveToScreen(win:screen():next())
+    win:maximize()
 end
 
 local function moveMouseToWindowCenter()
